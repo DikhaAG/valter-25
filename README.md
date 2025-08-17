@@ -1,10 +1,4 @@
 # valter-25
-<<<<<<< HEAD
-## current stack : ts, bun, next js, neon, better auth, drizzle, zod, zustand, tailwind, frame-motion, shadcn, tanstack table.
-=======
-<<<<<<< HEAD
-## current stack : ts, bun, next js, neon, better auth, drizzle, zod, zustand, tailwind, frame-motion, shadcn, tanstack table.
-=======
 ## current stack : ts, bun, next js, neon, better auth, drizzle, zod, zustand, tailwind, frame-motion, shadcn, tanstack table.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
