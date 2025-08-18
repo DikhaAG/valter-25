@@ -310,7 +310,7 @@ export default function HomePage() {
                                                                 Acara
                                                         </Link>
                                                         <Link
-                                                                href="#"
+                                                                href="#timeline-section"
                                                                 className="text-white hover:text-secondary font-medium"
                                                         >
                                                                 Timeline
@@ -518,7 +518,7 @@ export default function HomePage() {
                                                         : "opacity-0 transform translate-y-10"
                                         }`}
                                 >
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-20 items-center">
+                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
                                                 <div className="flex sm:hidden justify-center lg:justify-end">
                                                         <div className="w-full">
                                                                 <Image
@@ -530,7 +530,7 @@ export default function HomePage() {
                                                                         }
                                                                         src="/images/guest-star.png"
                                                                         alt="Kevin Anggara Guest Star Card"
-                                                                        className="w-full h-full object-contain"
+                                                                        className="w-[350px] h-[350px] object-contain"
                                                                 />
                                                         </div>
                                                 </div>
@@ -582,8 +582,8 @@ export default function HomePage() {
                                                         </button>
                                                 </div>
 
-                                                <div className="hidden sm:flex justify-center lg:justify-end">
-                                                        <div className="w-[530px] sm:-mr-50">
+                                                <div className="hidden md:flex justify-center lg:justify-end">
+                                                        <div className="w-[400px]">
                                                                 <Image
                                                                         width={
                                                                                 2000
@@ -689,9 +689,9 @@ export default function HomePage() {
                                                 {/* Left Arrow */}
                                                 <button
                                                         onClick={prevActivity}
-                                                        className="p-2 sm:p-3 hover:bg-gray-100 rounded-full transition-all duration-300 ease-out hover:scale-110 hover:shadow-lg active:scale-95 flex-shrink-0 z-20"
+                                                        className="cursor-pointer p-2 sm:p-3 rounded-full transition-all duration-300 ease-out hover:scale-110 active:scale-95 flex-shrink-0 z-20"
                                                 >
-                                                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-foreground" />
+                                                        <Image className="w-5 h-10 rotate-180" src={"/images/arrow-icon.png"} alt="arrow" width={1000} height={1000} />
                                                 </button>
 
                                                 <div className=" mx-auto max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:w-[700px] xl:max-w-[1500px] flex items-center justify-center min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[380px] xl:min-h-[420px] overflow-hidden relative">
@@ -838,9 +838,9 @@ export default function HomePage() {
                                                 {/* Right Arrow */}
                                                 <button
                                                         onClick={nextActivity}
-                                                        className="p-2 sm:p-3 hover:bg-gray-100 rounded-full transition-all duration-300 ease-out hover:scale-110 hover:shadow-lg active:scale-95 flex-shrink-0 z-20"
+                                                        className="cursor-pointer p-2 sm:p-3 rounded-full transition-all duration-300 ease-out hover:scale-110 active:scale-95 flex-shrink-0 z-20"
                                                 >
-                                                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-foreground" />
+                                                        <Image className="w-5 h-10" src={"/images/arrow-icon.png"} alt="arrow" width={1000} height={1000} />
                                                 </button>
                                         </div>
                                 </div>
@@ -848,6 +848,7 @@ export default function HomePage() {
 
                         {/* TIMELINE SECTION */}
                         <section
+                        id="timeline-section"
                                 ref={timelineSectionRef}
                                 className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
                                         showTimelineSection
