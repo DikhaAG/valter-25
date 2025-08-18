@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-        ChevronDown,
-        ChevronLeft,
-        ChevronRight,
-        Instagram,
-        Music,
-} from "lucide-react";
+import { ChevronDown, Instagram, Music } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -197,18 +191,30 @@ export default function HomePage() {
         const activities = [
                 {
                         image: "/images/uiuix.png",
-                        title: "UI/UX Design",
-                        description: "User Interface & Experience Design",
+                        title: "Web Design",
+                        // description: "User Interface & Experience Design",
+                        description: "",
+                        href: "/web-design",
                 },
                 {
                         image: "/images/game.png",
-                        title: "E-Sport",
-                        description: "Epep, Mobile Legend dan Roblox",
+                        title: "E-sport",
+                        description: "Mobile Legends: Bang Bang",
+                        href: "/ml",
                 },
                 {
                         image: "/images/vid.png",
                         title: "Video Campaign",
-                        description: "",
+                        description:
+                                "Peran AI dalam menggunakan sosial media bagi kalangan conten creator.",
+                        href: "/video-campaign",
+                },
+                {
+                        image: "/images/training.png",
+                        title: "Pelatihan",
+                        description:
+                                "Optimalisasi Produksi dan Penyajian Konten Digital Berkelanjutan",
+                        href: "/pelatihan",
                 },
         ];
 
@@ -237,10 +243,10 @@ export default function HomePage() {
                 // Use CSS calc to make it truly responsive
                 const mobileOffset =
                         -currentActivityIndex * baseItemWidth.mobile;
-                const tabletOffset =
-                        -currentActivityIndex * baseItemWidth.tablet;
-                const desktopOffset =
-                        -currentActivityIndex * baseItemWidth.desktop;
+                // const tabletOffset =
+                //         -currentActivityIndex * baseItemWidth.tablet;
+                // const desktopOffset =
+                //         -currentActivityIndex * baseItemWidth.desktop;
 
                 // Return responsive transform using CSS custom properties approach
                 return `translateX(calc(${mobileOffset}px + 50% - ${
@@ -576,10 +582,13 @@ export default function HomePage() {
                                                                 est laborum.
                                                         </p>
 
-                                                        <button className="w-full bg-secondary hover:bg-secondary/90 text-white pt-2 pb-1 mt-2 rounded-md font-medium font-glofium transition-colors duration-300 text-[10px] sm:text-[12px] hover:cursor-pointer">
+                                                        <Link
+                                                                href="/seminar"
+                                                                className="w-full bg-secondary hover:bg-secondary/90 text-white px-3 pt-2 pb-1 mt-2 rounded-md font-medium font-glofium transition-colors duration-300 text-[10px] sm:text-[12px] hover:cursor-pointer"
+                                                        >
                                                                 Lihat
                                                                 Selengkapnya
-                                                        </button>
+                                                        </Link>
                                                 </div>
 
                                                 <div className="hidden md:flex justify-center lg:justify-end">
@@ -652,9 +661,9 @@ export default function HomePage() {
                                                 </div>
 
                                                 <p className="text-foreground font-poppins mt-4 text-sm sm:text-base">
-                                                        Click to watch the
-                                                        official VALTER 2026
-                                                        trailer
+                                                        Klik untuk menontoh
+                                                        trailer resmi VALTER
+                                                        2025
                                                 </p>
                                         </div>
                                 </div>
@@ -691,7 +700,15 @@ export default function HomePage() {
                                                         onClick={prevActivity}
                                                         className="cursor-pointer p-2 sm:p-3 rounded-full transition-all duration-300 ease-out hover:scale-110 active:scale-95 flex-shrink-0 z-20"
                                                 >
-                                                        <Image className="w-5 h-10 rotate-180" src={"/images/arrow-icon.png"} alt="arrow" width={1000} height={1000} />
+                                                        <Image
+                                                                className="w-5 h-10 rotate-180"
+                                                                src={
+                                                                        "/images/arrow-icon.png"
+                                                                }
+                                                                alt="arrow"
+                                                                width={1000}
+                                                                height={1000}
+                                                        />
                                                 </button>
 
                                                 <div className=" mx-auto max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:w-[700px] xl:max-w-[1500px] flex items-center justify-center min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[380px] xl:min-h-[420px] overflow-hidden relative">
@@ -730,7 +747,7 @@ export default function HomePage() {
                                                                                 return (
                                                                                         <div
                                                                                                 key={`activity-${index}`}
-                                                                                                className={` flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${
+                                                                                                className={`${index === activities.length - 1 && isCenter ? "ml-20" : "ml-0"} ${index === activities.length - 2 && isCenter ? "ml-10" : "ml-0"} md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${
                                                                                                         isCenter
                                                                                                                 ? "transform scale-110 sm:scale-125 md:scale-130 lg:scale-140 xl:scale-150 z-10 opacity-100"
                                                                                                                 : isAdjacent
@@ -756,7 +773,7 @@ export default function HomePage() {
                                                                                                 >
                                                                                                         <Link
                                                                                                                 href={
-                                                                                                                        "/"
+                                                                                                                        activity.href
                                                                                                                 }
                                                                                                         >
                                                                                                                 <Image
@@ -840,7 +857,15 @@ export default function HomePage() {
                                                         onClick={nextActivity}
                                                         className="cursor-pointer p-2 sm:p-3 rounded-full transition-all duration-300 ease-out hover:scale-110 active:scale-95 flex-shrink-0 z-20"
                                                 >
-                                                        <Image className="w-5 h-10" src={"/images/arrow-icon.png"} alt="arrow" width={1000} height={1000} />
+                                                        <Image
+                                                                className="w-5 h-10"
+                                                                src={
+                                                                        "/images/arrow-icon.png"
+                                                                }
+                                                                alt="arrow"
+                                                                width={1000}
+                                                                height={1000}
+                                                        />
                                                 </button>
                                         </div>
                                 </div>
@@ -848,7 +873,7 @@ export default function HomePage() {
 
                         {/* TIMELINE SECTION */}
                         <section
-                        id="timeline-section"
+                                id="timeline-section"
                                 ref={timelineSectionRef}
                                 className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
                                         showTimelineSection
