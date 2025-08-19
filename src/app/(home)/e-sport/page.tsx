@@ -473,11 +473,11 @@ export default function ESportPage() {
                                                                         onChange={
                                                                                 handleInputChange
                                                                         }
-                                                                        placeholder="ex: whatsapp"
+                                                                        placeholder="ex: 086969.."
                                                                         className="w-full text-xs font-poppins border-2 border-foreground shadow-[7px_7px_0px_#00000040]"
                                                                 />
                                                         </div>
-                                                        <div className="max-w-fit">
+                                                        <div className="">
                                                                 <label className="block font-medium  mb-1 text-sm">
                                                                         Asal
                                                                         Instansi
@@ -492,7 +492,7 @@ export default function ESportPage() {
                                                                         onChange={
                                                                                 handleInputChange
                                                                         }
-                                                                        placeholder="ex: sekolah"
+                                                                        placeholder="ex: Politeknik Negeri Sriwijaya"
                                                                         className="w-full text-xs font-poppins border-2 border-foreground shadow-[7px_7px_0px_#00000040]"
                                                                 />
                                                         </div>
