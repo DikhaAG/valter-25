@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/nb/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { CekRegistrasiButton } from "@/components/home/e-sport/registration-form/CekRegistrasiButton";
+import { toast } from "sonner";
 
 export default function ESportPage() {
         const [isVisible, setIsVisible] = useState(false);
@@ -88,7 +89,7 @@ export default function ESportPage() {
                                 }`}
                         >
                                 <div className="max-w-md md:max-w-4xl flex flex-col md:flex-row mx-auto gap-20 text-center">
-                                        <div className="mb-6 flex justify-center">
+                                        <div className="md:mb-6 flex justify-center">
                                                 <div className="relative md:w-80">
                                                         <Image
                                                                 src="/images/game.png"
@@ -553,6 +554,11 @@ export default function ESportPage() {
                                                         type="submit"
                                                         variant={"secondary"}
                                                         className="w-full"
+                                                        onClick={() => toast.custom(() => (
+                                                                                <div className="border-4 border-foreground bg-background rounded-md shadow-[7px_7px_0px_#00000040] p-2 text-xs">
+                                                                                        Fungsi registrasinya belum ditambahin njir  :(
+                                                                                </div>
+                                                                        ))}
                                                 >
                                                         Submit
                                                 </Button>
