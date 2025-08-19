@@ -43,12 +43,13 @@
         --radius-xl: calc(var(--radius) + 4px);
         --font-poppins: "poppinsRegular";
         --font-funky-vibes: "funkyVibes";
+        --font-glofium-demo: "glofiumDemo";
 }
 
 :root {
         --radius: 0.625rem;
         --background: #f9f6ee;
-        --foreground: #212121;
+        --foreground: #313131;
         --card: #f9f6ee;
         --card-foreground: #212121;
         --popover: #f9f6ee;
@@ -56,6 +57,7 @@
         --primary: #4c1775;
         --primary-foreground: #f9f6ee;
         --secondary: #da0099;
+        --secondary-hover: #cf0191;
         --secondary-foreground: #f9f6ee;
         --muted: oklch(0.97 0 0);
         --muted-foreground: oklch(0.556 0 0);
@@ -124,7 +126,7 @@
         }
         body {
                 @apply bg-background text-foreground;
-                font-family: "GlofiumDemo";
+                font-family: var(--font-poppins);
         }
 }
 

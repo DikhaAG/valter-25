@@ -200,7 +200,7 @@ export default function HomePage() {
                         image: "/images/game.png",
                         title: "E-sport",
                         description: "Mobile Legends: Bang Bang",
-                        href: "/ml",
+                        href: "/e-sport",
                 },
                 {
                         image: "/images/vid.png",
@@ -282,7 +282,7 @@ export default function HomePage() {
         ];
 
         return (
-                <div className="min-h-screen bg-background relative overflow-x-hidden">
+                <div className="min-h-screen bg-background relative overflow-x-hidden font-glofium-demo">
                         <nav
                                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                                         isScrolled
@@ -310,7 +310,7 @@ export default function HomePage() {
                                                                 Beranda
                                                         </Link>
                                                         <Link
-                                                                href="#"
+                                                                href="#activity-section"
                                                                 className="text-white hover:text-secondary font-medium"
                                                         >
                                                                 Acara
@@ -543,7 +543,11 @@ export default function HomePage() {
 
                                                 <div className="space-y-2 sm:space-y-8">
                                                         <h2 className="text-center sm:text-[28px] font-bold font-glofium text-secondary">
-                                                                Co-Create or
+                                                                Co
+                                                                <span className="font-funky-vibes text-2xl md:text-5xl">
+                                                                        -
+                                                                </span>
+                                                                Create or
                                                                 Compete
                                                         </h2>
 
@@ -671,6 +675,7 @@ export default function HomePage() {
 
                         {/* ACTIVITY SECTION */}
                         <section
+                                id="activity-section"
                                 ref={activitySectionRef}
                                 className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
                                         showActivitySection
@@ -747,7 +752,21 @@ export default function HomePage() {
                                                                                 return (
                                                                                         <div
                                                                                                 key={`activity-${index}`}
-                                                                                                className={`${index === activities.length - 1 && isCenter ? "ml-20" : "ml-0"} ${index === activities.length - 2 && isCenter ? "ml-10" : "ml-0"} md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${
+                                                                                                className={`${
+                                                                                                        index ===
+                                                                                                                activities.length -
+                                                                                                                        1 &&
+                                                                                                        isCenter
+                                                                                                                ? "ml-20"
+                                                                                                                : "ml-0"
+                                                                                                } ${
+                                                                                                        index ===
+                                                                                                                activities.length -
+                                                                                                                        2 &&
+                                                                                                        isCenter
+                                                                                                                ? "ml-10"
+                                                                                                                : "ml-0"
+                                                                                                } md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${
                                                                                                         isCenter
                                                                                                                 ? "transform scale-110 sm:scale-125 md:scale-130 lg:scale-140 xl:scale-150 z-10 opacity-100"
                                                                                                                 : isAdjacent
@@ -775,6 +794,7 @@ export default function HomePage() {
                                                                                                                 href={
                                                                                                                         activity.href
                                                                                                                 }
+                                                                                                                className="cursor-pointer"
                                                                                                         >
                                                                                                                 <Image
                                                                                                                         width={
