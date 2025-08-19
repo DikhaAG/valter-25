@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { CekRegistrasiButton } from "@/components/home/e-sport/registration-form/CekRegistrasiButton";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/nb/textarea";
 
 export default function ESportPage() {
         const [isVisible, setIsVisible] = useState(false);
@@ -425,7 +426,7 @@ export default function ESportPage() {
                                                                         Mobile
                                                                         Legends
                                                                 </label>
-                                                                <Input
+                                                                <Textarea
                                                                         name="mlId"
                                                                         value={
                                                                                 formData.mlId
@@ -433,13 +434,13 @@ export default function ESportPage() {
                                                                         onChange={
                                                                                 handleInputChange
                                                                         }
-                                                                        placeholder="Tulis 5 Callsign"
+                                                                        placeholder="Tulis ID Tim Kamu. ex: 696969, 12312312,. etc"
                                                                         className="w-full text-xs font-poppins border-2 border-foreground shadow-[7px_7px_0px_#00000040]"
                                                                 />
                                                         </div>
                                                         <div>
                                                                 <label className="block text-sm font-medium  mb-1">
-                                                                        NISN/NIK
+                                                                        NISN <span className="font-funky-vibes text-xl">/</span> NIK
                                                                 </label>
                                                                 <Input
                                                                         name="nisn"
@@ -449,7 +450,7 @@ export default function ESportPage() {
                                                                         onChange={
                                                                                 handleInputChange
                                                                         }
-                                                                        placeholder="Cth: Anggota"
+                                                                        placeholder="ex: Anggota"
                                                                         className="w-full text-xs font-poppins border-2 border-foreground shadow-[7px_7px_0px_#00000040]"
                                                                 />
                                                         </div>
@@ -459,7 +460,9 @@ export default function ESportPage() {
                                                         <div>
                                                                 <label className="block text-sm font-medium  mb-1">
                                                                         Nomor HP
-                                                                        / WA
+                                                                        <span className="font-funky-vibes text-xl">/</span>
+                                                                        <br />
+                                                                        WA
                                                                         Aktif
                                                                 </label>
                                                                 <Input
@@ -474,12 +477,12 @@ export default function ESportPage() {
                                                                         className="w-full text-xs font-poppins border-2 border-foreground shadow-[7px_7px_0px_#00000040]"
                                                                 />
                                                         </div>
-                                                        <div>
-                                                                <label className="block text-sm font-medium  mb-1">
+                                                        <div className="max-w-fit">
+                                                                <label className="block font-medium  mb-1 text-sm">
                                                                         Asal
                                                                         Instansi
-                                                                        /
-                                                                        Komunitas
+                                                                        <span className="font-funky-vibes text-xl">/</span> 
+                                                                        <p>Komunitas</p>
                                                                 </label>
                                                                 <Input
                                                                         name="address"
