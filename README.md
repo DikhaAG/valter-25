@@ -1,5 +1,5 @@
 # valter-25
-## current stack : ts, next js, neon, better auth, drizzle, zod, zustand, tailwind, shadcn, tanstack table.
+## current stack : ts, next js, neon, cloudinary, better auth, drizzle, zod, zustand, tailwind, shadcn, tanstack table.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
