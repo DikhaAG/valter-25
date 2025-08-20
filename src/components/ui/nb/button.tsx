@@ -12,7 +12,8 @@ const buttonVariants = cva(
                                 default: "bg-primary text-primary-foreground hover:bg-primary/90",
                                 outline: "bg-background hover:bg-foreground/20 hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
                                 secondary: "bg-secondary/90 hover:bg-secondary text-secondary-foreground",
-                                gosong: "bg-foreground/90 border-4 border-foreground text-secondary-foreground"
+                                gosong: "bg-foreground/90 border-4 border-foreground text-secondary-foreground",
+                                destructive: "bg-red-600 hover:bg-red-700 border-4 border-foreground text-secondary-foreground"
                         },
                         size: {
                                 default: "h-9 px-4 py-2 has-[>svg]:px-3",

@@ -1,0 +1,142 @@
+{
+  "id": "dc3c5498-b93e-4a33-ae86-933e92b5cfa4",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.peserta_ml": {
+      "name": "peserta_ml",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_ml": {
+          "name": "id_ml",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "npm": {
+          "name": "npm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "peserta_ml_nama_tim_tim_ml_nama_tim_fk": {
+          "name": "peserta_ml_nama_tim_tim_ml_nama_tim_fk",
+          "tableFrom": "peserta_ml",
+          "tableTo": "tim_ml",
+          "columnsFrom": [
+            "nama_tim"
+          ],
+          "columnsTo": [
+            "nama_tim"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "peserta_ml_id_ml_unique": {
+          "name": "peserta_ml_id_ml_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id_ml"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tim_ml": {
+      "name": "tim_ml",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "no_wa": {
+          "name": "no_wa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "instansi": {
+          "name": "instansi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tim_ml_nama_tim_unique": {
+          "name": "tim_ml_nama_tim_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nama_tim"
+          ]
+        },
+        "tim_ml_bukti_pembayaran_unique": {
+          "name": "tim_ml_bukti_pembayaran_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "bukti_pembayaran"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
