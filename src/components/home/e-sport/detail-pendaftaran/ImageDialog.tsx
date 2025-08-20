@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { ZoomableImage } from "./ZoomableImage";
@@ -16,9 +16,10 @@ export function ImageDialog({ buktiPembayaran, namaTim }: Props) {
                                 <div className="w-52 h-52 relative cursor-pointer group">
                                         <Image
                                                 src={buktiPembayaran}
+                                                priority
                                                 alt={`Bukti Pembayaran ${namaTim}`}
                                                 fill
-                                                className="rounded-md object-cover border transition-opacity opacity-0 duration-500"
+                                                className="rounded-md object-cover border-foreground transition-opacity opacity-0 duration-500"
                                                 onLoad={(e) =>
                                                         e.currentTarget.classList.remove(
                                                                 "opacity-0"
@@ -35,6 +36,7 @@ export function ImageDialog({ buktiPembayaran, namaTim }: Props) {
                                 <DialogTitle className="font-glofium-demo">
                                         Bukti Pembayaran
                                 </DialogTitle>
+                                <DialogDescription hidden></DialogDescription>
                                 <ZoomableImage
                                         src={buktiPembayaran}
                                         alt={`Bukti pembayaran ${namaTim}`}

@@ -43,7 +43,11 @@ export function FormRegistrasi() {
 
         async function onSubmit(data: RegistrasiFormSchema) {
                 console.log("Data yang akan di-submit:", data);
-                const res = { error: undefined };
+                if (!data.buktiPembayaran) {
+                        form.setError("buktiPembayaran", {message: "Bukti pembayaran belum diupload!."})
+                        return 
+                }
+                const res = await submitFormAction(data);
                 if (res.error) {
                         CustomToast({
                                 variant: "error",
@@ -57,6 +61,10 @@ export function FormRegistrasi() {
                         await new Promise(() =>
                                 setInterval(() => {
                                         form.reset();
+                                        sessionStorage.setItem(
+                                                "kodeTim",
+                                                res.insertedId!
+                                        );
                                         router.push(
                                                 "/e-sport/detail-pendaftaran"
                                         );

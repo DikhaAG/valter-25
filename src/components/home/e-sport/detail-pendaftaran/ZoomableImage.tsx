@@ -38,6 +38,7 @@ export const ZoomableImage = ({ src, alt }: Props) => {
                 >
                         <Image
                                 ref={imageRef}
+                                priority
                                 src={src}
                                 alt={alt}
                                 width={800}

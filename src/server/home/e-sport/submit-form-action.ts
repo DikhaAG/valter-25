@@ -30,13 +30,16 @@ export async function submitFormAction(
                 }
 
                 // Insert ke tabel timML
-                await db.insert(timML).values({
-                        id: uuidv4(),
-                        namaTim: namaTim.toLocaleLowerCase(),
-                        noWa,
-                        instansi,
-                        buktiPembayaran: buktiPembayaranUrl,
-                });
+                const insertTimML = await db
+                        .insert(timML)
+                        .values({
+                                id: uuidv4(),
+                                namaTim: namaTim.toLocaleLowerCase(),
+                                noWa,
+                                instansi,
+                                buktiPembayaran: buktiPembayaranUrl,
+                        })
+                        .returning({ insertedId: timML.id });
 
                 // Setelah berhasil, insert ke tabel pesertaML
                 const pesertaToInsert = tim.map((p) => ({
@@ -49,7 +52,7 @@ export async function submitFormAction(
 
                 await db.insert(pesertaML).values(pesertaToInsert);
 
-                return { success: true };
+                return { success: true, insertedId: insertTimML[0].insertedId };
         } catch (error) {
                 console.error("Gagal memproses form:", error);
                 return {

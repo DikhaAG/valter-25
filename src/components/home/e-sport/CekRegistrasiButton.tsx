@@ -17,7 +17,6 @@ import { emotError } from "@/emot-response";
 import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 import { validate } from "uuid";
 export function CekRegistrasiButton() {
         const [kode, setKode] = useState<string>();
