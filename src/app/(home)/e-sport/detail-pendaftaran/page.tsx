@@ -17,7 +17,7 @@ import { timMLQueryById } from "@/server/home/e-sport/tim-query";
 import { TimMLDisplaySchema } from "@/zod/tables/timML-display";
 import { PesertaMLDisplayType } from "@/zod/tables/pesertaML-display";
 import { Button } from "@/components/ui/nb/button";
-import { Clipboard } from "lucide-react";
+import { Clipboard, Loader } from "lucide-react";
 import {
         Tooltip,
         TooltipContent,
@@ -26,6 +26,7 @@ import {
 import { copyToClipboard } from "../../../../../utils/copyToClipboard";
 import { AlertModal } from "@/components/home/e-sport/AlertModal";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
+import { Badge } from "@/components/ui/nb/badge";
 
 export default function DetailPendaftaran() {
         const [team, setTeam] = useState<TimMLDisplaySchema | undefined>();
@@ -53,8 +54,17 @@ export default function DetailPendaftaran() {
                         {team && (
                                 <>
                                         <div className="p-6 flex flex-col gap-y-8 md:gap-y-6">
-                                                <h3 className="text-2xl font-bold mb-10">
+                                                <h3 className="text-2xl font-bold mb-10 flex flex-col">
                                                         {team.namaTim}
+                                                        <Badge
+                                                                variant={
+                                                                        "warning"
+                                                                }
+                                                        >
+                                                                <Loader/>
+                                                                Menunggu
+                                                                konfirmasi
+                                                        </Badge>
                                                 </h3>
                                                 <div className="flex justify-end items-end">
                                                         <Tooltip>
@@ -65,13 +75,17 @@ export default function DetailPendaftaran() {
                                                                                 variant={
                                                                                         "gosong"
                                                                                 }
-                                                                                onClick={() =>{
+                                                                                onClick={() => {
                                                                                         copyToClipboard(
                                                                                                 team.id
-                                                                                        )
-                                                                                        CustomToast({variant: "default", message: `Kode berhasil disalin. 😎`})
-                                                                                }
-                                                                                }
+                                                                                        );
+                                                                                        CustomToast(
+                                                                                                {
+                                                                                                        variant: "default",
+                                                                                                        message: `Kode berhasil disalin. 😎`,
+                                                                                                }
+                                                                                        );
+                                                                                }}
                                                                         >
                                                                                 salin
                                                                                 kode
