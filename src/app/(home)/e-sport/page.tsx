@@ -2,10 +2,10 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import { FormRegsitrasiSection } from "./_sections/form-registrasi-section";
-import { HeaderSection } from "../_section/header-section";
-import { TimelineSection } from "../_section/timeline-section";
-import { homeEsportHeaderData } from "@/data/home/e-sport/header-data";
-import { homeEsportTimelineData } from "@/data/home/e-sport/timeline-data";
+import { HeaderSection } from "../_sections/header-section";
+import { TimelineSection } from "../_sections/timeline-section";
+import { headerData } from "@/data/home/e-sport/header-data";
+import { timelineData } from "@/data/home/e-sport/timeline-data";
 
 export default function EsportPage() {
         const [isVisible, setIsVisible] = useState(false);
@@ -21,13 +21,13 @@ export default function EsportPage() {
                 <div className="min-h-screen flex flex-col gap-10">
                         {/* Header Section */}
                         <HeaderSection
-                                data={homeEsportHeaderData}
+                                data={headerData}
                                 isVisible={isVisible}
                         />
 
                         {/* Timeline Section */}
                         <TimelineSection
-                                data={homeEsportTimelineData}
+                                data={timelineData}
                                 isVisible={isVisible}
                         />
 

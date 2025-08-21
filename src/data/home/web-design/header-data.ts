@@ -1,6 +1,6 @@
 import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/header-data-type";
 
-export const homeWebDesignHeaderData: HomeAcaraHeaderDataType = {
+export const headerData: HomeAcaraHeaderDataType = {
         title: "Lomba Web Design (UI/UX)",
         desc: "",
         img: "uiux.png",

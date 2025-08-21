@@ -1,6 +1,6 @@
 import { HomeAcaraTimelineDataType } from "@/types/home/home/acara/timeline-data-type";
 
-export const homeEsportTimelineData: HomeAcaraTimelineDataType[] = [
+export const timelineData: HomeAcaraTimelineDataType[] = [
         {
                 nama: "Pendaftaran",
                 tanggal: " 1 September - 13 Oktober 2025",
