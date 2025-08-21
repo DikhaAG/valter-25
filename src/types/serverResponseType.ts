@@ -3,4 +3,5 @@ export interface ServerResponseType<T> {
         message?: string;
         data?: T;
         error? : unknown
+        statusCode?: number
 }
