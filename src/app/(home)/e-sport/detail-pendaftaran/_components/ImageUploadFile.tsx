@@ -1,9 +1,7 @@
+import { ACCEPTED_IMAGE_TYPES } from "@/utils/image-upload-requirements";
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";
-
-// --- KONSTANTA VALIDASI GAMBAR ---
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 // --- KOMPONEN INPUT GAMBAR ---
 export const ImageUploadField = ({

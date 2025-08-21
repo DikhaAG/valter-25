@@ -31,7 +31,7 @@ export const ZoomableImage = ({ src, alt }: Props) => {
 
         return (
                 <div
-                        className="relative overflow-hidden cursor-zoom-in"
+                        className="relative overflow-scroll cursor-zoom-in max-h-[500px] md:max-h-[500px]"
                         onMouseEnter={() => setIsZoomed(true)}
                         onMouseLeave={handleMouseLeave}
                         onMouseMove={handleMouseMove}

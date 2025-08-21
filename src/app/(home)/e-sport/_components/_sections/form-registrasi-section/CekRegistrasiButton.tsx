@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/nb/dialog";
 import { Input } from "@/components/ui/nb/input";
 import { Label } from "@/components/ui/nb/label";
-import { emotError } from "@/emot-response";
+import { emotError } from "@/data/emot-response";
 import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
