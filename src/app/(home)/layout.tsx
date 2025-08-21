@@ -1,8 +1,8 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { HomeNavSection } from "./_section/nav-section";
-import { HomeFooterSection } from "./_section/footer-section";
+import { HomeNavSection } from "./_sections/nav-section";
+import { HomeFooterSection } from "./_sections/footer-section";
 interface Props {
         children: React.ReactNode;
 }
