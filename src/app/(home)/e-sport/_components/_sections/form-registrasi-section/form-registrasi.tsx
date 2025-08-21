@@ -29,7 +29,8 @@ import {
         formPendaftaranTimEsportSchema,
         FormPendaftaranTimEsportSchemaType,
 } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
-import { Spinner } from "@/components/ui/nb/spinner";
+import { Spinner } from "@/components/ui/nb/Spinner";
+
 
 export function FormRegistrasi() {
         const [termsChecked, setTermsChecked] = useState<boolean>(false);
