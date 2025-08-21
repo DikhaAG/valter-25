@@ -9,7 +9,6 @@ import { pesertaML, timML } from "@/db/schema";
 import { v4 as uuidv4 } from "uuid";
 import { isUniqueConstraintViolationError } from "@/utils/uniqueConstraintError";
 import { DrizzleQueryError, eq } from "drizzle-orm";
-import { PostgresError } from "postgres";
 import { ServerResponseType } from "@/types/serverResponseType";
 
 export async function submitFormAction(

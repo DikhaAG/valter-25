@@ -69,7 +69,7 @@ export function ExcelForm() {
   });
 
   const watchedRows = useWatch({ control, name: 'rows' });
-  const watchedNominalBayar = useWatch({ control, name: 'nominalBayar' });
+  // const watchedNominalBayar = useWatch({ control, name: 'nominalBayar' });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

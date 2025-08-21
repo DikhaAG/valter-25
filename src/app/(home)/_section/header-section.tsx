@@ -1,10 +1,10 @@
-import { EsportHeaderDataType } from "@/types/home/home/acara/headerDataType";
+import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/headerDataType";
 import { wrapSymbols } from "@/utils/wrapSymbols";
 import Image from "next/image";
 
 interface Props {
         isVisible: boolean;
-        data: EsportHeaderDataType;
+        data: HomeAcaraHeaderDataType;
 }
 export function HeaderSection({ isVisible, data }: Props) {
         return (
