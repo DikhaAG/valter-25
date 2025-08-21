@@ -22,7 +22,6 @@ import { Label } from "@/components/ui/nb/label";
 import { cekKetersediaanNamaTim } from "@/server/home/e-sport/cek-ketersediaan-nama-tim";
 import { emotError } from "@/data/emot-response";
 import { cekKetersediaanPemain } from "@/server/home/e-sport/cek-ketersediaan-pemain";
-import { Spinner } from "@/components/ui/nb/spinner";
 import { cekKetersediaanNoWa } from "@/server/home/e-sport/cek-ketersediaan-no-wa";
 import { isNumeric } from "@/utils/is-numeric";
 import { wrapSymbols } from "@/utils/wrap-symbols";
@@ -30,6 +29,7 @@ import {
         formPendaftaranTimEsportSchema,
         FormPendaftaranTimEsportSchemaType,
 } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import { Spinner } from "@/components/ui/nb/spinner";
 
 export function FormRegistrasi() {
         const [termsChecked, setTermsChecked] = useState<boolean>(false);
