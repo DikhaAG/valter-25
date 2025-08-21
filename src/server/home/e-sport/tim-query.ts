@@ -2,7 +2,7 @@
 
 import { db } from "@/db/drizzle";
 import { timML } from "@/db/schema";
-import { emotError, emotSuccess } from "@/emot-response";
+import { emotError, emotSuccess } from "@/data/emot-response";
 import { ServerResponseType } from "@/types/serverResponseType";
 import { TimMLDisplaySchema } from "@/zod/tables/timML-display";
 import { eq } from "drizzle-orm";

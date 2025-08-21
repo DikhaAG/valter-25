@@ -15,18 +15,7 @@ import { Button } from "@/components/ui/nb/button";
 import { toast } from "sonner";
 import { ImageUploadField } from "./ImageUploadFile";
 import { TimMLDisplaySchema } from "@/zod/tables/timML-display";
-
-// --- KONSTANTA VALIDASI GAMBAR ---
-const MAX_FILE_SIZE_KB = 500;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
-
-function isValidImageType(file: File) {
-        return ACCEPTED_IMAGE_TYPES.includes(file.type);
-}
-
-function isFileSizeValid(file: File) {
-        return file.size <= MAX_FILE_SIZE_KB * 1024;
-}
+import { isValidImageType, isFileSizeValid } from "@/utils/image-upload-requirements";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {

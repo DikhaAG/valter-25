@@ -7,13 +7,19 @@ import { uploadToCloudinary } from "./upload-to-cloudinary";
 import { db } from "@/db/drizzle";
 import { pesertaML, timML } from "@/db/schema";
 import { v4 as uuidv4 } from "uuid";
+import { isUniqueConstraintViolationError } from "@/utils/uniqueConstraintError";
+import { DrizzleQueryError, eq } from "drizzle-orm";
+import { ServerResponseType } from "@/types/serverResponseType";
 
 export async function submitFormAction(
         registrasiFormData: RegistrasiFormSchema
-) {
+): Promise<ServerResponseType<string>> {
         const result = registrasiFormSchema.safeParse(registrasiFormData);
         if (!result.success) {
-                return { error: result.error!.issues.join(", ") };
+                return {
+                        success: false,
+                        error: result.error!.issues.join(", "),
+                };
         }
 
         const { namaTim, noWa, instansi, buktiPembayaran, tim } = result.data;
@@ -52,11 +58,47 @@ export async function submitFormAction(
 
                 await db.insert(pesertaML).values(pesertaToInsert);
 
-                return { success: true, insertedId: insertTimML[0].insertedId };
-        } catch (error) {
-                console.error("Gagal memproses form:", error);
                 return {
-                        error: "Gagal memproses permintaan. Periksa log server.",
+                        success: true,
+                        data: insertTimML[0].insertedId,
+                };
+        } catch (error) {
+                await db.delete(timML).where(eq(timML.namaTim, namaTim));
+                if (isUniqueConstraintViolationError(error)) {
+                        console.log("errroorooror=================");
+                        console.log(
+                                Object.keys((error as DrizzleQueryError).cause!)
+                        );
+                        console.log(typeof (error as DrizzleQueryError));
+                        console.log(
+                                (error as DrizzleQueryError).cause?.message
+                        );
+
+                        if (
+                                (
+                                        error as DrizzleQueryError
+                                ).cause?.message.includes("id_ml")
+                        ) {
+                                return {
+                                        success: false,
+                                        message: "ID telah terdaftar.",
+                                };
+                        } else if (
+                                (
+                                        error as DrizzleQueryError
+                                ).cause?.message.includes("npm")
+                        ) {
+                                return {
+                                        success: false,
+                                        message: "NPM telah terdaftar.",
+                                };
+                        }
+                }
+                return {
+                        success: false,
+                        statusCode: 500,
+                        error: error,
+                        message: "Gagal memproses permintaan. Periksa log server.",
                 };
         }
 }
