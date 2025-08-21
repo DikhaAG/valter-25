@@ -11,7 +11,7 @@ export function CustomToast({ variant = "default", message }: Props) {
                         <div
                                 className={`${
                                         variant === "default" && "bg-background"
-                                } ${variant === "success" && "bg-green-200"} ${
+                                } ${variant === "success" && "bg-green-100"} ${
                                         variant === "error" && "bg-red-300"
                                 } ${variant === "warning" && "bg-yellow-100"} 
                         flex flex-row items-center gap-4 border-5 border-foreground rounded-xl shadow-[7px_7px_0px_#00000040] py-2 px-4 md:px-6`}

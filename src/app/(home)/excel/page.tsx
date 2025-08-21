@@ -1,4 +1,4 @@
-import { ExcelForm } from '@/components/ExcelForm';
+import { ExcelForm } from '@/components/excel-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function Excel() {

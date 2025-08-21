@@ -1,5 +1,5 @@
-import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/headerDataType";
-import { wrapSymbols } from "@/utils/wrapSymbols";
+import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/header-data-type";
+import { wrapSymbols } from "@/utils/wrap-symbols";
 import Image from "next/image";
 
 interface Props {
@@ -30,7 +30,10 @@ export function HeaderSection({ isVisible, data }: Props) {
                                 </div>
                                 <div className="flex flex-col gap-5">
                                         <h1 className="text-2xl text-start md:text-3xl font-bold text-secondary mb-4">
-                                                {data.title}
+                                                {wrapSymbols(
+                                                        data.title,
+                                                        "text-4xl"
+                                                )}
                                         </h1>
                                         <p className="text-sm md:text-base font-poppins leading-relaxed text-justify mb-6">
                                                 {data.desc}

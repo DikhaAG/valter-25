@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/nb/button";
-import { wrapSymbols } from "@/utils/wrapSymbols";
+import { wrapSymbols } from "@/utils/wrap-symbols";
 /**
  * v0 by Vercel.
  * @see https://v0.app/t/FhHJTdJDd5T
@@ -15,7 +15,17 @@ export default function Component() {
                         <div className="w-full space-y-6 text-center">
                                 <div className="space-y-3">
                                         <h1 className="font-glofium-demo text-3xl font-bold tracking-tighter sm:text-5xl animate-bounce">
-                                                Oopss{wrapSymbols(". . .", "text-3xl")} 404 {wrapSymbols("!", "text-5xl md:text-8xl")} 😭
+                                                Oopss
+                                                {wrapSymbols(
+                                                        ". . .",
+                                                        "text-3xl"
+                                                )}{" "}
+                                                404{" "}
+                                                {wrapSymbols(
+                                                        "!",
+                                                        "text-5xl md:text-8xl"
+                                                )}{" "}
+                                                😭
                                         </h1>
                                         <p className="text-gray-500">
                                                 Sepertinya kamu mengunjungi

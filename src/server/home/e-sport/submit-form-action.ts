@@ -1,20 +1,36 @@
+/**
+ * Server Action untuk memproses formulir pendaftaran tim esport.
+ *
+ * Fungsi ini melakukan serangkaian operasi kritis:
+ * 1.  **Validasi Data**: Menggunakan skema Zod untuk memvalidasi data formulir yang diterima dari klien.
+ * 2.  **Unggah File**: Mengunggah file `buktiPembayaran` ke Cloudinary.
+ * 3.  **Penyimpanan ke Database**: Memasukkan data tim ke `timEsportTable` dan data peserta ke `pesertaEsportTable` dalam satu alur.
+ * 4.  **Penanganan Error**: Menggunakan blok `try...catch` untuk menangani potensi kesalahan database, seperti pelanggaran `unique constraint`. Jika terjadi kesalahan, fungsi ini akan mencoba melakukan *rollback* dengan menghapus data tim yang sudah dimasukkan.
+ *
+ * @param registrasiFormData Data formulir yang diterima dari klien, dengan tipe yang telah divalidasi oleh Zod.
+ * @returns Sebuah Promise yang mengembalikan `ServerResponseType`.
+ * - Jika berhasil: `{ success: true, data: string }` di mana `data` adalah ID unik tim yang baru dibuat.
+ * - Jika gagal: `{ success: false, message?: string, error?: unknown }` dengan pesan error yang deskriptif.
+ */
 "use server";
-import {
-        registrasiFormSchema,
-        RegistrasiFormSchema,
-} from "@/zod/home/e-sport/registrasi-form-schema";
+
 import { uploadToCloudinary } from "./upload-to-cloudinary";
 import { db } from "@/db/drizzle";
-import { pesertaML, timML } from "@/db/schema";
 import { v4 as uuidv4 } from "uuid";
-import { isUniqueConstraintViolationError } from "@/utils/uniqueConstraintError";
+import { isUniqueConstraintViolationError } from "@/utils/unique-constraint-error";
 import { DrizzleQueryError, eq } from "drizzle-orm";
-import { ServerResponseType } from "@/types/serverResponseType";
+import { ServerResponseType } from "@/types/server-response-type";
+import { pesertaEsportTable, timEsportTable } from "@/db/schemas/esport-schema";
+import {
+        formPendaftaranTimEsportSchema,
+        FormPendaftaranTimEsportSchemaType,
+} from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 
 export async function submitFormAction(
-        registrasiFormData: RegistrasiFormSchema
+        registrasiFormData: FormPendaftaranTimEsportSchemaType
 ): Promise<ServerResponseType<string>> {
-        const result = registrasiFormSchema.safeParse(registrasiFormData);
+        const result =
+                formPendaftaranTimEsportSchema.safeParse(registrasiFormData);
         if (!result.success) {
                 return {
                         success: false,
@@ -22,7 +38,8 @@ export async function submitFormAction(
                 };
         }
 
-        const { namaTim, noWa, instansi, buktiPembayaran, tim } = result.data;
+        const { namaTim, noWa, instansi, buktiPembayaran, peserta } =
+                result.data;
         let buktiPembayaranUrl: string | null = null;
 
         try {
@@ -37,18 +54,18 @@ export async function submitFormAction(
 
                 // Insert ke tabel timML
                 const insertTimML = await db
-                        .insert(timML)
+                        .insert(timEsportTable)
                         .values({
                                 id: uuidv4(),
-                                namaTim: namaTim.toLocaleLowerCase(),
+                                namaTim: namaTim,
                                 noWa,
                                 instansi,
                                 buktiPembayaran: buktiPembayaranUrl,
                         })
-                        .returning({ insertedId: timML.id });
+                        .returning({ insertedId: timEsportTable.id });
 
                 // Setelah berhasil, insert ke tabel pesertaML
-                const pesertaToInsert = tim.map((p) => ({
+                const pesertaToInsert = peserta.map((p) => ({
                         id: uuidv4(),
                         namaTim: namaTim,
                         idML: p.idML,
@@ -56,14 +73,17 @@ export async function submitFormAction(
                         npm: p.npm,
                 }));
 
-                await db.insert(pesertaML).values(pesertaToInsert);
+                await db.insert(pesertaEsportTable).values(pesertaToInsert);
 
                 return {
                         success: true,
                         data: insertTimML[0].insertedId,
                 };
         } catch (error) {
-                await db.delete(timML).where(eq(timML.namaTim, namaTim));
+                console.log(error)
+                await db
+                        .delete(timEsportTable)
+                        .where(eq(timEsportTable.namaTim, namaTim));
                 if (isUniqueConstraintViolationError(error)) {
                         console.log("errroorooror=================");
                         console.log(

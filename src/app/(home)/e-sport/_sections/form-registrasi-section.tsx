@@ -1,5 +1,18 @@
-import { CekRegistrasiButton } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/CekRegistrasiButton";
-import { FormRegistrasi } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/FormRegistrasi";
+/**
+ * Komponen klien React untuk menampilkan bagian formulir pendaftaran esport.
+ *
+ * Komponen ini memiliki fungsionalitas utama:
+ * 1.  Menyertakan `FormRegistrasi` untuk input data pendaftaran.
+ * 2.  Menyertakan `CekRegistrasiButton` untuk validasi status registrasi.
+ * 3.  Menggunakan properti `isVisible` untuk mengontrol animasi transisi masuk
+ * (fade-in dan slide-up) saat komponen dimuat.
+ *
+ * @param {object} props
+ * @param {boolean} props.isVisible - Properti untuk mengontrol apakah
+ * komponen ini terlihat dan mengaktifkan animasi.
+ */
+import { CekRegistrasiButton } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/cek-registrasi-button";
+import { FormRegistrasi } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/form-registrasi";
 
 interface Props {
         isVisible: boolean;

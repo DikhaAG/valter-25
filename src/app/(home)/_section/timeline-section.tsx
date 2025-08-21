@@ -1,5 +1,5 @@
-import { HomeAcaraTimelineDataType} from "@/types/home/home/acara/timelineDataType";
-import { wrapSymbols } from "@/utils/wrapSymbols";
+import { HomeAcaraTimelineDataType } from "@/types/home/home/acara/timeline-data-type";
+import { wrapSymbols } from "@/utils/wrap-symbols";
 
 interface Props {
         isVisible: boolean;

@@ -1,8 +1,8 @@
 "use client";
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
-import { ImageDialog } from "./_components/ImageDialog";
-import { UpdateImageDialog } from "./_components/UpdateImageDialog";
+import { ImageDialog } from "./_components/image-dialog";
+import { UpdateImageDialog } from "./_components/update-image-dialog";
 import {
         Table,
         TableBody,
@@ -13,9 +13,6 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
-import { timMLQueryById } from "@/server/home/e-sport/tim-query";
-import { TimMLDisplaySchema } from "@/zod/tables/timML-display";
-import { PesertaMLDisplayType } from "@/zod/tables/pesertaML-display";
 import { Button } from "@/components/ui/nb/button";
 import { Clipboard, Loader } from "lucide-react";
 import {
@@ -23,14 +20,17 @@ import {
         TooltipContent,
         TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { copyToClipboard } from "@/utils/copyToClipboard";
+import { copyToClipboard } from "@/utils/copy-to-clipboard";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { Badge } from "@/components/ui/nb/badge";
-import { DetailPendaftaranSkeleton } from "@/app/(home)/e-sport/detail-pendaftaran/_components/Skeleton";
+import { DetailPendaftaranSkeleton } from "@/app/(home)/e-sport/detail-pendaftaran/_components/skeleton";
 import { useRouter } from "next/navigation";
+import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-esport-display-schema";
+import { getTimEsportById } from "@/server/queries/get-tim-esport-by-id";
+import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
 
 export default function DetailPendaftaran() {
-        const [team, setTeam] = useState<TimMLDisplaySchema | undefined>();
+        const [team, setTeam] = useState<TimEsportDisplaySchemaType | undefined>();
         const router = useRouter();
 
         useEffect(() => {
@@ -42,7 +42,7 @@ export default function DetailPendaftaran() {
                         if (!res.success) {
                                 return;
                         }
-                        timMLQueryById(kodeStored).then((res) => {
+                        getTimEsportById(kodeStored).then((res) => {
                                 if (!res.success) {
                                         return;
                                 }
@@ -187,9 +187,9 @@ export default function DetailPendaftaran() {
                                                                                         </TableRow>
                                                                                 </TableHeader>
                                                                                 <TableBody>
-                                                                                        {team.pesertaMLs
+                                                                                        {team.peserta
                                                                                                 ? (
-                                                                                                          team.pesertaMLs as Array<PesertaMLDisplayType>
+                                                                                                          team.peserta as Array<PesertaEsportTableSchemaType>
                                                                                                   ).map(
                                                                                                           (
                                                                                                                   p
