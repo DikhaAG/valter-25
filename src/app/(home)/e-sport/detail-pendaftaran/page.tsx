@@ -31,7 +31,7 @@ import { getTimEsportById } from "@/server/queries/get-tim-esport-by-id";
 import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
 
-export default function DetailPendaftaran() {
+export default function DetailPendaftaranPage() {
         const [team, setTeam] = useState<TimEsportDisplaySchemaType | undefined>();
         const router = useRouter();
 

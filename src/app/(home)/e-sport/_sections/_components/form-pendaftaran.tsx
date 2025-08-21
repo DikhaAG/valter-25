@@ -11,7 +11,7 @@ import {
         FormMessage,
 } from "@/components/ui/form";
 import { Plus, Trash2 } from "lucide-react";
-import { UploadBuktiPembayaranField } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/upload-bukti-pembayaran-field";
+import { UploadBuktiPembayaranField } from "@/app/(home)/e-sport/_sections/_components/upload-bukti-pembayaran-field";
 import { v4 as uuidv4 } from "uuid";
 import { submitFormAction } from "@/server/home/e-sport/submit-form-action";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
@@ -31,8 +31,7 @@ import {
 } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 import { Spinner } from "@/components/ui/nb/Spinner";
 
-
-export function FormRegistrasi() {
+export function FormPendaftaran() {
         const [termsChecked, setTermsChecked] = useState<boolean>(false);
         const [loading, setLoading] = useState(false);
         const router = useRouter();
@@ -42,7 +41,9 @@ export function FormRegistrasi() {
                         namaTim: "",
                         instansi: "",
                         noWa: "",
-                        peserta: [{ id: uuidv4(), idML: "", nama: "", npm: "" }], // Baris pertama secara default
+                        peserta: [
+                                { id: uuidv4(), idML: "", nama: "", npm: "" },
+                        ], // Baris pertama secara default
                 },
                 mode: "onBlur",
         });
@@ -381,8 +382,9 @@ export function FormRegistrasi() {
                                                         })
                                                 }
                                                 disabled={
-                                                        form.getValues("peserta")
-                                                                .length === 5
+                                                        form.getValues(
+                                                                "peserta"
+                                                        ).length === 5
                                                 }
                                                 variant="gosong"
                                                 className="text-center items-center"

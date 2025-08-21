@@ -11,13 +11,14 @@
  * @param {boolean} props.isVisible - Properti untuk mengontrol apakah
  * komponen ini terlihat dan mengaktifkan animasi.
  */
-import { CekRegistrasiButton } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/cek-registrasi-button";
-import { FormRegistrasi } from "@/app/(home)/e-sport/_components/_sections/form-registrasi-section/form-registrasi";
+
+import { CekPendaftaranButton } from "./_components/cek-pendaftaran-button";
+import { FormPendaftaran } from "./_components/form-pendaftaran";
 
 interface Props {
         isVisible: boolean;
 }
-export function EsportFormRegsitrasiSection({ isVisible }: Props) {
+export function FormRegsitrasiSection({ isVisible }: Props) {
         return (
                 <section
                         className={`py-8 px-4 transition-all duration-1000 delay-500 ${
@@ -30,9 +31,9 @@ export function EsportFormRegsitrasiSection({ isVisible }: Props) {
                                 <h2 className="text-xl font-bold text-secondary text-center mb-6">
                                         Pendaftaran
                                 </h2>
-                                <FormRegistrasi />
+                                <FormPendaftaran />
                                 <div className="my-3"></div>
-                                <CekRegistrasiButton />
+                                <CekPendaftaranButton />
                         </div>
                 </section>
         );

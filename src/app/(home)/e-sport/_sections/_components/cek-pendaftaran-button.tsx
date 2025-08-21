@@ -31,7 +31,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validate } from "uuid";
 
-export function CekRegistrasiButton() {
+export function CekPendaftaranButton() {
         /**
          * State untuk menyimpan kode unik yang dimasukkan oleh pengguna.
          */
