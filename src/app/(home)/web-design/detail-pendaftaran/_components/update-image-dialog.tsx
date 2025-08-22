@@ -7,7 +7,7 @@
  * di sisi klien sebelum pengunggahan.
  *
  * @param {object} props
- * @param {TimEsportDisplaySchemaType} props.team - Objek data tim yang akan diperbarui bukti pembayarannya.
+ * @param {TimDisplaySchemaType} props.team - Objek data tim yang akan diperbarui bukti pembayarannya.
  */
 "use client";
 import { DialogHeader } from "@/components/ui/dialog";
@@ -29,11 +29,11 @@ import {
         isValidImageType,
         isFileSizeValid,
 } from "@/utils/image-upload-requirements";
-import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {
-        team: TimEsportDisplaySchemaType;
+        team: TimDisplaySchemaType;
 }
 export const UpdateImageDialog = ({ team }: Props) => {
         /**

@@ -7,7 +7,7 @@
  * di sisi klien sebelum pengunggahan.
  *
  * @param {object} props
- * @param {TimEsportDisplaySchemaType} props.team - Objek data tim yang akan diperbarui bukti pembayarannya.
+ * @param {TimDisplaySchemaType} props.team - Objek data tim yang akan diperbarui bukti pembayarannya.
  */
 "use client";
 import { DialogHeader } from "@/components/ui/dialog";

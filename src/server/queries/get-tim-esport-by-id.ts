@@ -6,7 +6,7 @@
  *
  * @param id ID unik tim yang akan dicari.
  * @returns Sebuah Promise yang mengembalikan `ServerResponseType`.
- * - Jika tim ditemukan: `{ success: true, message: string, data: TimEsportDisplaySchemaType }`
+ * - Jika tim ditemukan: `{ success: true, message: string, data: TimDisplaySchemaType }`
  * dengan data tim dan peserta.
  * - Jika tim tidak ditemukan: `{ success: false, message: "Data tim tidak ditemukan" }`.
  * - Jika terjadi kesalahan pada server: `{ success: false, message: "Terjadi kesalahan...", error: unknown }`.
