@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Instagram, Music } from "lucide-react";
+import { ArrowBigRight, ChevronDown, Instagram, Music } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { wrapSymbols } from "@/utils/wrap-symbols";
+import { Button } from "@/components/ui/nb/button";
 
 export default function HomePage() {
    const [timeLeft, setTimeLeft] = useState({
@@ -235,7 +237,7 @@ export default function HomePage() {
          <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                isScrolled
-                  ? "bg-primary/80 backdrop-blur-[3px]"
+                  ? "bg-primary/90 backdrop-blur-[3px]"
                   : "bg-transparent"
             }`}
          >
@@ -251,7 +253,7 @@ export default function HomePage() {
                      />
                   </div>
 
-                  <div className="hidden md:flex items-center space-x-8">
+                  <div className="flex items-center space-x-8 text-xs md:text-base">
                      <Link
                         href="/"
                         className="text-white hover:text-secondary font-medium"
@@ -356,7 +358,7 @@ export default function HomePage() {
             }`}
          >
             <div
-               className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-50 w-[287px] sm:w-[550px] h-[252px] sm:h-[802px] transition-all duration-1000 ease-out ${
+               className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-50 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${
                   showTopHand
                      ? "opacity-100 transform translate-y-0"
                      : "opacity-0 transform -translate-y-20"
@@ -375,7 +377,7 @@ export default function HomePage() {
             </div>
 
             <div
-               className={`absolute -bottom-10 sm:-bottom-0 -left-50 sm:-left-70 z-100 w-[287px] sm:w-[487px] h-[252px] sm:h-[552px] transition-all duration-1000 ease-out ${
+               className={`absolute -bottom-10 sm:-bottom-40 -left-50 sm:-left-70 z-100 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${
                   showBottomHand
                      ? "opacity-100 transform translate-y-0"
                      : "opacity-0 transform translate-y-20"
@@ -396,42 +398,71 @@ export default function HomePage() {
             </div>
 
             <div
-               className={`max-w-4xl mx-auto text-center sm:pt-20 transition-all duration-1000 delay-300 ease-out ${
+               className={`max-w-sm sm:max-w-md md:max-w-xl lg:max-w-4xl mx-auto text-center lg:pt-20 transition-all duration-1000 delay-300 ease-out ${
                   showAboutSection
                      ? "opacity-100 transform translate-y-0"
                      : "opacity-0 transform translate-y-10"
                }`}
             >
-               <h2 className="text-[15px] sm:text-[28px] font-bold mb-5 font-glofium text-start">
+               <h2 className="text-[15px] lg:text-[28px] font-bold mb-5 font-glofium text-start">
                   <span className="text-foreground">Apa itu </span>
                   <span className="text-secondary">Valter</span>
-                  <span className="sm:text-[38px] text-secondary font-funky-vibes">
+                  <span className="lg:text-[38px] text-secondary font-funky-vibes">
                      ?
                   </span>
                </h2>
 
-               <p className="text-foreground text-[10px] sm:text-[19.5px] leading-relaxed mb-10 sm:mb-16 font-poppins max-w-6xl">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+               <p className="text-foreground text-[10px] lg:text-[19.5px] leading-relaxed mb-10 lg:mb-16 font-poppins max-w-6xl">
+                  <strong className="text-secondary font-glofium-demo font-[900]">
+                     VALTER
+                  </strong>{" "}
+                  atau{" "}
+                  <strong className="font-[900]">
+                     Festival Multimedia & Komputer{" "}
+                  </strong>
+                  merupakan salah satu event tahunan{" "}
+                  <strong className="font-[900]">
+                     HMJ TEKNIK KOMPUTER POLITEKNIK NEGERI SRIWIJAYA
+                  </strong>
+                  . Tahun ini,{" "}
+                  <strong className="text-secondary font-glofium-demo font-[900]">
+                     VALTER
+                  </strong>{" "}
+                  hadir lebih dekat dengan dunia content creator dengan
+                  mengusung tema{" "}
+                  <strong className="text-[8px] lg:text-sm font-glofium-demo font-[900]">
+                     {wrapSymbols(
+                        "Creative Synergy : “ Kreativitas Berdaya bersama Teknologi “ ",
+                        "text-[10px] lg:text-2xl"
+                     )}
+                  </strong>{" "}
+                  . Disini rangkaian acara seru siap menemani kamu! Mulai dari
+                  pelatihan, 3 kompetisi digital, hingga seminar inspiratif
+                  sebagai acara puncak! Saatnya wujudkan ide kreatifmu,
+                  kolaborasikan dengan teknologi, dan jadilah bagian dari energi
+                  baru di dunia digital! <br className="block lg:hidden" />
+                  <strong className="text-secondary font-glofium-demo font-[900]">
+                     VALTER 2025
+                  </strong>{" "}
+                  <strong className="font-[200] font-glofium-demo">
+                     {wrapSymbols(
+                        `- Imajinasi Ciptakan Inovasi !`,
+                        "text-lg lg:text-4xl"
+                     )}
+                  </strong>
                </p>
 
-               <div className="bg-primary rounded-3xl sm:p-3 relative shadow-2xl sm:drop-shadow-[0px_12px_0px_#00000040]">
-                  <div className="inline-block bg-secondary text-white px-2 pt-1 sm:pt-1.5 pb-0.5 sm:pb-1 rounded sm:rounded-md text-[5px] sm:text-[10px] font-medium mb-2 sm:mb-6 drop-shadow-[0px_7px_0px_#00000040] sm:drop-shadow-[0px_10px_0px_#00000040]">
+               <div className="max-w-xl lg:max-w-full mx-auto bg-primary rounded-3xl lg:p-3 relative drop-shadow-[0px_12px_0px_#00000040]">
+                  <div className="inline-block bg-secondary text-white px-2 pt-1 lg:pt-1.5 pb-0.5 lg:pb-1 rounded lg:rounded-md text-[5px] lg:text-[10px] font-medium mb-2 lg:mb-6 drop-shadow-[0px_7px_0px_#00000040] sm:drop-shadow-[0px_10px_0px_#00000040]">
                      Tema Valter 2025
                   </div>
-                  <h3 className="text-white text-[13px] sm:text-[20px] font-bold font-glofium leading-tight pb-4 sm:pb-0 sm:mb-6">
+                  <h3 className="text-white text-[13px] lg:text-[20px] font-bold font-glofium leading-tight pb-4 lg:pb-0 lg:mb-6">
                      Creative synergy
-                     <span className="font-funky-vibes sm:text-[30px]">
+                     <span className="font-funky-vibes lg:text-[30px]">
                         : &quot;
                      </span>
                      Kreativitas Berdaya bersama Teknologi{" "}
-                     <span className="font-funky-vibes sm:text-[30px]">
+                     <span className="font-funky-vibes lg:text-[30px]">
                         &quot;
                      </span>
                   </h3>
@@ -455,8 +486,8 @@ export default function HomePage() {
                }`}
             >
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-                  <div className="flex sm:hidden justify-center lg:justify-end">
-                     <div className="w-full">
+                  <div className="flex lg:hidden justify-center lg:justify-end">
+                     <div className="w-full flex justify-center">
                         <Image
                            width={2000}
                            height={2000}
@@ -477,26 +508,28 @@ export default function HomePage() {
                      </h2>
 
                      <p className="text-foreground text-[12px] sm:text-[15px] leading-relaxed font-poppins">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        Seminar VALTER 2025 hadir sebagai acara puncak dari
+                        Festival Multimedia dan Komputer (VALTER)! Dengan
+                        mengusung tema “CoCreate or Compete: Kolaborasi atau
+                        Kompetisi bersama AI”, seminar ini menjadi momen spesial
+                        yang menghadirkan GUEST STAR inspiratif untuk berbagi
+                        pengalaman dan insight terbaru. Seminar ini menggali
+                        bagaimana kreativitas, teknologi, dan AI dapat berjalan
+                        berdampingan, sekaligus menjadi tantangan di era digital
+                        dan content creation.
                      </p>
 
-                     <Link
-                        href="/seminar"
-                        className="w-full bg-secondary hover:bg-secondary/90 text-white px-3 pt-2 pb-1 mt-2 rounded-md font-medium font-glofium transition-colors duration-300 text-[10px] sm:text-[12px] hover:cursor-pointer"
-                     >
-                        Lihat Selengkapnya
+                     <div className="my-4"></div>
+
+                     <Link href="/seminar">
+                        <Button variant={"secondary"}>
+                           Lihat Selengkapnya
+                           <ArrowBigRight fill="#ffff"/>
+                        </Button>
                      </Link>
                   </div>
 
-                  <div className="hidden md:flex justify-center lg:justify-end">
+                  <div className="hidden lg:flex justify-center lg:justify-end">
                      <div className="w-[400px]">
                         <Image
                            width={2000}
@@ -816,7 +849,7 @@ export default function HomePage() {
             }`}
          >
             <div
-               className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-100 w-[287px] sm:w-[550px] h-[252px] sm:h-[802px] transition-all duration-1000 ease-out ${
+               className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-100 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${
                   showTopHand
                      ? "opacity-100 transform translate-y-0"
                      : "opacity-0 transform -translate-y-20"
@@ -835,7 +868,7 @@ export default function HomePage() {
             </div>
 
             <div
-               className={`absolute -bottom-20 sm:-bottom-30 -left-50 sm:-left-70 z-50 w-[287px] sm:w-[487px] h-[252px] sm:h-[552px] transition-all duration-1000 ease-out ${
+               className={`absolute -bottom-20 sm:-bottom-30 -left-50 sm:-left-70 z-50 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${
                   showBottomHand
                      ? "opacity-100 transform translate-y-0"
                      : "opacity-0 transform translate-y-20"

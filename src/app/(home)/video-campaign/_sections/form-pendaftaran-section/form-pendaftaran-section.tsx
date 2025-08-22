@@ -21,6 +21,7 @@ interface Props {
 export function FormPendaftaranSection({ isVisible }: Props) {
    return (
       <section
+         id="pendaftaran-section"
          className={`py-8 px-4 transition-all duration-1000 delay-500 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
          }`}
