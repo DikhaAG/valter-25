@@ -1,38 +1,32 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { FormRegsitrasiSection } from "./_sections/form-registrasi-section";
+import { FormPendaftaranSection } from "./_sections/form-pendaftaran-section/form-pendaftaran-section";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
 import { headerData } from "@/data/home/web-design/header-data";
 import { timelineData } from "@/data/home/web-design/timeline-data";
 
 export default function WebDesignPage() {
-        const [isVisible, setIsVisible] = useState(false);
-        if (typeof window !== "undefined") {
-                sessionStorage.clear();
-        }
+   const [isVisible, setIsVisible] = useState(false);
+   if (typeof window !== "undefined") {
+      sessionStorage.clear();
+   }
 
-        useEffect(() => {
-                setIsVisible(true);
-        }, []);
+   useEffect(() => {
+      setIsVisible(true);
+   }, []);
 
-        return (
-                <div className="min-h-screen flex flex-col gap-10">
-                        {/* Header Section */}
-                        <HeaderSection
-                                data={headerData}
-                                isVisible={isVisible}
-                        />
+   return (
+      <div className="min-h-screen flex flex-col gap-10">
+         {/* Header Section */}
+         <HeaderSection data={headerData} isVisible={isVisible} />
 
-                        {/* Timeline Section */}
-                        <TimelineSection
-                                data={timelineData}
-                                isVisible={isVisible}
-                        />
+         {/* Timeline Section */}
+         <TimelineSection data={timelineData} isVisible={isVisible} />
 
-                        {/* Registration Form Section */}
-                        <FormRegsitrasiSection isVisible={isVisible} />
-                </div>
-        );
+         {/* Registration Form Section */}
+         <FormPendaftaranSection isVisible={isVisible} />
+      </div>
+   );
 }

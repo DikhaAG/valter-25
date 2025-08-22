@@ -10,12 +10,12 @@ import { z } from "zod";
  * - `npm`: Nomor Pokok Mahasiswa, harus berupa 12 digit angka.
  */
 export const formPendaftaranPesertaSchema = z.object({
-        id: z.uuid().optional(),
-        nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
-        npm: z
-                .string()
-                .min(12, { message: "NPM harus berjumlah 12 angka." })
-                .max(12, { message: "NPM harus berjumlah 12 angka." }),
+   id: z.uuid().optional(),
+   nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
+   npm: z
+      .string()
+      .min(12, { message: "NPM harus berjumlah 12 angka." })
+      .max(12, { message: "NPM harus berjumlah 12 angka." }),
 });
 
 /**
@@ -32,45 +32,43 @@ export const formPendaftaranPesertaSchema = z.object({
  * - `peserta`: Sebuah array yang harus berisi skema validasi `formPendaftaranPesertaEsportSchema` untuk setiap pemain.
  */
 export const formPendaftaranTimSchema = z
-        .object({
-                namaTim: z
-                        .string()
-                        .min(1, { message: "Nama tim tidak boleh kosong" }),
-                noWa: z.string().min(11, {
-                        message: "Nomor Whatsapp minimal 11 angka.",
-                }),
-                instansi: z.string().min(1, {
-                        message: "Asal instansi tidak boleh kosong.",
-                }),
-                buktiPembayaran: z.any(),
-                peserta: z.array(formPendaftaranPesertaSchema),
-        })
-        .refine(
-                (data) => {
-                        // Mengambil semua nilai NPM dari array
-                        const npms = data.peserta
-                                .map((peserta) => peserta.npm)
-                                .filter(Boolean);
-                        // Membuat Set untuk menghilangkan duplikat
-                        const uniqueNpms = new Set(npms);
+   .object({
+      namaTim: z.string().min(1, { message: "Nama tim tidak boleh kosong" }),
+      noWa: z.string().min(11, {
+         message: "Nomor Whatsapp minimal 11 angka.",
+      }),
+      instansi: z.string().min(1, {
+         message: "Asal instansi tidak boleh kosong.",
+      }),
+      buktiPembayaran: z.any(),
+      peserta: z.array(formPendaftaranPesertaSchema),
+   })
+   .refine(
+      (data) => {
+         // Mengambil semua nilai NPM dari array
+         const npms = data.peserta
+            .map((peserta) => peserta.npm)
+            .filter(Boolean);
+         // Membuat Set untuk menghilangkan duplikat
+         const uniqueNpms = new Set(npms);
 
-                        // Memeriksa apakah jumlah item di Set sama dengan jumlah item di array asli
-                        return npms.length === uniqueNpms.size;
-                },
-                {
-                        // Pesan error jika validasi gagal
-                        error: `Tidak boleh ada NPM yang sama!. ${emotError}`,
-                        // Path di mana error akan ditampilkan
-                        path: [`npmatauidsama`],
-                }
-        );
+         // Memeriksa apakah jumlah item di Set sama dengan jumlah item di array asli
+         return npms.length === uniqueNpms.size;
+      },
+      {
+         // Pesan error jika validasi gagal
+         error: `Tidak boleh ada NPM yang sama!. ${emotError}`,
+         // Path di mana error akan ditampilkan
+         path: [`npmatauidsama`],
+      }
+   );
 
 /**
  * Tipe inferensi dari skema validasi `formPendaftaranTimSchema`.
  * Digunakan untuk memastikan keamanan tipe data tim yang sudah tervalidasi.
  */
 export type FormPendaftaranTimSchemaType = z.infer<
-        typeof formPendaftaranTimSchema
+   typeof formPendaftaranTimSchema
 >;
 
 /**
@@ -78,5 +76,5 @@ export type FormPendaftaranTimSchemaType = z.infer<
  * Digunakan untuk memastikan keamanan tipe data setiap peserta yang sudah tervalidasi.
  */
 export type FormPendaftaranPesertaSchemaType = z.infer<
-        typeof formPendaftaranPesertaSchema
+   typeof formPendaftaranPesertaSchema
 >;

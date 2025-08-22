@@ -22,40 +22,36 @@ import { FormPendaftaranPesertaSchemaType } from "@/zod/home/web-design/form-pen
 import { eq } from "drizzle-orm";
 
 export async function cekKetersediaanPemain(
-        peserta: FormPendaftaranPesertaSchemaType[]
+   peserta: FormPendaftaranPesertaSchemaType[]
 ): Promise<ServerResponseType<unknown>> {
-        for (const p of peserta) {
-                try {
-                        if (!isNumeric(p.npm)) {
-                                return {
-                                        success: false,
-                                        message: `NPM hanya boleh mengandung angka.`,
-                                };
-                        }
+   for (const p of peserta) {
+      try {
+         if (!isNumeric(p.npm)) {
+            return {
+               success: false,
+               message: `NPM hanya boleh mengandung angka.`,
+            };
+         }
 
-                        const cekNpmRes =
-                                await db.query.pesertaWebDesignTable.findFirst({
-                                        where: eq(
-                                                pesertaWebDesignTable.npm,
-                                                p.npm!
-                                        ),
-                                });
-                        if (cekNpmRes) {
-                                return {
-                                        success: false,
-                                        message: `NPM ${p.npm} tim telah dipakai.`,
-                                };
-                        }
-                } catch (error) {
-                        return {
-                                success: false,
-                                message: "Terjadi kesalahan pada server.",
-                                error: error,
-                                statusCode: 500,
-                        };
-                }
-        }
-        return {
-                success: true,
-        };
+         const cekNpmRes = await db.query.pesertaWebDesignTable.findFirst({
+            where: eq(pesertaWebDesignTable.npm, p.npm!),
+         });
+         if (cekNpmRes) {
+            return {
+               success: false,
+               message: `NPM ${p.npm} tim telah dipakai.`,
+            };
+         }
+      } catch (error) {
+         return {
+            success: false,
+            message: "Terjadi kesalahan pada server.",
+            error: error,
+            statusCode: 500,
+         };
+      }
+   }
+   return {
+      success: true,
+   };
 }

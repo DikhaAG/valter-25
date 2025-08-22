@@ -21,29 +21,29 @@ import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/t
 import { timWebDesignTable } from "@/db/schemas/web-design-schema";
 
 export async function getTimById(
-        id: string
+   id: string
 ): Promise<ServerResponseType<TimDisplaySchemaType>> {
-        try {
-                const res = await db.query.timEsportTable.findFirst({
-                        with: { peserta: true },
-                        where: eq(timWebDesignTable.id, id),
-                });
-                if (!res) {
-                        return {
-                                success: false,
-                                message: `Data tim tidak ditemukan ${emotError}`,
-                        };
-                }
-                return {
-                        success: true,
-                        message: `Berhasil mengambil data tim. ${emotSuccess}`,
-                        data: res,
-                };
-        } catch (error) {
-                return {
-                        success: false,
-                        message: `Terjadi kesalahan dalam mengambil data tim ${emotError}`,
-                        error,
-                };
-        }
+   try {
+      const res = await db.query.timWebDesignTable.findFirst({
+         with: { peserta: true },
+         where: eq(timWebDesignTable.id, id),
+      });
+      if (!res) {
+         return {
+            success: false,
+            message: `Data tim tidak ditemukan ${emotError}`,
+         };
+      }
+      return {
+         success: true,
+         message: `Berhasil mengambil data tim. ${emotSuccess}`,
+         data: res,
+      };
+   } catch (error) {
+      return {
+         success: false,
+         message: `Terjadi kesalahan dalam mengambil data tim ${emotError}`,
+         error,
+      };
+   }
 }

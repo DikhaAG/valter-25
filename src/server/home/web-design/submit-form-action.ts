@@ -20,87 +20,82 @@ import { isUniqueConstraintViolationError } from "@/utils/home/is-unique-constra
 import { DrizzleQueryError, eq } from "drizzle-orm";
 import { ServerResponseType } from "@/types/server-response-type";
 import {
-        formPendaftaranTimSchema,
-        FormPendaftaranTimSchemaType,
+   formPendaftaranTimSchema,
+   FormPendaftaranTimSchemaType,
 } from "@/zod/home/web-design/form-pendaftaran-tim-schema";
 import { uploadToCloudinary } from "@/utils/home/upload-to-cloudinary";
 import {
-        pesertaWebDesignTable,
-        timWebDesignTable,
+   pesertaWebDesignTable,
+   timWebDesignTable,
 } from "@/db/schemas/web-design-schema";
 
 export async function submitFormAction(
-        registrasiFormData: FormPendaftaranTimSchemaType
+   registrasiFormData: FormPendaftaranTimSchemaType
 ): Promise<ServerResponseType<string>> {
-        const result = formPendaftaranTimSchema.safeParse(registrasiFormData);
-        if (!result.success) {
-                return {
-                        success: false,
-                        error: result.error!.issues.join(", "),
-                };
-        }
+   const result = formPendaftaranTimSchema.safeParse(registrasiFormData);
+   if (!result.success) {
+      return {
+         success: false,
+         error: result.error!.issues.join(", "),
+      };
+   }
 
-        const { namaTim, noWa, instansi, buktiPembayaran, peserta } =
-                result.data;
-        let buktiPembayaranUrl: string | null = null;
+   const { namaTim, noWa, instansi, buktiPembayaran, peserta } = result.data;
+   let buktiPembayaranUrl: string | null = null;
 
-        try {
-                if (buktiPembayaran instanceof File) {
-                        const arrayBuffer = await buktiPembayaran.arrayBuffer();
-                        const buffer = Buffer.from(arrayBuffer);
-                        buktiPembayaranUrl = await uploadToCloudinary(
-                                buffer,
-                                buktiPembayaran.name
-                        );
-                }
+   try {
+      if (buktiPembayaran instanceof File) {
+         const arrayBuffer = await buktiPembayaran.arrayBuffer();
+         const buffer = Buffer.from(arrayBuffer);
+         buktiPembayaranUrl = await uploadToCloudinary(
+            buffer,
+            buktiPembayaran.name
+         );
+      }
 
-                // Insert ke tabel timML
-                const insertTim = await db
-                        .insert(timWebDesignTable)
-                        .values({
-                                id: uuidv4(),
-                                namaTim: namaTim,
-                                noWa,
-                                instansi,
-                                buktiPembayaran: buktiPembayaranUrl,
-                        })
-                        .returning({ insertedId: timWebDesignTable.id });
+      // Insert ke tabel timML
+      const insertTim = await db
+         .insert(timWebDesignTable)
+         .values({
+            id: uuidv4(),
+            namaTim: namaTim,
+            noWa,
+            instansi,
+            buktiPembayaran: buktiPembayaranUrl,
+         })
+         .returning({ insertedId: timWebDesignTable.id });
 
-                // Setelah berhasil, insert ke tabel pesertaML
-                const pesertaToInsert = peserta.map((p) => ({
-                        id: uuidv4(),
-                        namaTim: namaTim,
-                        nama: p.nama,
-                        npm: p.npm,
-                }));
+      // Setelah berhasil, insert ke tabel pesertaML
+      const pesertaToInsert = peserta.map((p) => ({
+         id: uuidv4(),
+         namaTim: namaTim,
+         nama: p.nama,
+         npm: p.npm,
+      }));
 
-                await db.insert(pesertaWebDesignTable).values(pesertaToInsert);
+      await db.insert(pesertaWebDesignTable).values(pesertaToInsert);
 
-                return {
-                        success: true,
-                        data: insertTim[0].insertedId,
-                };
-        } catch (error) {
-                await db
-                        .delete(timWebDesignTable)
-                        .where(eq(timWebDesignTable.namaTim, namaTim));
-                if (isUniqueConstraintViolationError(error)) {
-                        if (
-                                (
-                                        error as DrizzleQueryError
-                                ).cause?.message.includes("npm")
-                        ) {
-                                return {
-                                        success: false,
-                                        message: "NPM telah terdaftar.",
-                                };
-                        }
-                }
-                return {
-                        success: false,
-                        statusCode: 500,
-                        error: error,
-                        message: "Gagal memproses permintaan. Periksa log server.",
-                };
-        }
+      return {
+         success: true,
+         data: insertTim[0].insertedId,
+      };
+   } catch (error) {
+      await db
+         .delete(timWebDesignTable)
+         .where(eq(timWebDesignTable.namaTim, namaTim));
+      if (isUniqueConstraintViolationError(error)) {
+         if ((error as DrizzleQueryError).cause?.message.includes("npm")) {
+            return {
+               success: false,
+               message: "NPM telah terdaftar.",
+            };
+         }
+      }
+      return {
+         success: false,
+         statusCode: 500,
+         error: error,
+         message: "Gagal memproses permintaan. Periksa log server.",
+      };
+   }
 }
