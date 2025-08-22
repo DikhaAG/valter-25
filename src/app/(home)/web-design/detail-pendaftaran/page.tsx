@@ -1,7 +1,7 @@
 "use client";
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
-import { ImageDialog } from "./_components/image-dialog";
+import { ImageDialog } from "@/components/home/detail-pendaftaran/image-dialog";
 import { UpdateImageDialog } from "./_components/update-image-dialog";
 import {
    Table,
@@ -27,7 +27,7 @@ import { Badge } from "@/components/ui/nb/badge";
 import { useRouter } from "next/navigation";
 import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
 import { getTimById } from "@/server/queries/web-design/get-tim-by-id";
-import { PesertaEsportTableSchemaType } from "@/zod/tables/web-design/peserta";
+import { PesertaWebDesignTableSchemaType } from "@/zod/tables/web-design/peserta";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
 
 export default function DetailPendaftaranPage() {
@@ -136,7 +136,7 @@ export default function DetailPendaftaranPage() {
                               <TableBody>
                                  {team.peserta
                                     ? (
-                                         team.peserta as Array<PesertaEsportTableSchemaType>
+                                         team.peserta as Array<PesertaWebDesignTableSchemaType>
                                       ).map((p) => (
                                          <TableRow key={p.id}>
                                             <TableCell className="border border-gray-300 px-4 py-2 text-sm">

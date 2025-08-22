@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/nb/button";
 import { Badge } from "@/components/ui/nb/badge";
 import { SalinKode } from "@/components/home/detail-pendaftaran/salin-kode";
 //-------------------------------------------------------------------
-import { ImageDialog } from "./_components/image-dialog";
+import { ImageDialog } from "@/components/home/detail-pendaftaran/image-dialog";
 import { UpdateImageDialog } from "./_components/update-image-dialog";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
 import { ExportDataPendaftaran } from "./_components/export-data-pendaftaran";
