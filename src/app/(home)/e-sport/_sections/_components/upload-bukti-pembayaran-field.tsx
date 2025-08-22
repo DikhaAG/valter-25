@@ -6,8 +6,8 @@
  * validasi tipe/ukuran file, dan preview gambar secara instan.
  *
  * @param {object} props
- * @param {ControllerRenderProps<FormPendaftaranTimEsportSchemaType>} props.field - Properti dari `ControllerRenderProps` untuk mengintegrasikan input dengan form induk.
- * @param {UseFormReturn<FormPendaftaranTimEsportSchemaType>} props.form - Objek form lengkap dari `useForm` untuk mengakses metode seperti `setValue` dan `setError`.
+ * @param {ControllerRenderProps<FormPendaftaranTimSchemaType>} props.field - Properti dari `ControllerRenderProps` untuk mengintegrasikan input dengan form induk.
+ * @param {UseFormReturn<FormPendaftaranTimSchemaType>} props.form - Objek form lengkap dari `useForm` untuk mengakses metode seperti `setValue` dan `setError`.
  */
 "use client";
 import Image from "next/image";
@@ -21,11 +21,11 @@ import {
         MAX_FILE_SIZE_KB,
         ACCEPTED_IMAGE_TYPES,
 } from "@/utils/image-upload-requirements";
-import { FormPendaftaranTimEsportSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import { FormPendaftaranTimSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 
 interface Props {
-        field: ControllerRenderProps<FormPendaftaranTimEsportSchemaType>;
-        form: UseFormReturn<FormPendaftaranTimEsportSchemaType>;
+        field: ControllerRenderProps<FormPendaftaranTimSchemaType>;
+        form: UseFormReturn<FormPendaftaranTimSchemaType>;
 }
 
 export function UploadBuktiPembayaranField({ form }: Props) {

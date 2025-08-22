@@ -18,11 +18,11 @@ import { emotError, emotSuccess } from "@/data/emot-response";
 import { ServerResponseType } from "@/types/server-response-type";
 import { eq } from "drizzle-orm";
 import { timEsportTable } from "@/db/schemas/esport-schema";
-import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-esport-display-schema";
+import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 
 export async function getTimEsportById(
         id: string
-): Promise<ServerResponseType<TimEsportDisplaySchemaType>> {
+): Promise<ServerResponseType<TimDisplaySchemaType>> {
         try {
                 const res = await db.query.timEsportTable.findFirst({
                         with: { peserta: true },

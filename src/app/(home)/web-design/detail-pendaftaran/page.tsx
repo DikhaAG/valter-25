@@ -24,15 +24,16 @@ import { copyToClipboard } from "@/utils/copy-to-clipboard";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { Badge } from "@/components/ui/nb/badge";
 
-
 import { useRouter } from "next/navigation";
-import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-esport-display-schema";
+import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 import { getTimEsportById } from "@/server/queries/get-tim-esport-by-id";
 import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
 
 export default function DetailPendaftaranPage() {
-        const [team, setTeam] = useState<TimEsportDisplaySchemaType | undefined>();
+        const [team, setTeam] = useState<
+        TimDisplaySchemaType | undefined
+        >();
         const router = useRouter();
 
         useEffect(() => {

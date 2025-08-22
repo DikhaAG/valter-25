@@ -14,25 +14,23 @@ import {
 import { useEffect, useState } from "react";
 import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
 import { Button } from "@/components/ui/nb/button";
-import { Clipboard, Loader } from "lucide-react";
-import {
-        Tooltip,
-        TooltipContent,
-        TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { copyToClipboard } from "@/utils/copy-to-clipboard";
-import { CustomToast } from "@/components/ui/nb/custom-toast";
+import { Loader } from "lucide-react";
 import { Badge } from "@/components/ui/nb/badge";
-
+import { FaWhatsapp } from "react-icons/fa";
 
 import { useRouter } from "next/navigation";
-import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-esport-display-schema";
+
 import { getTimEsportById } from "@/server/queries/get-tim-esport-by-id";
 import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
+import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import { SalinKode } from "./_components/salin-kode";
+import { ExportDataPendaftaran } from "./_components/export-data-pendaftaran";
+import Link from "next/link";
+import { gcUrl } from "@/data/home/e-sport/gc-url";
 
 export default function DetailPendaftaranPage() {
-        const [team, setTeam] = useState<TimEsportDisplaySchemaType | undefined>();
+        const [team, setTeam] = useState<TimDisplaySchemaType | undefined>();
         const router = useRouter();
 
         useEffect(() => {
@@ -75,42 +73,42 @@ export default function DetailPendaftaranPage() {
                                                                         Menunggu
                                                                         konfirmasi
                                                                 </Badge>
-                                                        </h3>
-                                                        <div className="flex justify-end items-end">
-                                                                <Tooltip>
-                                                                        <TooltipTrigger
-                                                                                asChild
-                                                                        >
+                                                                <div className="mt-4">
+                                                                        {team.statusPembayaran && (
                                                                                 <Button
                                                                                         variant={
-                                                                                                "gosong"
+                                                                                                "success"
                                                                                         }
-                                                                                        onClick={() => {
-                                                                                                copyToClipboard(
-                                                                                                        team.id
-                                                                                                );
-                                                                                                CustomToast(
-                                                                                                        {
-                                                                                                                variant: "default",
-                                                                                                                message: `Kode berhasil disalin. 😎`,
-                                                                                                        }
-                                                                                                );
-                                                                                        }}
+                                                                                        className="text-background"
                                                                                 >
-                                                                                        salin
-                                                                                        kode
-                                                                                        <Clipboard />
+                                                                                        <Link
+                                                                                                href={
+                                                                                                        gcUrl
+                                                                                                }
+                                                                                                passHref={
+                                                                                                        true
+                                                                                                }
+                                                                                        >
+                                                                                                Gabung
+                                                                                                grup
+                                                                                                wa
+                                                                                        </Link>
+                                                                                        <FaWhatsapp />
                                                                                 </Button>
-                                                                        </TooltipTrigger>
-                                                                        <TooltipContent>
-                                                                                <p>
-                                                                                        Salin
-                                                                                        kode
-                                                                                        tim
-                                                                                        kamu
-                                                                                </p>
-                                                                        </TooltipContent>
-                                                                </Tooltip>
+                                                                        )}
+                                                                </div>
+                                                        </h3>
+                                                        <div className="flex flex-col space-y-2 justify-end items-end">
+                                                                <SalinKode
+                                                                        team={
+                                                                                team
+                                                                        }
+                                                                />
+                                                                <ExportDataPendaftaran
+                                                                        team={
+                                                                                team
+                                                                        }
+                                                                />
                                                         </div>
                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                                                                 <div className="space-y-2">

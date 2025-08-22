@@ -7,7 +7,7 @@ import { z } from "zod";
  * Tipe ini digunakan saat mengambil dan menampilkan data tim dari database,
  * bukan untuk validasi formulir pendaftaran.
  */
-export const timEsportDisplaySchema = z.object({
+export const timDisplaySchema = z.object({
         /**
          * ID unik tim.
          * @example "0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d"
@@ -52,7 +52,7 @@ export const timEsportDisplaySchema = z.object({
 });
 
 /**
- * Tipe inferensi untuk skema `timEsportDisplaySchema`.
+ * Tipe inferensi untuk skema `timDisplaySchema`.
  * Digunakan untuk memastikan keamanan tipe data tim yang diambil dari database.
  */
-export type TimEsportDisplaySchemaType = z.infer<typeof timEsportDisplaySchema>;
+export type TimDisplaySchemaType = z.infer<typeof timDisplaySchema>;

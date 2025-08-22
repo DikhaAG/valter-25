@@ -29,7 +29,7 @@ import {
         isValidImageType,
         isFileSizeValid,
 } from "@/utils/image-upload-requirements";
-import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-esport-display-schema";
+import { TimEsportDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {

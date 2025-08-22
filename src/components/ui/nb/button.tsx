@@ -13,6 +13,7 @@ const buttonVariants = cva(
                                 outline: "bg-background hover:bg-foreground/20 hover:text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
                                 secondary: "bg-secondary/90 hover:bg-secondary text-secondary-foreground",
                                 gosong: "bg-foreground/90 border-4 border-foreground text-secondary-foreground",
+                                success: "bg-green-600/90 hover:bg-green-600 border-4 border-foreground text-secondary-foreground",
                                 destructive: "bg-red-600 hover:bg-red-700 border-4 border-foreground text-secondary-foreground"
                         },
                         size: {

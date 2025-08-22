@@ -1,0 +1,1 @@
+export const gcUrl = "https://web.whatsapp.com/"

@@ -18,11 +18,11 @@ import { db } from "@/db/drizzle";
 import { pesertaEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
 import { isNumeric } from "@/utils/is-numeric";
-import { FormPendaftaranPesertaEsportSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 import { eq } from "drizzle-orm";
 
 export async function cekKetersediaanPemain(
-        peserta: FormPendaftaranPesertaEsportSchemaType[]
+        peserta: FormPendaftaranPesertaSchemaType[]
 ): Promise<ServerResponseType<unknown>> {
         for (const p of peserta) {
                 try {
