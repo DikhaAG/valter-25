@@ -12,10 +12,12 @@ import { esportSchema } from "./schemas/esport-schema";
 import { esportRelations } from "./relations/esport-relation";
 import { webDesignSchema } from "./schemas/web-design-schema";
 import { webDesignRelations } from "./relations/web-design-relation";
+import { videoCampaignSchema } from "./schemas/video-campaign-schema";
+import { videoCampaignRelation } from "./relations/video-campaign-relation";
 
 // Memuat variabel lingkungan dari file .env
 config({
-        path: ".env",
+   path: ".env",
 });
 
 /**
@@ -32,11 +34,13 @@ const sql = neon(process.env.DATABASE_URL!);
  * skema serta relasi database yang telah ditentukan.
  */
 export const db = drizzle({
-        client: sql,
-        schema: {
-                ...esportSchema,
-                ...esportRelations,
-                ...webDesignSchema,
-                ...webDesignRelations,
-        },
+   client: sql,
+   schema: {
+      ...esportSchema,
+      ...esportRelations,
+      ...webDesignSchema,
+      ...webDesignRelations,
+      ...videoCampaignSchema,
+      ...videoCampaignRelation,
+   },
 });
