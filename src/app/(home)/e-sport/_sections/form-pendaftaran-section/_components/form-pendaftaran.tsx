@@ -249,18 +249,18 @@ export function FormPendaftaran() {
             </div>
             <h2>Daftar Peserta</h2>
             {fields.map((field, index) => (
-               <div key={field.id} className="grid md:grid-cols-6 gap-6">
+               <div key={field.id} className="grid md:grid-cols-8 gap-6">
                   <div className="">
                      {wrapSymbols("#")}
                      {index + 1}
                   </div>
-                  <div>
+                  <div className="col-span-2">
                      <FormField
                         control={form.control}
                         name={`peserta.${index}.idML`}
                         render={({ field }) => (
                            <FormItem className="flex-1">
-                              <FormLabel>ID</FormLabel>
+                              <FormLabel>ID ML</FormLabel>
                               <FormControl>
                                  <Input placeholder="ex: 6969" {...field} />
                               </FormControl>
@@ -269,7 +269,7 @@ export function FormPendaftaran() {
                         )}
                      />
                   </div>
-                  <div>
+                  <div className="col-span-2">
                      <FormField
                         control={form.control}
                         name={`peserta.${index}.npm`}
@@ -284,7 +284,7 @@ export function FormPendaftaran() {
                         )}
                      />
                   </div>
-                  <div>
+                  <div className="col-span-2">
                      <FormField
                         control={form.control}
                         name={`peserta.${index}.nama`}

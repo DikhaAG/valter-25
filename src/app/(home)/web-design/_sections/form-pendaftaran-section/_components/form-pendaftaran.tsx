@@ -252,7 +252,7 @@ export function FormPendaftaran() {
                      {wrapSymbols("#")}
                      {index + 1}
                   </div>
-                  <div>
+                  <div className="col-span-2">
                      <FormField
                         control={form.control}
                         name={`peserta.${index}.npm`}
@@ -267,7 +267,7 @@ export function FormPendaftaran() {
                         )}
                      />
                   </div>
-                  <div>
+                  <div className="col-span-2">
                      <FormField
                         control={form.control}
                         name={`peserta.${index}.nama`}

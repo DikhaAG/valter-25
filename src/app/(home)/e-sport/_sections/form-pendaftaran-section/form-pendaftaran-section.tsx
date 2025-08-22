@@ -25,7 +25,7 @@ export function FormPendaftaranSection({ isVisible }: Props) {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
          }`}
       >
-         <div className="max-w-md md:max-w-5xl mx-auto">
+         <div className="max-w-md md:max-w-4xl mx-auto">
             <h2 className="text-xl font-bold text-secondary text-center mb-6">
                Pendaftaran
             </h2>
