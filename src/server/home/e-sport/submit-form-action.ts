@@ -14,7 +14,7 @@
  */
 "use server";
 
-import { uploadToCloudinary } from "./upload-to-cloudinary";
+import { uploadToCloudinary } from "../../../utils/upload-to-cloudinary";
 import { db } from "@/db/drizzle";
 import { v4 as uuidv4 } from "uuid";
 import { isUniqueConstraintViolationError } from "@/utils/unique-constraint-error";
@@ -29,8 +29,7 @@ import {
 export async function submitFormAction(
         registrasiFormData: FormPendaftaranTimSchemaType
 ): Promise<ServerResponseType<string>> {
-        const result =
-                formPendaftaranTimSchema.safeParse(registrasiFormData);
+        const result = formPendaftaranTimSchema.safeParse(registrasiFormData);
         if (!result.success) {
                 return {
                         success: false,
@@ -53,7 +52,7 @@ export async function submitFormAction(
                 }
 
                 // Insert ke tabel timML
-                const insertTimML = await db
+                const insertTim = await db
                         .insert(timEsportTable)
                         .values({
                                 id: uuidv4(),
@@ -77,23 +76,13 @@ export async function submitFormAction(
 
                 return {
                         success: true,
-                        data: insertTimML[0].insertedId,
+                        data: insertTim[0].insertedId,
                 };
         } catch (error) {
-                console.log(error)
                 await db
                         .delete(timEsportTable)
                         .where(eq(timEsportTable.namaTim, namaTim));
                 if (isUniqueConstraintViolationError(error)) {
-                        console.log("errroorooror=================");
-                        console.log(
-                                Object.keys((error as DrizzleQueryError).cause!)
-                        );
-                        console.log(typeof (error as DrizzleQueryError));
-                        console.log(
-                                (error as DrizzleQueryError).cause?.message
-                        );
-
                         if (
                                 (
                                         error as DrizzleQueryError

@@ -21,7 +21,7 @@ import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
 import { cekKetersediaanNamaTim } from "@/server/home/e-sport/cek-ketersediaan-nama-tim";
 import { emotError } from "@/data/emot-response";
-import { cekKetersediaanPemain } from "@/server/home/e-sport/cek-ketersediaan-pemain";
+import { cekKetersediaanPeserta } from "@/server/home/e-sport/cek-ketersediaan-peserta";
 import { cekKetersediaanNoWa } from "@/server/home/e-sport/cek-ketersediaan-no-wa";
 import { isNumeric } from "@/utils/is-numeric";
 import { wrapSymbols } from "@/utils/wrap-symbols";
@@ -124,7 +124,7 @@ export function FormPendaftaran() {
 
                 //cek apakah id ml atau npm pemain telah terdaftar
                 // dan cek apakah npm pemain hanya mengandung angka
-                const cekPemain = await cekKetersediaanPemain(data.peserta);
+                const cekPemain = await cekKetersediaanPeserta(data.peserta);
                 if (!cekPemain.success) {
                         if (cekPemain.statusCode === 500) {
                                 CustomToast({

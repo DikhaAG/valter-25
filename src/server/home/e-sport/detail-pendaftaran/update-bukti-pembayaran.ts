@@ -13,24 +13,25 @@
  */
 "use server";
 import { eq } from "drizzle-orm";
-import { uploadToCloudinary } from "../upload-to-cloudinary";
+import { uploadToCloudinary } from "../../../../utils/upload-to-cloudinary";
 import { db } from "@/db/drizzle";
 import { timEsportTable } from "@/db/schemas/esport-schema";
+import { ServerResponseType } from "@/types/server-response-type";
 
 // --- SERVER ACTION UNTUK UPDATE GAMBAR ---
-export async function updateBuktiPembayaranEsport({
+export async function updateBuktiPembayaran({
         file,
         namaTim,
 }: {
         file: File;
         namaTim: string;
-}) {
+}): Promise<ServerResponseType<unknown>> {
         if (!file) {
-                return { error: "File tidak ditemukan." };
+                return { message: "File tidak ditemukan.", success: false };
         }
 
         if (!namaTim) {
-                return { error: "Nama tim tidak ditemukan." };
+                return { message: "Nama tim tidak ditemukan.", success: false };
         }
 
         // Validasi file
@@ -41,7 +42,10 @@ export async function updateBuktiPembayaranEsport({
                 !ACCEPTED_IMAGE_TYPES.includes(file.type) ||
                 file.size > MAX_FILE_SIZE_KB * 1024
         ) {
-                return { error: "Jenis atau ukuran file tidak valid." };
+                return {
+                        success: false,
+                        message: "Jenis atau ukuran file tidak valid.",
+                };
         }
 
         try {
@@ -59,7 +63,10 @@ export async function updateBuktiPembayaranEsport({
 
                 return { success: true };
         } catch (error) {
-                console.error("Gagal memperbarui gambar:", error);
-                return { error: "Gagal memperbarui gambar." };
+                return {
+                        message: "Gagal memperbarui gambar.",
+                        error: error,
+                        success: false,
+                };
         }
 }
