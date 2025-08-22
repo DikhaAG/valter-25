@@ -1,9 +1,9 @@
-import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/header-data-type";
+import { HeaderDataType } from "@/types/home/acara/header-data-type";
 
-export const headerData: HomeAcaraHeaderDataType = {
+export const headerData: HeaderDataType = {
         title: "Lomba Web Design (UI/UX)",
         desc: "",
-        img: "uiux.png",
+        img: "uiuix.png",
         htm: "35.000",
         cp: [
                 {

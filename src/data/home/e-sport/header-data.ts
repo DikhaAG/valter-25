@@ -1,6 +1,6 @@
-import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/header-data-type";
+import { HeaderDataType } from "@/types/home/acara/header-data-type";
 
-export const headerData: HomeAcaraHeaderDataType = {
+export const headerData: HeaderDataType = {
         img: "game.png",
         title: "E-Sport: Mobile Legends",
         desc: ` Lorem ipsum dolor sit amet,
