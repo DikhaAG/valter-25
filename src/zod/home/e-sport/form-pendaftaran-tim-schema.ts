@@ -10,7 +10,7 @@ import { z } from "zod";
  * - `nama`: Nama lengkap peserta. Harus diisi.
  * - `npm`: Nomor Pokok Mahasiswa, harus berupa 12 digit angka.
  */
-export const formPendaftaranPesertaEsportSchema = z.object({
+export const formPendaftaranPesertaSchema = z.object({
         id: z.uuid().optional(),
         idML: z
                 .string()
@@ -36,7 +36,7 @@ export const formPendaftaranPesertaEsportSchema = z.object({
  * - `buktiPembayaran`: File bukti pembayaran. Tipe `any` digunakan karena validasi file biasanya ditangani secara terpisah.
  * - `peserta`: Sebuah array yang harus berisi skema validasi `formPendaftaranPesertaEsportSchema` untuk setiap pemain.
  */
-export const formPendaftaranTimEsportSchema = z
+export const formPendaftaranTimSchema = z
         .object({
                 namaTim: z
                         .string()
@@ -48,7 +48,7 @@ export const formPendaftaranTimEsportSchema = z
                         message: "Asal instansi tidak boleh kosong.",
                 }),
                 buktiPembayaran: z.any(),
-                peserta: z.array(formPendaftaranPesertaEsportSchema),
+                peserta: z.array(formPendaftaranPesertaSchema),
         })
         .refine(
                 (data) => {
@@ -92,14 +92,14 @@ export const formPendaftaranTimEsportSchema = z
  * Tipe inferensi dari skema validasi `formPendaftaranTimEsportSchema`.
  * Digunakan untuk memastikan keamanan tipe data tim yang sudah tervalidasi.
  */
-export type FormPendaftaranTimEsportSchemaType = z.infer<
-        typeof formPendaftaranTimEsportSchema
+export type FormPendaftaranTimSchemaType = z.infer<
+        typeof formPendaftaranTimSchema
 >;
 
 /**
  * Tipe inferensi dari skema validasi `formPendaftaranPesertaEsportSchema`.
  * Digunakan untuk memastikan keamanan tipe data setiap peserta yang sudah tervalidasi.
  */
-export type FormPendaftaranPesertaEsportSchemaType = z.infer<
-        typeof formPendaftaranPesertaEsportSchema
+export type FormPendaftaranPesertaSchemaType = z.infer<
+        typeof formPendaftaranPesertaSchema
 >;

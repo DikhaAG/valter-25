@@ -50,18 +50,38 @@ export function FormPendaftaran() {
 
         const { fields, append, remove } = useFieldArray({
                 control: form.control,
-                name: "peserta",
+                name: "tim",
         });
 
         async function onSubmit(data: FormPendaftaranTimSchemaType) {
                 setLoading(true);
+
+                // cek apakah nama tim telah terdaftar
+                const cekNamaTim = await cekKetersediaanNamaTim(data.namaTim);
+                if (!cekNamaTim.success) {
+                        if (cekNamaTim.statusCode === 500) {
+                                CustomToast({
+                                        variant: "warning",
+                                        message: `${cekNamaTim.message} ${emotError}`,
+                                });
+                                setLoading(false);
+                                return;
+                        }
+                        CustomToast({
+                                variant: "warning",
+                                message: `${cekNamaTim.message} ${emotError}`,
+                        });
+                        setLoading(false);
+                        return;
+                }
+
                 //cek apakah nomor whatsapp merupakan number
                 if (!isNumeric(data.noWa)) {
                         form.setError("noWa", {
                                 message: "Nomor Whatsapp tidak valid!.",
                         });
                         CustomToast({
-                                variant: "error",
+                                variant: "warning",
                                 message: `Nomor Whatsapp tidak valid!. ${emotError}`,
                         });
                         setLoading(false);
@@ -73,14 +93,14 @@ export function FormPendaftaran() {
                 if (!cekNoWa.success) {
                         if (cekNoWa.statusCode === 500) {
                                 CustomToast({
-                                        variant: "error",
+                                        variant: "warning",
                                         message: `${cekNoWa.message} ${emotError}`,
                                 });
                                 setLoading(false);
                                 return;
                         }
                         CustomToast({
-                                variant: "error",
+                                variant: "warning",
                                 message: `${cekNoWa.message} ${emotError}`,
                         });
                         setLoading(false);
@@ -97,26 +117,8 @@ export function FormPendaftaran() {
                 // cek jika jumlah anggota sudah mencapai 5
                 if (data.peserta.length < 5) {
                         CustomToast({
-                                variant: "error",
+                                variant: "warning",
                                 message: "Permain harus berjumlah 5 orang.",
-                        });
-                        setLoading(false);
-                        return;
-                }
-                // cek apakah nama tim telah terdaftar
-                const cekNamaTim = await cekKetersediaanNamaTim(data.namaTim);
-                if (!cekNamaTim.success) {
-                        if (cekNamaTim.statusCode === 500) {
-                                CustomToast({
-                                        variant: "error",
-                                        message: `${cekNamaTim.message} ${emotError}`,
-                                });
-                                setLoading(false);
-                                return;
-                        }
-                        CustomToast({
-                                variant: "error",
-                                message: `${cekNamaTim.message} ${emotError}`,
                         });
                         setLoading(false);
                         return;
@@ -128,7 +130,7 @@ export function FormPendaftaran() {
                 if (!cekPemain.success) {
                         if (cekPemain.statusCode === 500) {
                                 CustomToast({
-                                        variant: "error",
+                                        variant: "warning",
                                         message: `${cekPemain.message} ${emotError}`,
                                 });
                                 setLoading(false);
@@ -145,7 +147,7 @@ export function FormPendaftaran() {
                 const res = await submitFormAction(data);
                 if (!res.success) {
                         CustomToast({
-                                variant: "error",
+                                variant: "warning",
                                 message: `${res.message} 😂💀`,
                         });
                         setLoading(false);

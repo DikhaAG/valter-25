@@ -1,13 +1,13 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { FormPendaftaranSection } from "./_sections/form-pendaftaran-section";
+import { FormRegsitrasiSection } from "./_sections/form-registrasi-section";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
-import { headerData } from "@/data/home/e-sport/header-data";
-import { timelineData } from "@/data/home/e-sport/timeline-data";
+import { headerData } from "@/data/home/web-design/header-data";
+import { timelineData } from "@/data/home/web-design/timeline-data";
 
-export default function EsportPage() {
+export default function WebDesignPage() {
         const [isVisible, setIsVisible] = useState(false);
         if (typeof window !== "undefined") {
                 sessionStorage.clear();
@@ -32,7 +32,7 @@ export default function EsportPage() {
                         />
 
                         {/* Registration Form Section */}
-                        <FormPendaftaranSection isVisible={isVisible} />
+                        <FormRegsitrasiSection isVisible={isVisible} />
                 </div>
         );
 }

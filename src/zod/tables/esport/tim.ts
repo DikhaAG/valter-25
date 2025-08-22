@@ -44,6 +44,18 @@ export const timEsportTableSchema = z.object({
         statusPembayaran: z.boolean().default(false),
 
         /**
+         * Timestamp saat data pertama kali dibuat.
+         * Ditetapkan secara otomatis saat insert.
+         */
+        createdat: z.string(),
+        
+        /**
+         * Timestamp saat data terakhir diperbarui.
+         * Diperbarui secara otomatis saat ada perubahan pada baris.
+         */
+        updatedat: z.string(),
+
+        /**
          * Array berisi data peserta yang terkait dengan tim ini.
          * Tipe datanya divalidasi oleh `pesertaEsportTableSchema`.
          */

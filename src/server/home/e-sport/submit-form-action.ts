@@ -22,15 +22,15 @@ import { DrizzleQueryError, eq } from "drizzle-orm";
 import { ServerResponseType } from "@/types/server-response-type";
 import { pesertaEsportTable, timEsportTable } from "@/db/schemas/esport-schema";
 import {
-        formPendaftaranTimEsportSchema,
-        FormPendaftaranTimEsportSchemaType,
+        formPendaftaranTimSchema,
+        FormPendaftaranTimSchemaType,
 } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 
 export async function submitFormAction(
-        registrasiFormData: FormPendaftaranTimEsportSchemaType
+        registrasiFormData: FormPendaftaranTimSchemaType
 ): Promise<ServerResponseType<string>> {
         const result =
-                formPendaftaranTimEsportSchema.safeParse(registrasiFormData);
+                formPendaftaranTimSchema.safeParse(registrasiFormData);
         if (!result.success) {
                 return {
                         success: false,

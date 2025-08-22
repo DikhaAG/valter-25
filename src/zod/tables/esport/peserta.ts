@@ -12,10 +12,22 @@ export const pesertaEsportTableSchema = z.object({
         id: z.uuid(),
 
         /**
+         * Nama tim yang menjadi kunci asing (foreign key) ke `timEsportTable`.
+         * Apabila tim dihapus, semua peserta yang terkait juga akan dihapus (onDelete: "cascade").
+         */
+        namaTim: z.string(),
+
+        /**
          * ID in-game Mobile Legends dari peserta.
          * @example "12345678"
          */
         idML: z.string(),
+
+        /**
+         * Nomor Pokok Mahasiswa (NPM) dari peserta. Properti ini bisa `null` jika data tidak tersedia.
+         * @example "202210010023"
+         */
+        npm: z.string().nullable(),
 
         /**
          * Nama lengkap peserta. Properti ini bisa `null` jika data tidak tersedia.
@@ -24,10 +36,14 @@ export const pesertaEsportTableSchema = z.object({
         nama: z.string().nullable(),
 
         /**
-         * Nomor Pokok Mahasiswa (NPM) dari peserta. Properti ini bisa `null` jika data tidak tersedia.
-         * @example "202210010023"
+         * Timestamp saat data pertama kali dibuat.
          */
-        npm: z.string().nullable(),
+        createdat: z.string(),
+
+        /**
+         * Timestamp saat data terakhir diperbarui.
+         */
+        updatedat: z.string(),
 });
 
 /**

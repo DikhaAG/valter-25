@@ -10,6 +10,8 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { config } from "dotenv";
 import { esportSchema } from "./schemas/esport-schema";
 import { esportRelations } from "./relations/esport-relation";
+import { webDesignSchema } from "./schemas/web-design-schema";
+import { webDesignRelations } from "./relations/web-design-relation";
 
 // Memuat variabel lingkungan dari file .env
 config({
@@ -31,5 +33,10 @@ const sql = neon(process.env.DATABASE_URL!);
  */
 export const db = drizzle({
         client: sql,
-        schema: { ...esportSchema, ...esportRelations },
+        schema: {
+                ...esportSchema,
+                ...esportRelations,
+                ...webDesignSchema,
+                ...webDesignRelations,
+        },
 });
