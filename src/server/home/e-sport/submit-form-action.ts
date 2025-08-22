@@ -22,92 +22,85 @@ import { DrizzleQueryError, eq } from "drizzle-orm";
 import { ServerResponseType } from "@/types/server-response-type";
 import { pesertaEsportTable, timEsportTable } from "@/db/schemas/esport-schema";
 import {
-        formPendaftaranTimSchema,
-        FormPendaftaranTimSchemaType,
+   formPendaftaranTimSchema,
+   FormPendaftaranTimSchemaType,
 } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 
 export async function submitFormAction(
-        registrasiFormData: FormPendaftaranTimSchemaType
+   registrasiFormData: FormPendaftaranTimSchemaType
 ): Promise<ServerResponseType<string>> {
-        const result = formPendaftaranTimSchema.safeParse(registrasiFormData);
-        if (!result.success) {
-                return {
-                        success: false,
-                        error: result.error!.issues.join(", "),
-                };
-        }
+   const result = formPendaftaranTimSchema.safeParse(registrasiFormData);
+   if (!result.success) {
+      return {
+         success: false,
+         error: result.error!.issues.join(", "),
+      };
+   }
 
-        const { namaTim, noWa, instansi, buktiPembayaran, peserta } =
-                result.data;
-        let buktiPembayaranUrl: string | null = null;
+   const { namaTim, noWa, instansi, buktiPembayaran, peserta } = result.data;
+   let buktiPembayaranUrl: string | null = null;
 
-        try {
-                if (buktiPembayaran instanceof File) {
-                        const arrayBuffer = await buktiPembayaran.arrayBuffer();
-                        const buffer = Buffer.from(arrayBuffer);
-                        buktiPembayaranUrl = await uploadToCloudinary(
-                                buffer,
-                                buktiPembayaran.name
-                        );
-                }
+   try {
+      if (buktiPembayaran instanceof File) {
+         const arrayBuffer = await buktiPembayaran.arrayBuffer();
+         const buffer = Buffer.from(arrayBuffer);
+         buktiPembayaranUrl = await uploadToCloudinary(
+            buffer,
+            buktiPembayaran.name
+         );
+      }
 
-                // Insert ke tabel timML
-                const insertTim = await db
-                        .insert(timEsportTable)
-                        .values({
-                                id: uuidv4(),
-                                namaTim: namaTim,
-                                noWa,
-                                instansi,
-                                buktiPembayaran: buktiPembayaranUrl,
-                        })
-                        .returning({ insertedId: timEsportTable.id });
+      // Insert ke tabel timML
+      const insertTim = await db
+         .insert(timEsportTable)
+         .values({
+            id: uuidv4(),
+            namaTim: namaTim,
+            noWa,
+            instansi,
+            buktiPembayaran: buktiPembayaranUrl,
+         })
+         .returning({ insertedId: timEsportTable.id });
 
-                // Setelah berhasil, insert ke tabel pesertaML
-                const pesertaToInsert = peserta.map((p) => ({
-                        id: uuidv4(),
-                        namaTim: namaTim,
-                        idML: p.idML,
-                        nama: p.nama,
-                        npm: p.npm,
-                }));
+      // Setelah berhasil, insert ke tabel pesertaML
+      const pesertaToInsert = peserta.map((p) => ({
+         id: uuidv4(),
+         namaTim: namaTim,
+         idML: p.idML,
+         nama: p.nama,
+         npm: p.npm,
+      }));
 
-                await db.insert(pesertaEsportTable).values(pesertaToInsert);
+      await db.insert(pesertaEsportTable).values(pesertaToInsert);
 
-                return {
-                        success: true,
-                        data: insertTim[0].insertedId,
-                };
-        } catch (error) {
-                await db
-                        .delete(timEsportTable)
-                        .where(eq(timEsportTable.namaTim, namaTim));
-                if (isUniqueConstraintViolationError(error)) {
-                        if (
-                                (
-                                        error as DrizzleQueryError
-                                ).cause?.message.includes("id_ml")
-                        ) {
-                                return {
-                                        success: false,
-                                        message: "ID telah terdaftar.",
-                                };
-                        } else if (
-                                (
-                                        error as DrizzleQueryError
-                                ).cause?.message.includes("npm")
-                        ) {
-                                return {
-                                        success: false,
-                                        message: "NPM telah terdaftar.",
-                                };
-                        }
-                }
-                return {
-                        success: false,
-                        statusCode: 500,
-                        error: error,
-                        message: "Gagal memproses permintaan. Periksa log server.",
-                };
-        }
+      return {
+         success: true,
+         data: insertTim[0].insertedId,
+      };
+   } catch (error) {
+      await db
+         .delete(timEsportTable)
+         .where(eq(timEsportTable.namaTim, namaTim));
+      if (isUniqueConstraintViolationError(error)) {
+         if ((error as DrizzleQueryError).cause?.message.includes("id_ml")) {
+            return {
+               success: false,
+               message: "ID telah terdaftar.",
+            };
+         } else if (
+            (error as DrizzleQueryError).cause?.message.includes("npm")
+         ) {
+            return {
+               success: false,
+               message: "NPM telah terdaftar.",
+            };
+         }
+      }
+      return {
+         success: false,
+         statusCode: 500,
+         error: error,
+         message: "Gagal memproses permintaan. Periksa log server.",
+      };
+   }
 }
