@@ -1,9 +1,9 @@
-import { HomeAcaraTimelineDataType } from "@/types/home/acara/timeline-data-type";
+import { TimelineDataType } from "@/types/home/acara/timeline-data-type";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 
 interface Props {
         isVisible: boolean;
-        data: HomeAcaraTimelineDataType[];
+        data: TimelineDataType[];
 }
 export function TimelineSection({ isVisible, data }: Props) {
         return (

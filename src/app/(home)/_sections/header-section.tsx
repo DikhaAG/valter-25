@@ -1,10 +1,10 @@
-import { HomeAcaraHeaderDataType } from "@/types/home/acara/header-data-type";
+import { HeaderDataType } from "@/types/home/acara/header-data-type";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import Image from "next/image";
 
 interface Props {
         isVisible: boolean;
-        data: HomeAcaraHeaderDataType;
+        data: HeaderDataType;
 }
 export function HeaderSection({ isVisible, data }: Props) {
         return (
