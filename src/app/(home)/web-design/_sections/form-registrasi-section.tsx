@@ -1,5 +1,5 @@
 /**
- * Komponen klien React untuk menampilkan bagian formulir pendaftaran esport.
+ * Komponen klien React untuk menampilkan bagian formulir pendaftaran lomba web design.
  *
  * Komponen ini memiliki fungsionalitas utama:
  * 1.  Menyertakan `FormRegistrasi` untuk input data pendaftaran.

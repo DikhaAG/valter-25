@@ -23,7 +23,7 @@ import { cekKetersediaanNamaTim } from "@/server/home/e-sport/cek-ketersediaan-n
 import { emotError } from "@/data/emot-response";
 import { cekKetersediaanPeserta } from "@/server/home/e-sport/cek-ketersediaan-peserta";
 import { cekKetersediaanNoWa } from "@/server/home/e-sport/cek-ketersediaan-no-wa";
-import { isNumeric } from "@/utils/is-numeric";
+import { isNumeric } from "@/utils/home/is-numeric";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import {
         formPendaftaranTimSchema,

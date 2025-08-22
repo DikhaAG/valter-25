@@ -1,13 +1,13 @@
 /**
- * Server Action untuk mengecek ketersediaan data pemain (ID ML dan NPM).
+ * Server Action untuk mengecek ketersediaan data peserta (NPM).
  *
- * Fungsi ini mengiterasi setiap pemain dan melakukan validasi serta pengecekan
- * ke database secara berurutan. Jika ada salah satu data (ID ML atau NPM) yang
+ * Fungsi ini mengiterasi setiap peserta dan melakukan validasi serta pengecekan
+ * ke database secara berurutan. Jika ada salah satu data (NPM) yang
  * sudah terdaftar, fungsi akan langsung mengembalikan error.
  *
- * @param peserta Array dari objek peserta yang berisi data ID ML, nama, dan NPM.
+ * @param peserta Array dari objek peserta yang berisi data nama, dan NPM.
  * @returns Sebuah Promise yang mengembalikan `ServerResponseType`.
- * - Jika semua pemain tersedia: `{ success: true }`.
+ * - Jika semua peserta tersedia: `{ success: true }`.
  * - Jika ada data yang tidak valid atau sudah terdaftar: `{ success: false, message: string }`
  * dengan pesan error yang spesifik.
  * - Jika terjadi kesalahan server: `{ success: false, message: "Terjadi kesalahan pada server." }`.
@@ -15,10 +15,10 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import { pesertaEsportTable } from "@/db/schemas/esport-schema";
+import { pesertaWebDesignTable } from "@/db/schemas/web-design-schema";
 import { ServerResponseType } from "@/types/server-response-type";
-import { isNumeric } from "@/utils/is-numeric";
-import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import { isNumeric } from "@/utils/home/is-numeric";
+import { FormPendaftaranPesertaSchemaType } from "@/zod/home/web-design/form-pendaftaran-tim-schema";
 import { eq } from "drizzle-orm";
 
 export async function cekKetersediaanPemain(
@@ -33,24 +33,10 @@ export async function cekKetersediaanPemain(
                                 };
                         }
 
-                        const cekIdMLRes =
-                                await db.query.pesertaEsportTable.findFirst({
-                                        where: eq(
-                                                pesertaEsportTable.idML,
-                                                p.idML
-                                        ),
-                                });
-                        if (cekIdMLRes) {
-                                return {
-                                        success: false,
-                                        message: `ID ML ${p.idML} tim telah dipakai.`,
-                                };
-                        }
-
                         const cekNpmRes =
-                                await db.query.pesertaEsportTable.findFirst({
+                                await db.query.pesertaWebDesignTable.findFirst({
                                         where: eq(
-                                                pesertaEsportTable.npm,
+                                                pesertaWebDesignTable.npm,
                                                 p.npm!
                                         ),
                                 });

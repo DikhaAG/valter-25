@@ -18,18 +18,19 @@ import {
         DialogTitle,
         DialogDescription,
 } from "@/components/ui/dialog";
-import { updateBuktiPembayaranEsport } from "@/server/home/e-sport/detail-pendaftaran/update-bukti-pembayaran";
+import { updateBuktiPembayaran } from "@/server/home/web-design/detail-pendaftaran/update-bukti-pembayaran";
 import { Pencil, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/nb/button";
 import { toast } from "sonner";
-import { ImageUploadField } from "./image-upload-file";
 import {
         isValidImageType,
         isFileSizeValid,
-} from "@/utils/image-upload-requirements";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+} from "@/utils/home/image-upload-requirements";
+import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
+import { CustomToast } from "@/components/ui/nb/custom-toast";
+import { ImageUploadField } from "@/components/home/detail-pendaftaran/image-upload-field";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {
@@ -81,16 +82,22 @@ export const UpdateImageDialog = ({ team }: Props) => {
 
                 startTransition(async () => {
                         // Memanggil Server Action untuk mengunggah dan memperbarui data
-                        const res = await updateBuktiPembayaranEsport({
+                        const res = await updateBuktiPembayaran({
                                 file: file,
                                 namaTim: team.namaTim,
                         });
 
                         // Menangani respons dari Server Action
                         if (res.error) {
-                                toast.error(res.error);
+                                CustomToast({
+                                        variant: "error",
+                                        message: res.message!,
+                                });
                         } else {
-                                toast.success("Gambar berhasil diperbarui!");
+                                CustomToast({
+                                        variant: "success",
+                                        message: res.message!,
+                                });
                                 router.refresh(); // Memperbarui halaman untuk menampilkan perubahan
                                 setOpen(false); // Menutup dialog
                         }

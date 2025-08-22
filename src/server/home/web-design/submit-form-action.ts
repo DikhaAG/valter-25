@@ -1,10 +1,10 @@
 /**
- * Server Action untuk memproses formulir pendaftaran tim esport.
+ * Server Action untuk memproses formulir pendaftaran tim web design.
  *
  * Fungsi ini melakukan serangkaian operasi kritis:
  * 1.  **Validasi Data**: Menggunakan skema Zod untuk memvalidasi data formulir yang diterima dari klien.
  * 2.  **Unggah File**: Mengunggah file `buktiPembayaran` ke Cloudinary.
- * 3.  **Penyimpanan ke Database**: Memasukkan data tim ke `timEsportTable` dan data peserta ke `pesertaEsportTable` dalam satu alur.
+ * 3.  **Penyimpanan ke Database**: Memasukkan data tim ke `timWebDesignTable` dan data peserta ke `pesertaWebDesignTable` dalam satu alur.
  * 4.  **Penanganan Error**: Menggunakan blok `try...catch` untuk menangani potensi kesalahan database, seperti pelanggaran `unique constraint`. Jika terjadi kesalahan, fungsi ini akan mencoba melakukan *rollback* dengan menghapus data tim yang sudah dimasukkan.
  *
  * @param registrasiFormData Data formulir yang diterima dari klien, dengan tipe yang telah divalidasi oleh Zod.
@@ -14,17 +14,20 @@
  */
 "use server";
 
-import { uploadToCloudinary } from "../../../utils/home/upload-to-cloudinary";
 import { db } from "@/db/drizzle";
 import { v4 as uuidv4 } from "uuid";
 import { isUniqueConstraintViolationError } from "@/utils/home/is-unique-constraint-error";
 import { DrizzleQueryError, eq } from "drizzle-orm";
 import { ServerResponseType } from "@/types/server-response-type";
-import { pesertaEsportTable, timEsportTable } from "@/db/schemas/esport-schema";
 import {
         formPendaftaranTimSchema,
         FormPendaftaranTimSchemaType,
-} from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+} from "@/zod/home/web-design/form-pendaftaran-tim-schema";
+import { uploadToCloudinary } from "@/utils/home/upload-to-cloudinary";
+import {
+        pesertaWebDesignTable,
+        timWebDesignTable,
+} from "@/db/schemas/web-design-schema";
 
 export async function submitFormAction(
         registrasiFormData: FormPendaftaranTimSchemaType
@@ -53,7 +56,7 @@ export async function submitFormAction(
 
                 // Insert ke tabel timML
                 const insertTim = await db
-                        .insert(timEsportTable)
+                        .insert(timWebDesignTable)
                         .values({
                                 id: uuidv4(),
                                 namaTim: namaTim,
@@ -61,18 +64,17 @@ export async function submitFormAction(
                                 instansi,
                                 buktiPembayaran: buktiPembayaranUrl,
                         })
-                        .returning({ insertedId: timEsportTable.id });
+                        .returning({ insertedId: timWebDesignTable.id });
 
                 // Setelah berhasil, insert ke tabel pesertaML
                 const pesertaToInsert = peserta.map((p) => ({
                         id: uuidv4(),
                         namaTim: namaTim,
-                        idML: p.idML,
                         nama: p.nama,
                         npm: p.npm,
                 }));
 
-                await db.insert(pesertaEsportTable).values(pesertaToInsert);
+                await db.insert(pesertaWebDesignTable).values(pesertaToInsert);
 
                 return {
                         success: true,
@@ -80,19 +82,10 @@ export async function submitFormAction(
                 };
         } catch (error) {
                 await db
-                        .delete(timEsportTable)
-                        .where(eq(timEsportTable.namaTim, namaTim));
+                        .delete(timWebDesignTable)
+                        .where(eq(timWebDesignTable.namaTim, namaTim));
                 if (isUniqueConstraintViolationError(error)) {
                         if (
-                                (
-                                        error as DrizzleQueryError
-                                ).cause?.message.includes("id_ml")
-                        ) {
-                                return {
-                                        success: false,
-                                        message: "ID telah terdaftar.",
-                                };
-                        } else if (
                                 (
                                         error as DrizzleQueryError
                                 ).cause?.message.includes("npm")

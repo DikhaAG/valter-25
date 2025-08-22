@@ -1,5 +1,5 @@
 /**
- * Server Action untuk memperbarui bukti pembayaran tim esport.
+ * Server Action untuk memperbarui bukti pembayaran tim lomba web design.
  *
  * Fungsi ini menerima file gambar baru dan nama tim, lalu mengunggahnya ke Cloudinary
  * dan memperbarui URL gambar di database.
@@ -13,9 +13,9 @@
  */
 "use server";
 import { eq } from "drizzle-orm";
-import { uploadToCloudinary } from "../../../../utils/home/upload-to-cloudinary";
 import { db } from "@/db/drizzle";
-import { timEsportTable } from "@/db/schemas/esport-schema";
+import { timWebDesignTable } from "@/db/schemas/web-design-schema";
+import { uploadToCloudinary } from "@/utils/home/upload-to-cloudinary";
 import { ServerResponseType } from "@/types/server-response-type";
 
 // --- SERVER ACTION UNTUK UPDATE GAMBAR ---
@@ -57,9 +57,9 @@ export async function updateBuktiPembayaran({
 
                 // Perbarui URL gambar di database
                 await db
-                        .update(timEsportTable)
+                        .update(timWebDesignTable)
                         .set({ buktiPembayaran: imageUrl })
-                        .where(eq(timEsportTable.namaTim, namaTim));
+                        .where(eq(timWebDesignTable.namaTim, namaTim));
 
                 return { success: true };
         } catch (error) {

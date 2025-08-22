@@ -1,8 +1,18 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
+import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
+import { getTimById } from "@/server/queries/e-sport/get-tim-by-id";
+import { gcUrl } from "@/data/home/e-sport/gc-url";
+// ---------------------------------------------------------
+import { Loader } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+// ---------------------------------------------------
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
-import { ImageDialog } from "./_components/image-dialog";
-import { UpdateImageDialog } from "./_components/update-image-dialog";
 import {
         Table,
         TableBody,
@@ -11,23 +21,14 @@ import {
         TableHeader,
         TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
-import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
 import { Button } from "@/components/ui/nb/button";
-import { Loader } from "lucide-react";
 import { Badge } from "@/components/ui/nb/badge";
-import { FaWhatsapp } from "react-icons/fa";
-
-import { useRouter } from "next/navigation";
-
-import { getTimEsportById } from "@/server/queries/get-tim-esport-by-id";
-import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
+import { SalinKode } from "@/components/home/detail-pendaftaran/salin-kode";
+//-------------------------------------------------------------------
+import { ImageDialog } from "./_components/image-dialog";
+import { UpdateImageDialog } from "./_components/update-image-dialog";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
-import { SalinKode } from "./_components/salin-kode";
 import { ExportDataPendaftaran } from "./_components/export-data-pendaftaran";
-import Link from "next/link";
-import { gcUrl } from "@/data/home/e-sport/gc-url";
 
 export default function DetailPendaftaranPage() {
         const [team, setTeam] = useState<TimDisplaySchemaType | undefined>();
@@ -42,7 +43,7 @@ export default function DetailPendaftaranPage() {
                         if (!res.success) {
                                 return;
                         }
-                        getTimEsportById(kodeStored).then((res) => {
+                        getTimById(kodeStored).then((res) => {
                                 if (!res.success) {
                                         return;
                                 }
@@ -100,8 +101,8 @@ export default function DetailPendaftaranPage() {
                                                         </h3>
                                                         <div className="flex flex-col space-y-2 justify-end items-end">
                                                                 <SalinKode
-                                                                        team={
-                                                                                team
+                                                                        kode={
+                                                                                team.id
                                                                         }
                                                                 />
                                                                 <ExportDataPendaftaran

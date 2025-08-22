@@ -1,4 +1,4 @@
-import { HomeAcaraHeaderDataType } from "@/types/home/home/acara/header-data-type";
+import { HomeAcaraHeaderDataType } from "@/types/home/acara/header-data-type";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import Image from "next/image";
 

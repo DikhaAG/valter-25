@@ -5,21 +5,20 @@ import {
         TooltipContent,
         TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { copyToClipboard } from "@/utils/copy-to-clipboard";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import { copyToClipboard } from "@/utils/home/detal-pendaftaran/copy-to-clipboard";
 import { Clipboard } from "lucide-react";
 
 interface Props {
-        team: TimDisplaySchemaType;
+        kode: string;
 }
-export function SalinKode({ team }: Props) {
+export function SalinKode({ kode }: Props) {
         return (
                 <Tooltip>
                         <TooltipTrigger asChild>
                                 <Button
                                         variant={"gosong"}
                                         onClick={() => {
-                                                copyToClipboard(team.id);
+                                                copyToClipboard(kode);
                                                 CustomToast({
                                                         variant: "default",
                                                         message: `Kode berhasil disalin. 😎`,

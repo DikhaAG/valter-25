@@ -5,8 +5,8 @@ import {
         TooltipContent,
         TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { exportDataPendaftaranToExcel } from "@/utils/home/detal-pendaftaran/export-data-pendaftaran-esport";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import { exportDataPendaftaranToExcel } from "@/utils/home/detal-pendaftaran/export-data-pendaftaran-web-design";
+import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
 import { Download } from "lucide-react";
 
 interface Props {

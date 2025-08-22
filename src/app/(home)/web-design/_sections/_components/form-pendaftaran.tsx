@@ -1,7 +1,30 @@
 "use client";
+// PACKAGES
+import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, Trash2 } from "lucide-react";
+// ZOD
+import {
+        formPendaftaranTimSchema,
+        FormPendaftaranTimSchemaType,
+} from "@/zod/home/web-design/form-pendaftaran-tim-schema";
+// SERVER
+import { cekKetersediaanNoWa } from "@/server/home/web-design/cek-ketersediaan-no-wa";
+import { cekKetersediaanPemain } from "@/server/home/web-design/cek-ketersediaan-peserta";
+import { cekKetersediaanNamaTim } from "@/server/home/web-design/cek-ketersediaan-nama-tim";
+import { submitFormAction } from "@/server/home/web-design/submit-form-action";
+// UTILS
+import { isNumeric } from "@/utils/home/is-numeric";
+import { wrapSymbols } from "@/utils/wrap-symbols";
+import { emotError } from "@/data/emot-response";
+// COMPONENTS
 import { Button } from "@/components/ui/nb/button";
 import { Input } from "@/components/ui/nb/input";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomToast } from "@/components/ui/nb/custom-toast";
+import { Checkbox } from "@/components/ui/nb/checkbox";
+import { Label } from "@/components/ui/nb/label";
 import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import {
         FormField,
@@ -10,26 +33,8 @@ import {
         FormControl,
         FormMessage,
 } from "@/components/ui/form";
-import { Plus, Trash2 } from "lucide-react";
-import { UploadBuktiPembayaranField } from "@/app/(home)/e-sport/_sections/_components/upload-bukti-pembayaran-field";
-import { v4 as uuidv4 } from "uuid";
-import { submitFormAction } from "@/server/home/e-sport/submit-form-action";
-import { CustomToast } from "@/components/ui/nb/custom-toast";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Checkbox } from "@/components/ui/nb/checkbox";
-import { Label } from "@/components/ui/nb/label";
-import { cekKetersediaanNamaTim } from "@/server/home/e-sport/cek-ketersediaan-nama-tim";
-import { emotError } from "@/data/emot-response";
-import { cekKetersediaanPemain } from "@/server/home/e-sport/cek-ketersediaan-pemain";
-import { cekKetersediaanNoWa } from "@/server/home/e-sport/cek-ketersediaan-no-wa";
-import { isNumeric } from "@/utils/is-numeric";
-import { wrapSymbols } from "@/utils/wrap-symbols";
-import {
-        formPendaftaranTimSchema,
-        FormPendaftaranTimSchemaType,
-} from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 import { Spinner } from "@/components/ui/nb/Spinner";
+import { UploadBuktiPembayaranField } from "./upload-bukti-pembayaran-field";
 
 export function FormPendaftaran() {
         const [termsChecked, setTermsChecked] = useState<boolean>(false);
@@ -41,9 +46,7 @@ export function FormPendaftaran() {
                         namaTim: "",
                         instansi: "",
                         noWa: "",
-                        peserta: [
-                                { id: uuidv4(), idML: "", nama: "", npm: "" },
-                        ], // Baris pertama secara default
+                        peserta: [{ id: uuidv4(), nama: "", npm: "" }], // Baris pertama secara default
                 },
                 mode: "onBlur",
         });
@@ -159,7 +162,7 @@ export function FormPendaftaran() {
                         });
                         form.reset();
                         sessionStorage.setItem("kodeTim", res.data!);
-                        router.push("/e-sport/detail-pendaftaran");
+                        router.push("/web-design/detail-pendaftaran");
                         router.refresh();
                 }
                 // Di sini Anda bisa melakukan insert ke database menggunakan Drizzle ORM
@@ -275,30 +278,6 @@ export function FormPendaftaran() {
                                                 <div className="">
                                                         {wrapSymbols("#")}
                                                         {index + 1}
-                                                </div>
-                                                <div>
-                                                        <FormField
-                                                                control={
-                                                                        form.control
-                                                                }
-                                                                name={`peserta.${index}.idML`}
-                                                                render={({
-                                                                        field,
-                                                                }) => (
-                                                                        <FormItem className="flex-1">
-                                                                                <FormLabel>
-                                                                                        ID
-                                                                                </FormLabel>
-                                                                                <FormControl>
-                                                                                        <Input
-                                                                                                placeholder="ex: 6969"
-                                                                                                {...field}
-                                                                                        />
-                                                                                </FormControl>
-                                                                                <FormMessage />
-                                                                        </FormItem>
-                                                                )}
-                                                        />
                                                 </div>
                                                 <div>
                                                         <FormField

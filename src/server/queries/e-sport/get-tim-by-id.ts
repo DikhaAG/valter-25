@@ -20,7 +20,7 @@ import { eq } from "drizzle-orm";
 import { timEsportTable } from "@/db/schemas/esport-schema";
 import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 
-export async function getTimEsportById(
+export async function getTimById(
         id: string
 ): Promise<ServerResponseType<TimDisplaySchemaType>> {
         try {

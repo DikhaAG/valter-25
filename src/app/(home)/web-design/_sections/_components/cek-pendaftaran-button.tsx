@@ -26,7 +26,7 @@ import {
 import { Input } from "@/components/ui/nb/input";
 import { Label } from "@/components/ui/nb/label";
 import { emotError } from "@/data/emot-response";
-import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
+import { cekKodeUnik } from "@/server/home/web-design/cek-kode-unik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validate } from "uuid";
@@ -76,7 +76,7 @@ export function CekPendaftaranButton() {
 
                 setOnSubmit(true);
                 sessionStorage.setItem("kodeTim", kode!);
-                router.push("/e-sport/detail-pendaftaran");
+                router.push("/web-design/detail-pendaftaran");
         }
 
         return (

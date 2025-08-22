@@ -15,7 +15,7 @@ import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import { ZoomableImage } from "./zoomable-image";
+import { ZoomableImage } from "../../../../../components/home/zoomable-image";
 
 interface Props {
         buktiPembayaran: string;

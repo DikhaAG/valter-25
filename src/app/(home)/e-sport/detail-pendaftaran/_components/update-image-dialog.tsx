@@ -24,11 +24,11 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/nb/button";
 import { toast } from "sonner";
-import { ImageUploadField } from "./image-upload-file";
+import { ImageUploadField } from "../../../../../components/home/detail-pendaftaran/image-upload-field";
 import {
         isValidImageType,
         isFileSizeValid,
-} from "@/utils/image-upload-requirements";
+} from "@/utils/home/image-upload-requirements";
 import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 

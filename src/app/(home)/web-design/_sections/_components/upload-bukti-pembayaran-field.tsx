@@ -20,8 +20,8 @@ import {
         isFileSizeValid,
         MAX_FILE_SIZE_KB,
         ACCEPTED_IMAGE_TYPES,
-} from "@/utils/image-upload-requirements";
-import { FormPendaftaranTimSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+} from "@/utils/home/image-upload-requirements";
+import { FormPendaftaranTimSchemaType } from "@/zod/home/web-design/form-pendaftaran-tim-schema";
 
 interface Props {
         field: ControllerRenderProps<FormPendaftaranTimSchemaType>;

@@ -11,11 +11,11 @@
  * @param {string} props.namaTim - Nama tim yang digunakan untuk teks alt gambar.
  */
 "use client";
+import { ZoomableImage } from "@/components/home/zoomable-image";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import { ZoomableImage } from "./zoomable-image";
 
 interface Props {
         buktiPembayaran: string;

@@ -17,7 +17,7 @@
 import { db } from "@/db/drizzle";
 import { pesertaEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
-import { isNumeric } from "@/utils/is-numeric";
+import { isNumeric } from "@/utils/home/is-numeric";
 import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 import { eq } from "drizzle-orm";
 

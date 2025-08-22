@@ -10,7 +10,7 @@
  * @param {Dispatch<SetStateAction<File | null>>} props.onFileChange - Fungsi callback untuk
  * memperbarui state file di komponen induk dengan file yang diunggah.
  */
-import { ACCEPTED_IMAGE_TYPES } from "@/utils/image-upload-requirements";
+import { ACCEPTED_IMAGE_TYPES } from "@/utils/home/image-upload-requirements";
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "sonner";

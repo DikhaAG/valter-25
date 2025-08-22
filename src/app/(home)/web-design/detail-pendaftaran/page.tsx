@@ -12,7 +12,7 @@ import {
         TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
+import { cekKodeUnik } from "@/server/home/web-design/cek-kode-unik";
 import { Button } from "@/components/ui/nb/button";
 import { Clipboard, Loader } from "lucide-react";
 import {
@@ -20,20 +20,18 @@ import {
         TooltipContent,
         TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { copyToClipboard } from "@/utils/copy-to-clipboard";
+import { copyToClipboard } from "@/utils/home/detal-pendaftaran/copy-to-clipboard";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { Badge } from "@/components/ui/nb/badge";
 
 import { useRouter } from "next/navigation";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
-import { getTimEsportById } from "@/server/queries/get-tim-esport-by-id";
-import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
+import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
+import { getTimById } from "@/server/queries/web-design/get-tim-by-id";
+import { PesertaEsportTableSchemaType } from "@/zod/tables/web-design/peserta";
 import { DetailPendaftaranSkeleton } from "./_components/Skeleton";
 
 export default function DetailPendaftaranPage() {
-        const [team, setTeam] = useState<
-        TimDisplaySchemaType | undefined
-        >();
+        const [team, setTeam] = useState<TimDisplaySchemaType | undefined>();
         const router = useRouter();
 
         useEffect(() => {
@@ -45,7 +43,7 @@ export default function DetailPendaftaranPage() {
                         if (!res.success) {
                                 return;
                         }
-                        getTimEsportById(kodeStored).then((res) => {
+                        getTimById(kodeStored).then((res) => {
                                 if (!res.success) {
                                         return;
                                 }
@@ -202,11 +200,6 @@ export default function DetailPendaftaranPage() {
                                                                                                                                   p.id
                                                                                                                           }
                                                                                                                   >
-                                                                                                                          <TableCell className="border border-gray-300 px-4 py-2 text-sm">
-                                                                                                                                  {
-                                                                                                                                          p.idML
-                                                                                                                                  }
-                                                                                                                          </TableCell>
                                                                                                                           <TableCell className="border border-gray-300 px-4 py-2 text-sm">
                                                                                                                                   {
                                                                                                                                           p.nama
