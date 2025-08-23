@@ -11,7 +11,7 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Plus, Trash2 } from "lucide-react";
-import { UploadBuktiPembayaranField } from "./upload-bukti-pembayaran-field";
+import { UploadBuktiPembayaranField } from "../_components/upload-bukti-pembayaran-field";
 import { v4 as uuidv4 } from "uuid";
 import { submitFormAction } from "@/server/home/e-sport/submit-form-action";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
@@ -19,28 +19,27 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
-import { cekKetersediaanNamaTim } from "@/server/home/e-sport/cek-ketersediaan-nama-tim";
-import { emotError } from "@/data/emot-response";
-import { cekKetersediaanPeserta } from "@/server/home/e-sport/cek-ketersediaan-peserta";
-import { cekKetersediaanNoWa } from "@/server/home/e-sport/cek-ketersediaan-no-wa";
-import { isNumeric } from "@/utils/home/is-numeric";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import {
-   formPendaftaranTimUmumSchema,
-   FormPendaftaranTimUmumSchemaType,
-} from "@/zod/home/e-sport/form-pendaftaran-tim-umum-schema";
+   formPendaftaranTimSchema,
+   FormPendaftaranTimSchemaType,
+} from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
 import { Spinner } from "@/components/ui/nb/Spinner";
+import { cekKetersediaanNpm } from "@/server/home/e-sport/cek-ketersediaan-npm";
+import { cekKetersediaanIdMl } from "@/server/home/e-sport/cek-ketersediaan-id-ml";
 
-export function FormPendaftaranUmum() {
+export function FormPendaftaranMahasiswa() {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);
    const [loading, setLoading] = useState(false);
    const router = useRouter();
-   const form = useForm<FormPendaftaranTimUmumSchemaType>({
-      resolver: zodResolver(formPendaftaranTimUmumSchema),
+   const form = useForm<FormPendaftaranTimSchemaType>({
+      resolver: zodResolver(formPendaftaranTimSchema),
       defaultValues: {
+         as: "mahasiswa",
          namaTim: "",
+         instansi: "",
          noWa: "",
-         peserta: [{ id: uuidv4(), idML: "", nama: "" }], // Baris pertama secara default
+         peserta: [{ id: uuidv4(), idML: "", nama: "", npm: "" }], // Baris pertama secara default
       },
       mode: "onBlur",
    });
@@ -50,106 +49,44 @@ export function FormPendaftaranUmum() {
       name: "peserta",
    });
 
-   async function onSubmit(data: FormPendaftaranTimUmumSchemaType) {
+   async function onSubmit(data: FormPendaftaranTimSchemaType) {
       setLoading(true);
-      //cek apakah nomor whatsapp merupakan number
-      if (!isNumeric(data.noWa)) {
-         form.setError("noWa", {
-            message: "Nomor Whatsapp tidak valid!.",
-         });
-         CustomToast({
-            variant: "error",
-            message: `Nomor Whatsapp tidak valid!. ${emotError}`,
-         });
-         setLoading(false);
-         return;
-      }
 
-      // cek jika bukti pembayaran sudah dipload
-      if (!data.buktiPembayaran) {
-         form.setError("buktiPembayaran", {
-            message: "Bukti pembayaran belum diupload!.",
-         });
-         setLoading(false);
-         return;
-      }
-
-      // cek apakah no wa telah terdaftar
-      const cekNoWa = await cekKetersediaanNoWa(data.noWa);
-      if (!cekNoWa.success) {
-         if (cekNoWa.statusCode === 500) {
-            CustomToast({
-               variant: "error",
-               message: `${cekNoWa.message} ${emotError}`,
+      let hasError = false;
+      for (const [i, p] of data.peserta.entries()) {
+         const cekIdMl = await cekKetersediaanIdMl(p);
+         const cekNpm = await cekKetersediaanNpm(p);
+         if (!cekIdMl.success) {
+            form.setError(`peserta.${i}.idML`, {
+               type: "server",
+               message: cekIdMl.message, // Gunakan pesan dari server
             });
-            setLoading(false);
-            return;
+            hasError = true;
          }
-         CustomToast({
-            variant: "error",
-            message: `${cekNoWa.message} ${emotError}`,
-         });
-         setLoading(false);
-         return;
+         if (!cekNpm.success) {
+            form.setError(`peserta.${i}.npm`, {
+               type: "server",
+               message: cekNpm.message, // Gunakan pesan dari server
+            });
+            hasError = true;
+         }
       }
 
-      // cek jika jumlah anggota sudah mencapai 5
-      if (data.peserta.length < 5) {
-         CustomToast({
-            variant: "error",
-            message: "Permain harus minimal berjumlah 5 orang.",
-         });
-         setLoading(false);
-         return;
-      }
-      // cek apakah nama tim telah terdaftar
-      const cekNamaTim = await cekKetersediaanNamaTim(data.namaTim);
-      if (!cekNamaTim.success) {
-         if (cekNamaTim.statusCode === 500) {
-            CustomToast({
-               variant: "error",
-               message: `${cekNamaTim.message} ${emotError}`,
-            });
-            setLoading(false);
-            return;
-         }
-         CustomToast({
-            variant: "error",
-            message: `${cekNamaTim.message} ${emotError}`,
-         });
-         setLoading(false);
-         return;
-      }
-
-      //cek apakah id ml atau npm pemain telah terdaftar
-      // dan cek apakah npm pemain hanya mengandung angka
-      const cekPemain = await cekKetersediaanPeserta(data.peserta, "umum");
-      if (!cekPemain.success) {
-         if (cekPemain.statusCode === 500) {
-            CustomToast({
-               variant: "error",
-               message: `${cekPemain.message} ${emotError}`,
-            });
-            setLoading(false);
-            return;
-         }
-         CustomToast({
-            variant: "warning",
-            message: `${cekPemain.message} ${emotError}`,
-         });
+      if (hasError) {
          setLoading(false);
          return;
       }
 
       const res = await submitFormAction(data);
       if (!res.success) {
+         setLoading(false);
          CustomToast({
             variant: "error",
             message: `${res.message} 😂💀`,
          });
-         setLoading(false);
          return;
       } else {
+         setLoading(false);
          CustomToast({
             variant: "success",
             message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
@@ -159,13 +96,17 @@ export function FormPendaftaranUmum() {
          router.push("/e-sport/detail-pendaftaran");
          router.refresh();
       }
-      // Di sini Anda bisa melakukan insert ke database menggunakan Drizzle ORM
-      // Contoh:
-      // await db.insert(yourTable).values(data.items);
    }
+
    return (
       <FormProvider {...form}>
          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+               control={form.control}
+               name="as"
+               defaultValue="mahasiswa"
+               render={({}) => <FormItem hidden></FormItem>}
+            />
             <div>
                <FormField
                   control={form.control}
@@ -185,7 +126,7 @@ export function FormPendaftaranUmum() {
                />
             </div>
 
-            <div>
+            <div className="grid grid-cols-2 gap-4">
                <div className="">
                   <FormField
                      control={form.control}
@@ -207,18 +148,38 @@ export function FormPendaftaranUmum() {
                      )}
                   />
                </div>
+               <div className="pt-4 md:pt-0">
+                  <FormField
+                     control={form.control}
+                     name={`instansi`}
+                     render={({ field }) => (
+                        <FormItem className="flex-1">
+                           <FormLabel className="text-xs">
+                              Asal Instansi
+                           </FormLabel>
+                           <FormControl>
+                              <Input
+                                 className="text-xs"
+                                 placeholder="ex: Politeknik Negeri Sriwijaya"
+                                 {...field}
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+               </div>
             </div>
+
             <div>
                <FormField
                   control={form.control}
                   name={`buktiPembayaran`}
-                  render={({ field }) => (
+                  render={({}) => (
                      <FormItem>
                         <FormLabel className="mb-2">Bukti Pembayaran</FormLabel>
                         <FormControl>
-                           <UploadBuktiPembayaranField
-                              form={form}
-                           />
+                           <UploadBuktiPembayaranField form={form} />
                         </FormControl>
                         <FormMessage />
                      </FormItem>
@@ -227,7 +188,7 @@ export function FormPendaftaranUmum() {
             </div>
             <h2>Daftar Peserta</h2>
             {fields.map((field, index) => (
-               <div key={field.id} className="grid md:grid-cols-6 gap-6">
+               <div key={field.id} className="grid md:grid-cols-8 gap-6">
                   <div className="">
                      {wrapSymbols("#")}
                      {index + 1}
@@ -246,6 +207,21 @@ export function FormPendaftaranUmum() {
                               <FormLabel>ID ML</FormLabel>
                               <FormControl>
                                  <Input placeholder="ex: 6969" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                           </FormItem>
+                        )}
+                     />
+                  </div>
+                  <div className="col-span-2">
+                     <FormField
+                        control={form.control}
+                        name={`peserta.${index}.npm`}
+                        render={({ field }) => (
+                           <FormItem className="flex-1">
+                              <FormLabel>NPM</FormLabel>
+                              <FormControl>
+                                 <Input placeholder="ex: 0624..." {...field} />
                               </FormControl>
                               <FormMessage />
                            </FormItem>
@@ -290,6 +266,7 @@ export function FormPendaftaranUmum() {
                      append({
                         idML: "",
                         nama: "",
+                        npm: "",
                      })
                   }
                   disabled={form.getValues("peserta").length === 7}
@@ -316,7 +293,7 @@ export function FormPendaftaranUmum() {
                </Label>
             </div>
             <FormField
-               name="npmatauidsama"
+               name="pesertaError"
                render={({}) => (
                   <FormItem>
                      <FormMessage className="p-4 bg-red-200 border-4 rounded-lg font-semibold border-foreground shadow-[7px_7px_0px_#00000040]" />
