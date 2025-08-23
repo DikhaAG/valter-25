@@ -13,14 +13,14 @@
  */
 "use server";
 import { eq } from "drizzle-orm";
-import { uploadToCloudinary } from "../../../../utils/home/upload-to-cloudinary";
 import { db } from "@/db/drizzle";
 import { timEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE_KB } from "@/utils/home/image-upload-requirements";
+import { uploadToCloudinary } from "@/utils/home/upload-to-cloudinary";
 
 // --- SERVER ACTION UNTUK UPDATE GAMBAR ---
-export async function updateBuktiPembayaran({
+export async function esportUpdateBuktiPembayaran({
    file,
    namaTim,
 }: {

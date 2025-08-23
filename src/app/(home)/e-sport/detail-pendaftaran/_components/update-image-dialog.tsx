@@ -18,7 +18,6 @@ import {
    DialogTitle,
    DialogDescription,
 } from "@/components/ui/dialog";
-import { updateBuktiPembayaran } from "@/server/home/e-sport/detail-pendaftaran/update-bukti-pembayaran";
 import { Pencil, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -31,6 +30,7 @@ import {
 } from "@/utils/home/image-upload-requirements";
 import type { EsportRegistrationDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/display";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
+import { esportUpdateBuktiPembayaran } from "@/server/home/e-sport/detail-pendaftaran/update/update-bukti-pembayaran";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {
@@ -80,7 +80,7 @@ export const UpdateImageDialog = ({ team }: Props) => {
 
       startTransition(async () => {
          // Memanggil Server Action untuk mengunggah dan memperbarui data
-         const res = await updateBuktiPembayaran({
+         const res = await esportUpdateBuktiPembayaran({
             file: file,
             namaTim: team.namaTim,
          });

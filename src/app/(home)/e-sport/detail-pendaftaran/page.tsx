@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { EsportRegistrationDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/display";
 import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
-import { esportTimRegistrationCodeCheck } from "@/server/home/e-sport/validate/cek-kode-unik";
+import { esportTimRegistrationCodeCheck } from "@/server/home/e-sport/validate/registration-code-check";
 import { getTimById } from "@/server/queries/e-sport/get-tim-by-id";
 import { gcUrl } from "@/data/home/e-sport/gc-url";
 // ---------------------------------------------------

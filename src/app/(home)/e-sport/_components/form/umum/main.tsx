@@ -29,8 +29,8 @@ import {
    EsportTimUmumFormSchemaType,
 } from "@/zod/home/e-sport/umum-form";
 import { Spinner } from "@/components/ui/nb/Spinner";
-import { esportIdMlAvailableCheck } from "@/server/home/e-sport/validate/cek-ketersediaan-id-ml";
-import { esportUmumSubmitFormAction } from "@/server/home/e-sport/umum-submit-form-action";
+import { esportIdMlAvailableCheck } from "@/server/home/e-sport/validate/id-ml-available-check";
+import { esportUmumSubmitFormAction } from "@/server/home/e-sport/insert/umum-submit-form-action";
 
 export function EsportUmumForm() {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);
