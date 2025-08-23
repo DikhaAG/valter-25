@@ -1,7 +1,7 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { FormPendaftaran } from "./_sections/form-pendaftaran/main";
+import { EsportForm } from "./_components/form/main";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
 import { headerData } from "@/data/home/e-sport/header-data";
@@ -26,7 +26,7 @@ export default function EsportPage() {
          <TimelineSection data={timelineData} isVisible={isVisible} />
 
          {/* Registration Form Section */}
-         <FormPendaftaran isVisible={isVisible} />
+         <EsportForm isVisible={isVisible} />
       </div>
    );
 }

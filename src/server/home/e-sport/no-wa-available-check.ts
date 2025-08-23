@@ -17,28 +17,28 @@ import { timEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
 import { eq } from "drizzle-orm";
 
-export async function cekKetersediaanNoWa(
-        noWa: string
+export async function esportNoWaAvaliableCheck(
+   noWa: string
 ): Promise<ServerResponseType<unknown>> {
-        try {
-                const res = await db.query.timEsportTable.findFirst({
-                        where: eq(timEsportTable.noWa, noWa),
-                });
-                if (res) {
-                        return {
-                                success: false,
-                                message: "Nomor Whatsapp telah terdaftar.",
-                        };
-                }
-                return {
-                        success: true,
-                };
-        } catch (error) {
-                return {
-                        success: false,
-                        message: "Terjadi kesalahan pada server.",
-                        error: error,
-                        statusCode: 500,
-                };
-        }
+   try {
+      const res = await db.query.timEsportTable.findFirst({
+         where: eq(timEsportTable.noWa, noWa),
+      });
+      if (res) {
+         return {
+            success: false,
+            message: "Nomor Whatsapp telah terdaftar.",
+         };
+      }
+      return {
+         success: true,
+      };
+   } catch (error) {
+      return {
+         success: false,
+         message: "Terjadi kesalahan pada server.",
+         error: error,
+         statusCode: 500,
+      };
+   }
 }

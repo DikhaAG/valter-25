@@ -1,9 +1,11 @@
 import { emotError } from "@/data/emot-response";
+import { esportNoWaAvaliableCheck } from "@/server/home/e-sport/no-wa-available-check";
+import { esportTimNameAvaliableCheck } from "@/server/home/e-sport/tim-name-available-check";
 import { isNumeric } from "@/utils/home/is-numeric";
 import { asEnumSchema } from "@/zod/tables/enums/asEnum";
 import { z } from "zod";
 
-export const formPendaftaranPesertaUmumSchema = z.object({
+export const esportPesertaUmumFormSchema = z.object({
    id: z.uuid().optional(),
    idML: z
       .string()
@@ -11,7 +13,7 @@ export const formPendaftaranPesertaUmumSchema = z.object({
    nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
 });
 
-export const formPendaftaranTimUmumSchema = z
+export const esportTimUmumFormSchema = z
    .object({
       as: asEnumSchema,
       namaTim: z.string().min(1, { message: "Nama tim tidak boleh kosong" }),
@@ -19,24 +21,44 @@ export const formPendaftaranTimUmumSchema = z
          message: "Nomor Whatsapp minimal 11 angka.",
       }),
       buktiPembayaran: z.any(),
-      peserta: z.array(formPendaftaranPesertaUmumSchema),
+      peserta: z.array(esportPesertaUmumFormSchema),
    })
+   .refine(
+      async (data) => {
+         const res = await esportTimNameAvaliableCheck(data.namaTim);
+         return res.success;
+      },
+      {
+         error: "Nama Tim telah terdaftar!.",
+         path: ["namaTim"],
+      }
+   )
    .refine(
       (data) => {
          return isNumeric(data.noWa);
       },
       {
-         error: `Nomor Whatsapp tidak valid!.`,
+         error: `Nomor Whatsapp tidak validsss!.`,
+         path: ["noWa"],
+      }
+   )
+   .refine(
+      async (data) => {
+         const res = await esportNoWaAvaliableCheck(data.noWa);
+         return res.success;
+      },
+      {
+         error: "Nomor Whatsapp telah terdaftar!.",
          path: ["noWa"],
       }
    )
    .refine(
       (data) => {
-         return data.peserta.length >= 5;
+         return data.buktiPembayaran;
       },
       {
-         error: `Jumlah pemain minimal 5!.`,
-         path: ["pesertaError"],
+         error: `Bukti pembayaran belum diupload!.`,
+         path: ["buktiPembayaran"],
       }
    )
    .refine(
@@ -54,11 +76,20 @@ export const formPendaftaranTimUmumSchema = z
          // Path di mana error akan ditampilkan
          path: [`pesertaError`],
       }
+   )
+   .refine(
+      (data) => {
+         return data.peserta.length >= 5;
+      },
+      {
+         error: `Jumlah pemain minimal 5!.`,
+         path: ["pesertaError"],
+      }
    );
 
-export type FormPendaftaranTimUmumSchemaType = z.infer<
-   typeof formPendaftaranTimUmumSchema
+export type EsportTimUmumFormSchemaType = z.infer<
+   typeof esportTimUmumFormSchema
 >;
-export type FormPendaftaranPesertaUmumSchemaType = z.infer<
-   typeof formPendaftaranPesertaUmumSchema
+export type EsportPesertaUmumFormSchemaType = z.infer<
+   typeof esportPesertaUmumFormSchema
 >;

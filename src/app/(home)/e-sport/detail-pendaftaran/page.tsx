@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import type { EsportRegistrationDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/display";
 import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
-import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
+import { esportTimRegistrationCodeCheck } from "@/server/home/e-sport/cek-kode-unik";
 import { getTimById } from "@/server/queries/e-sport/get-tim-by-id";
 import { gcUrl } from "@/data/home/e-sport/gc-url";
 // ---------------------------------------------------
@@ -18,16 +18,18 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/nb/button";
-import { SalinKode } from "@/components/home/detail-pendaftaran/salin-kode";
+import { CopyTeamCode } from "@/components/home/detail-pendaftaran/salin-kode";
 //-------------------------------------------------------------------
 import { ImageDialog } from "@/components/home/detail-pendaftaran/image-dialog";
 import { UpdateImageDialog } from "./_components/update-image-dialog";
-import { ExportDataPendaftaran } from "./_components/export-data-pendaftaran";
+import { ExportRegistrationData } from "./_components/export-registration-data";
 import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran/detail-pendaftaran-tim-skeleton";
-import { DetailPendaftaranHeader } from "@/components/home/detail-pendaftaran/header";
+import { RegistrationDetailHeader } from "@/components/home/detail-pendaftaran/header";
 
-export default function DetailPendaftaranPage() {
-   const [team, setTeam] = useState<TimDisplaySchemaType | undefined>();
+export default function EsportRegistrationDetailPage() {
+   const [team, setTeam] = useState<
+      EsportRegistrationDisplaySchemaType | undefined
+   >();
    const router = useRouter();
 
    useEffect(() => {
@@ -35,7 +37,7 @@ export default function DetailPendaftaranPage() {
       if (!kodeStored) {
          return;
       }
-      cekKodeUnik(kodeStored).then((res) => {
+      esportTimRegistrationCodeCheck(kodeStored).then((res) => {
          if (!res.success) {
             return;
          }
@@ -57,20 +59,26 @@ export default function DetailPendaftaranPage() {
             {team ? (
                <>
                   <div className="p-6 flex flex-col gap-y-8 md:gap-y-6">
-                     <DetailPendaftaranHeader
+                     <RegistrationDetailHeader
                         namaTim={team.namaTim}
                         statusPembayaran={team.statusPembayaran}
                         gcUrl={gcUrl}
                      />
                      <div className="flex flex-col space-y-2 justify-end items-end">
-                        <SalinKode kode={team.id} />
-                        <ExportDataPendaftaran team={team} />
+                        <CopyTeamCode kode={team.id} />
+                        <ExportRegistrationData team={team} />
                      </div>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <div className="space-y-2">
-                           <Label>Instansi</Label>
-                           <Input readOnly value={team.instansi!} />
-                        </div>
+                     <div
+                        className={`grid grid-cols-1 ${
+                           team.instansi && "md:grid-cols-2"
+                        }  gap-4 text-xs`}
+                     >
+                        {team.as === "mahasiswa" && (
+                           <div className="space-y-2">
+                              <Label>Instansi</Label>
+                              <Input readOnly value={team.instansi!} />
+                           </div>
+                        )}
                         <div className="space-y-2">
                            <Label>Nomor Whatsapp</Label>
                            <Input readOnly value={team.noWa!} />
@@ -104,9 +112,11 @@ export default function DetailPendaftaranPage() {
                                     <TableHead className="border text-left text-sm text-background">
                                        Nama
                                     </TableHead>
-                                    <TableHead className="border text-left text-sm text-background">
-                                       NPM
-                                    </TableHead>
+                                    {team.as === "mahasiswa" && (
+                                       <TableHead className="border text-left text-sm text-background">
+                                          NPM
+                                       </TableHead>
+                                    )}
                                  </TableRow>
                               </TableHeader>
                               <TableBody>
@@ -121,9 +131,11 @@ export default function DetailPendaftaranPage() {
                                             <TableCell className="border border-gray-300 px-4 py-2 text-sm">
                                                {p.nama}
                                             </TableCell>
-                                            <TableCell className="border border-gray-300 px-4 py-2 text-sm">
-                                               {p.npm}
-                                            </TableCell>
+                                            {team.as === "mahasiswa" && (
+                                               <TableCell className="border border-gray-300 px-4 py-2 text-sm">
+                                                  {p.npm}
+                                               </TableCell>
+                                            )}
                                          </TableRow>
                                       ))
                                     : "tidak ada peserta"}

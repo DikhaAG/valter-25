@@ -21,13 +21,13 @@ import {
    MAX_FILE_SIZE_KB,
    ACCEPTED_IMAGE_TYPES,
 } from "@/utils/home/image-upload-requirements";
-import { FormPendaftaranTimSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
-import { FormPendaftaranTimUmumSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-umum-schema";
+import { EsportTimMahasiswaFormSchemaType } from "@/zod/home/e-sport/mahasiswa-form";
+import { EsportTimUmumFormSchemaType } from "@/zod/home/e-sport/umum-form";
 
 interface Props {
    form:
-      | UseFormReturn<FormPendaftaranTimSchemaType>
-      | UseFormReturn<FormPendaftaranTimUmumSchemaType>;
+      | UseFormReturn<EsportTimMahasiswaFormSchemaType>
+      | UseFormReturn<EsportTimUmumFormSchemaType>;
 }
 
 export function UploadBuktiPembayaranField({ form }: Props) {
@@ -75,13 +75,13 @@ export function UploadBuktiPembayaranField({ form }: Props) {
 
          // Jika validasi berhasil, hapus error dan perbarui nilai form
          form.clearErrors(`buktiPembayaran`);
-         (form as UseFormReturn<FormPendaftaranTimSchemaType>).setValue(
-            `buktiPembayaran`,
-            file,
-            {
-               shouldValidate: true,
-            }
-         );
+         (
+            form as UseFormReturn<
+               EsportTimMahasiswaFormSchemaType | EsportTimUmumFormSchemaType
+            >
+         ).setValue(`buktiPembayaran`, file, {
+            shouldValidate: true,
+         });
          // Buat URL objek untuk menampilkan preview
          setPreviewUrl(URL.createObjectURL(file));
       },

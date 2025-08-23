@@ -14,7 +14,7 @@ import { asEnumTable } from "./enum-schema";
  * dasar setiap tim yang mendaftar.
  */
 export const timEsportTable = pgTable("tim_esport", {
-   as: asEnumTable("as"),
+   as: asEnumTable("as").notNull(),
    /**
     * ID unik tim.
     * Merupakan kunci utama (primary key).
