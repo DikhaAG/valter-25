@@ -1,7 +1,7 @@
 // app/form-schema.ts
 import { emotError } from "@/data/emot-response";
-import { esportNoWaAvaliableCheck } from "@/server/home/e-sport/no-wa-available-check";
-import { esportTimNameAvaliableCheck } from "@/server/home/e-sport/tim-name-available-check";
+import { esportNoWaAvaliableCheck } from "@/server/home/e-sport/validate/no-wa-available-check";
+import { esportTimNameAvaliableCheck } from "@/server/home/e-sport/validate/tim-name-available-check";
 import { isNumeric } from "@/utils/home/is-numeric";
 import { asEnumSchema } from "@/zod/tables/enums/asEnum";
 import { z } from "zod";

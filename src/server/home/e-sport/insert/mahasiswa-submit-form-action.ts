@@ -14,7 +14,7 @@
  */
 "use server";
 
-import { uploadToCloudinary } from "../../../utils/home/upload-to-cloudinary";
+import { uploadToCloudinary } from "../../../../utils/home/upload-to-cloudinary";
 import { db } from "@/db/drizzle";
 import { v4 as uuidv4 } from "uuid";
 import { isUniqueConstraintViolationError } from "@/utils/home/is-unique-constraint-error";

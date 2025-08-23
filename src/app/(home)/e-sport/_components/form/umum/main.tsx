@@ -2,7 +2,12 @@
 import { Button } from "@/components/ui/nb/button";
 import { Input } from "@/components/ui/nb/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFieldArray, FormProvider, FieldErrors } from "react-hook-form";
+import {
+   useForm,
+   useFieldArray,
+   FormProvider,
+   FieldErrors,
+} from "react-hook-form";
 import {
    FormField,
    FormItem,
@@ -24,7 +29,7 @@ import {
    EsportTimUmumFormSchemaType,
 } from "@/zod/home/e-sport/umum-form";
 import { Spinner } from "@/components/ui/nb/Spinner";
-import { esportIdMlAvailableCheck } from "@/server/home/e-sport/cek-ketersediaan-id-ml";
+import { esportIdMlAvailableCheck } from "@/server/home/e-sport/validate/cek-ketersediaan-id-ml";
 import { esportUmumSubmitFormAction } from "@/server/home/e-sport/umum-submit-form-action";
 
 export function EsportUmumForm() {
@@ -85,13 +90,16 @@ export function EsportUmumForm() {
          router.refresh();
       }
    }
-   
-   function formError(e:FieldErrors<EsportTimUmumFormSchemaType>) {
-      console.log(e)
+
+   function formError(e: FieldErrors<EsportTimUmumFormSchemaType>) {
+      console.log(e);
    }
    return (
       <FormProvider {...form}>
-         <form onSubmit={form.handleSubmit(onSubmit, formError)} className="space-y-8">
+         <form
+            onSubmit={form.handleSubmit(onSubmit, formError)}
+            className="space-y-8"
+         >
             <FormField
                control={form.control}
                name="as"
