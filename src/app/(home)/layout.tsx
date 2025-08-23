@@ -3,9 +3,6 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { HomeNavSection } from "./_sections/nav-section";
 import { HomeFooterSection } from "./_sections/footer-section";
-import Image from "next/image";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
 interface Props {
    children: React.ReactNode;
 }

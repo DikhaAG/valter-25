@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ArrowBigRight, ChevronDown, Instagram, Music } from "lucide-react";
+import { ArrowBigRight, ChevronDown, Instagram } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { wrapSymbols } from "@/utils/wrap-symbols";
