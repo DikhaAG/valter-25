@@ -13,7 +13,7 @@ import {
 import { Plus, Trash2 } from "lucide-react";
 import { UploadBuktiPembayaranField } from "../upload-bukti-pembayaran-field";
 import { v4 as uuidv4 } from "uuid";
-import { esportMahasiswaSubmitFormAction } from "@/server/home/e-sport/mahasiswa-submit-form-action";
+import { esportMahasiswaSubmitFormAction } from "@/server/home/e-sport/insert/mahasiswa-submit-form-action";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,12 +21,12 @@ import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import { Spinner } from "@/components/ui/nb/Spinner";
-import { EsportPesertaNpmAvailableCheck } from "@/server/home/e-sport/cek-ketersediaan-npm";
+import { EsportPesertaNpmAvailableCheck } from "@/server/home/e-sport/validate/cek-ketersediaan-npm";
 import {
    esportTimMahasiswaFormSchema,
    EsportTimMahasiswaFormSchemaType,
 } from "@/zod/home/e-sport/mahasiswa-form";
-import { esportIdMlAvailableCheck } from "@/server/home/e-sport/cek-ketersediaan-id-ml";
+import { esportIdMlAvailableCheck } from "@/server/home/e-sport/validate/cek-ketersediaan-id-ml";
 
 export function EsportMahasiswaForm() {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);
