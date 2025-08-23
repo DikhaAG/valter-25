@@ -21,12 +21,12 @@ import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import { Spinner } from "@/components/ui/nb/Spinner";
-import { EsportPesertaNpmAvailableCheck } from "@/server/home/e-sport/validate/cek-ketersediaan-npm";
+import { EsportPesertaNpmAvailableCheck } from "@/server/home/e-sport/validate/npm-available-check";
 import {
    esportTimMahasiswaFormSchema,
    EsportTimMahasiswaFormSchemaType,
 } from "@/zod/home/e-sport/mahasiswa-form";
-import { esportIdMlAvailableCheck } from "@/server/home/e-sport/validate/cek-ketersediaan-id-ml";
+import { esportIdMlAvailableCheck } from "@/server/home/e-sport/validate/id-ml-available-check";
 
 export function EsportMahasiswaForm() {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);

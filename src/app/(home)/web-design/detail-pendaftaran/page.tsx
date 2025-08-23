@@ -14,19 +14,15 @@ import {
 import { useEffect, useState } from "react";
 import { cekKodeUnik } from "@/server/home/web-design/cek-kode-unik";
 import { Button } from "@/components/ui/nb/button";
-import { Loader } from "lucide-react";
-import { Badge } from "@/components/ui/nb/badge";
 import { useRouter } from "next/navigation";
 import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
 import { getTimById } from "@/server/queries/web-design/get-tim-by-id";
 import { PesertaWebDesignTableSchemaType } from "@/zod/tables/web-design/peserta";
-import { SalinKode } from "@/components/home/detail-pendaftaran/salin-kode";
+import { CopyTeamCode } from "@/components/home/detail-pendaftaran/salin-kode";
 import { ExportDataPendaftaran } from "./_components/export-data-pendaftaran";
-import Link from "next/link";
 import { gcUrl } from "@/data/home/web-design/gc-url";
-import { FaWhatsapp } from "react-icons/fa";
 import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran/detail-pendaftaran-tim-skeleton";
-import { DetailPendaftaranHeader } from "@/components/home/detail-pendaftaran/header";
+import { RegistrationDetailHeader } from "@/components/home/detail-pendaftaran/header";
 
 export default function DetailPendaftaranPage() {
    const [team, setTeam] = useState<TimDisplaySchemaType | undefined>();
@@ -59,13 +55,13 @@ export default function DetailPendaftaranPage() {
             {team ? (
                <>
                   <div className="p-6 flex flex-col gap-y-8 md:gap-y-6">
-                     <DetailPendaftaranHeader
+                     <RegistrationDetailHeader
                         namaTim={team.namaTim}
                         statusPembayaran={team.statusPembayaran}
                         gcUrl={gcUrl}
                      />
                      <div className="flex flex-col space-y-2 justify-end items-end">
-                        <SalinKode kode={team.id} />
+                        <CopyTeamCode kode={team.id} />
                         <ExportDataPendaftaran team={team} />
                      </div>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
