@@ -12,8 +12,15 @@
  * komponen ini terlihat dan mengaktifkan animasi.
  */
 
+import {
+   Tabs,
+   TabsContent,
+   TabsList,
+   TabsTrigger,
+} from "@/components/ui/nb/tabs";
 import { CekPendaftaranButton } from "./_components/cek-pendaftaran-button";
 import { FormPendaftaran } from "./_components/form-pendaftaran";
+import { FormPendaftaranUmum } from "./_components/form-pendaftaran-umum";
 
 interface Props {
    isVisible: boolean;
@@ -30,7 +37,18 @@ export function FormPendaftaranSection({ isVisible }: Props) {
             <h2 className="text-xl font-bold text-secondary text-center mb-6">
                Pendaftaran
             </h2>
-            <FormPendaftaran />
+            <Tabs defaultValue="mahasiswa">
+               <TabsList className="mb-4 self-end">
+                  <TabsTrigger value="mahasiswa">Mahasiswa</TabsTrigger>
+                  <TabsTrigger value="umum">Umum</TabsTrigger>
+               </TabsList>
+               <TabsContent value="mahasiswa">
+                  <FormPendaftaran />
+               </TabsContent>
+               <TabsContent value="umum">
+                  <FormPendaftaranUmum />
+               </TabsContent>
+            </Tabs>
             <div className="my-3"></div>
             <CekPendaftaranButton />
          </div>

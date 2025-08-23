@@ -15,7 +15,7 @@ import { pesertaEsportTable, timEsportTable } from "../schemas/esport-schema";
  * dengan sebuah tim.
  */
 export const timEsportRelation = relations(timEsportTable, ({ many }) => ({
-        peserta: many(pesertaEsportTable),
+   peserta: many(pesertaEsportTable),
 }));
 
 /**
@@ -26,13 +26,13 @@ export const timEsportRelation = relations(timEsportTable, ({ many }) => ({
  * `timEsportTable.namaTim`.
  */
 export const pesertaEsportRelation = relations(
-        pesertaEsportTable,
-        ({ one }) => ({
-                tim: one(timEsportTable, {
-                        fields: [pesertaEsportTable.namaTim],
-                        references: [timEsportTable.namaTim],
-                }),
-        })
+   pesertaEsportTable,
+   ({ one }) => ({
+      tim: one(timEsportTable, {
+         fields: [pesertaEsportTable.namaTim],
+         references: [timEsportTable.namaTim],
+      }),
+   })
 );
 
 /**

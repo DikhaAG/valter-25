@@ -1,7 +1,7 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { FormPendaftaranSection } from "./_sections/form-pendaftaran-section/form-pendaftaran-section";
+import { FormPendaftaranSection } from "./_sections/form-pendaftaran";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
 import { headerData } from "@/data/home/e-sport/header-data";

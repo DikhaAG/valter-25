@@ -19,57 +19,62 @@ import { pesertaEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
 import { isNumeric } from "@/utils/home/is-numeric";
 import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import { FormPendaftaranPesertaUmumSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-umum-schema";
 import { eq } from "drizzle-orm";
 
 export async function cekKetersediaanPeserta(
-        peserta: FormPendaftaranPesertaSchemaType[]
+   pesertas:
+      | FormPendaftaranPesertaSchemaType[]
+      | FormPendaftaranPesertaUmumSchemaType[],
+   as: string
 ): Promise<ServerResponseType<unknown>> {
-        for (const p of peserta) {
-                try {
-                        if (!isNumeric(p.npm)) {
-                                return {
-                                        success: false,
-                                        message: `NPM hanya boleh mengandung angka.`,
-                                };
-                        }
-
-                        const cekIdMLRes =
-                                await db.query.pesertaEsportTable.findFirst({
-                                        where: eq(
-                                                pesertaEsportTable.idML,
-                                                p.idML
-                                        ),
-                                });
-                        if (cekIdMLRes) {
-                                return {
-                                        success: false,
-                                        message: `ID ML ${p.idML} tim telah dipakai.`,
-                                };
-                        }
-
-                        const cekNpmRes =
-                                await db.query.pesertaEsportTable.findFirst({
-                                        where: eq(
-                                                pesertaEsportTable.npm,
-                                                p.npm!
-                                        ),
-                                });
-                        if (cekNpmRes) {
-                                return {
-                                        success: false,
-                                        message: `NPM ${p.npm} tim telah dipakai.`,
-                                };
-                        }
-                } catch (error) {
-                        return {
-                                success: false,
-                                message: "Terjadi kesalahan pada server.",
-                                error: error,
-                                statusCode: 500,
-                        };
-                }
-        }
-        return {
-                success: true,
-        };
+   try {
+      pesertas.map(async (peserta) => {
+         const cekIdMLRes = await db.query.pesertaEsportTable.findFirst({
+            where: eq(pesertaEsportTable.idML, peserta.idML),
+         });
+         if (cekIdMLRes) {
+            return {
+               success: false,
+               message: `ID ML ${peserta.idML} telah terdaftar.`,
+               path: "idML",
+            };
+         }
+         if (as === "mahasiswa") {
+            if (
+               !isNumeric((peserta as FormPendaftaranPesertaSchemaType).npm!)
+            ) {
+               return {
+                  success: false,
+                  message: `NPM tidak valid!.`,
+                  path: "npm",
+               };
+            }
+            const cekNpmRes = await db.query.pesertaEsportTable.findFirst({
+               where: eq(
+                  pesertaEsportTable.npm,
+                  (peserta as FormPendaftaranPesertaSchemaType).npm!
+               ),
+            });
+            if (cekNpmRes) {
+               return {
+                  success: false,
+                  message: `NPM ${(peserta as FormPendaftaranPesertaSchemaType)
+                     .npm!} telah terdaftar.`,
+                  path: "npm",
+               };
+            }
+         }
+      });
+   } catch (error) {
+      return {
+         success: false,
+         message: "Terjadi kesalahan pada server.",
+         error: error,
+         statusCode: 500,
+      };
+   }
+   return {
+      success: true,
+   };
 }

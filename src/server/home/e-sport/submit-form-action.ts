@@ -25,19 +25,16 @@ import {
    formPendaftaranTimSchema,
    FormPendaftaranTimSchemaType,
 } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import { FormPendaftaranTimUmumSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-umum-schema";
 
 export async function submitFormAction(
-   registrasiFormData: FormPendaftaranTimSchemaType
+   registrasiFormData:
+      | FormPendaftaranTimSchemaType
+      | FormPendaftaranTimUmumSchemaType
 ): Promise<ServerResponseType<string>> {
-   const result = formPendaftaranTimSchema.safeParse(registrasiFormData);
-   if (!result.success) {
-      return {
-         success: false,
-         error: result.error!.issues.join(", "),
-      };
-   }
+   const result = await formPendaftaranTimSchema.parseAsync(registrasiFormData);
 
-   const { namaTim, noWa, instansi, buktiPembayaran, peserta } = result.data;
+   const { namaTim, noWa, instansi, buktiPembayaran, peserta } = result;
    let buktiPembayaranUrl: string | null = null;
 
    try {

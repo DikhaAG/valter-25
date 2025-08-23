@@ -1,15 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
 import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
 import { cekKodeUnik } from "@/server/home/e-sport/cek-kode-unik";
 import { getTimById } from "@/server/queries/e-sport/get-tim-by-id";
 import { gcUrl } from "@/data/home/e-sport/gc-url";
-// ---------------------------------------------------------
-import { Loader } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
 // ---------------------------------------------------
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
@@ -22,7 +18,6 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/nb/button";
-import { Badge } from "@/components/ui/nb/badge";
 import { SalinKode } from "@/components/home/detail-pendaftaran/salin-kode";
 //-------------------------------------------------------------------
 import { ImageDialog } from "@/components/home/detail-pendaftaran/image-dialog";
