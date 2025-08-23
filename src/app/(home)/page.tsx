@@ -148,8 +148,7 @@ export default function HomePage() {
       {
          image: "/images/uiuix.png",
          title: "Web Design",
-         // description: "User Interface & Experience Design",
-         description: "",
+         description: "Landing Page Valter",
          href: "/web-design",
       },
       {
@@ -412,31 +411,27 @@ export default function HomePage() {
                   </span>
                </h2>
 
-               <p className="text-foreground text-[10px] lg:text-[19.5px] leading-relaxed mb-10 lg:mb-16 font-poppins max-w-6xl">
+               <p className="text-foreground text-[12px] lg:text-[19.5px] leading-relaxed mb-10 lg:mb-16 font-poppins max-w-6xl">
                   <strong className="text-secondary font-glofium-demo font-[900]">
                      VALTER
                   </strong>{" "}
-                  atau{" "}
-                  <strong className="font-[900]">
-                     Festival Multimedia & Komputer{" "}
-                  </strong>
-                  merupakan salah satu event tahunan{" "}
-                  <strong className="font-[900]">
-                     HMJ TEKNIK KOMPUTER POLITEKNIK NEGERI SRIWIJAYA
-                  </strong>
-                  . Tahun ini,{" "}
+                  Festival Multimedia & Komputer merupakan salah satu event
+                  tahunan HMJ TEKNIK KOMPUTER POLITEKNIK NEGERI SRIWIJAYA .
+                  Tahun ini,{" "}
                   <strong className="text-secondary font-glofium-demo font-[900]">
                      VALTER
                   </strong>{" "}
                   hadir lebih dekat dengan dunia content creator dengan
-                  mengusung tema{" "}
-                  <strong className="text-[8px] lg:text-sm font-glofium-demo font-[900]">
+                  mengusung tema <br className="sm:hidden" />
+                  <strong className="text-[10px] lg:text-sm font-glofium-demo font-[900]">
                      {wrapSymbols(
-                        "Creative Synergy : “ Kreativitas Berdaya bersama Teknologi “ ",
-                        "text-[10px] lg:text-2xl"
+                        `Creative Synergy : “ Kreativitas Berdaya bersama Teknologi “ `,
+                        "text-[14px] lg:text-2xl"
                      )}
                   </strong>{" "}
-                  . Disini rangkaian acara seru siap menemani kamu! Mulai dari
+                  .
+                  <br className="sm:hidden" />
+                  Disini rangkaian acara seru siap menemani kamu! Mulai dari
                   pelatihan, 3 kompetisi digital, hingga seminar inspiratif
                   sebagai acara puncak! Saatnya wujudkan ide kreatifmu,
                   kolaborasikan dengan teknologi, dan jadilah bagian dari energi
@@ -524,7 +519,7 @@ export default function HomePage() {
                      <Link href="/seminar">
                         <Button variant={"secondary"}>
                            Lihat Selengkapnya
-                           <ArrowBigRight fill="#ffff"/>
+                           <ArrowBigRight fill="#ffff" />
                         </Button>
                      </Link>
                   </div>
@@ -988,26 +983,42 @@ export default function HomePage() {
                      <ul className="text-sm sm:text-base space-y-2 font-poppins">
                         <li>
                            <Link
-                              href="#"
+                              href="/seminar"
                               className="text-white/80 hover:text-white transition-colors"
                            >
-                              Beranda
+                              Seminar
                            </Link>
                         </li>
                         <li>
                            <Link
-                              href="#"
+                              href="/pelatihan"
                               className="text-white/80 hover:text-white transition-colors"
                            >
-                              Acara
+                              Pelatihan
                            </Link>
                         </li>
                         <li>
                            <Link
-                              href="#"
+                              href="/e-sport"
                               className="text-white/80 hover:text-white transition-colors"
                            >
-                              Timeline
+                              E-sport
+                           </Link>
+                        </li>
+                        <li>
+                           <Link
+                              href="/web-design"
+                              className="text-white/80 hover:text-white transition-colors"
+                           >
+                              Web Design
+                           </Link>
+                        </li>
+                        <li>
+                           <Link
+                              href="/video-campaign"
+                              className="text-white/80 hover:text-white transition-colors"
+                           >
+                              Video Campaign
                            </Link>
                         </li>
                      </ul>
@@ -1019,9 +1030,13 @@ export default function HomePage() {
                         Hubungi Kami
                      </h3>
                      <ul className="text-sm sm:text-base space-y-2 font-poppins text-white/80">
-                        <li>Email:</li>
-                        <li>Instagram:</li>
-                        <li>Address</li>
+                        <li>
+                           <strong className="font-[900] mr-2">Alamat:</strong>
+                           <span className="text-sm">
+                              Kesekretariatan HMJ Teknik Komputer, Politeknik
+                              Negeri Sriwijaya
+                           </span>
+                        </li>
                      </ul>
                   </div>
 
@@ -1032,16 +1047,11 @@ export default function HomePage() {
                      </h3>
                      <div className="flex justify-center md:justify-start space-x-4">
                         <Link
-                           href="#"
+                           href="https://www.instagram.com/valterpolsri/"
+                           passHref={true}
                            className="text-white/80 hover:text-white transition-colors"
                         >
                            <Instagram className="w-6 h-6" />
-                        </Link>
-                        <Link
-                           href="#"
-                           className="text-white/80 hover:text-white transition-colors"
-                        >
-                           <Music className="w-6 h-6" />
                         </Link>
                      </div>
                   </div>
@@ -1051,8 +1061,8 @@ export default function HomePage() {
                <div className="border-t border-white/20 pt-8">
                   <div className="flex flex-col md:flex-row justify-between items-center">
                      <p className="text-white/60 font-poppins text-xs sm:text-sm mb-4 md:mb-0">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt
+                        Creative Synergy: “Kreativitas Berdaya bersama
+                        Teknologi”
                      </p>
                      <p className="text-white/60 font-poppins text-xs sm:text-sm">
                         © Valter 2025. All Rights Reserved.
