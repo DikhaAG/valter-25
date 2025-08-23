@@ -19,13 +19,13 @@ import {
    TabsTrigger,
 } from "@/components/ui/nb/tabs";
 import { CekPendaftaranButton } from "./_components/cek-pendaftaran-button";
-import { FormPendaftaran } from "./_components/form-pendaftaran";
-import { FormPendaftaranUmum } from "./_components/form-pendaftaran-umum";
+import { FormPendaftaranMahasiswa } from "./mahasiswa/main";
+import { FormPendaftaranUmum } from "./umum/main";
 
 interface Props {
    isVisible: boolean;
 }
-export function FormPendaftaranSection({ isVisible }: Props) {
+export function FormPendaftaran({ isVisible }: Props) {
    return (
       <section
          id="pendaftaran-section"
@@ -43,7 +43,7 @@ export function FormPendaftaranSection({ isVisible }: Props) {
                   <TabsTrigger value="umum">Umum</TabsTrigger>
                </TabsList>
                <TabsContent value="mahasiswa">
-                  <FormPendaftaran />
+                  <FormPendaftaranMahasiswa />
                </TabsContent>
                <TabsContent value="umum">
                   <FormPendaftaranUmum />
