@@ -1,15 +1,12 @@
 // app/form-schema.ts
-import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { emotError } from "@/data/emot-response";
-import { cekKetersediaanNamaTim } from "@/server/home/e-sport/cek-ketersediaan-nama-tim";
-import { cekKetersediaanNoWa } from "@/server/home/e-sport/cek-ketersediaan-no-wa";
-import { cekKetersediaanNpm } from "@/server/home/e-sport/cek-ketersediaan-npm";
-import { cekKetersediaanPeserta } from "@/server/home/e-sport/cek-ketersediaan-peserta";
+import { esportNoWaAvaliableCheck } from "@/server/home/e-sport/no-wa-available-check";
+import { esportTimNameAvaliableCheck } from "@/server/home/e-sport/tim-name-available-check";
 import { isNumeric } from "@/utils/home/is-numeric";
 import { asEnumSchema } from "@/zod/tables/enums/asEnum";
-import { superRefine, z } from "zod";
+import { z } from "zod";
 
-export const formPendaftaranPesertaSchema = z.object({
+export const esportPesertaMahasiswaFormSchema = z.object({
    id: z.uuid().optional(),
    idML: z
       .string()
@@ -21,7 +18,7 @@ export const formPendaftaranPesertaSchema = z.object({
       .max(12, { message: "NPM harus berjumlah 12 angka." }),
 });
 
-export const formPendaftaranTimSchema = z
+export const esportTimMahasiswaFormSchema = z
    .object({
       as: asEnumSchema,
       namaTim: z.string().min(1, { message: "Nama tim tidak boleh kosong" }),
@@ -32,11 +29,11 @@ export const formPendaftaranTimSchema = z
          message: "Asal instansi tidak boleh kosong.",
       }),
       buktiPembayaran: z.any(),
-      peserta: z.array(formPendaftaranPesertaSchema),
+      peserta: z.array(esportPesertaMahasiswaFormSchema),
    })
    .refine(
       async (data) => {
-         const res = await cekKetersediaanNamaTim(data.namaTim);
+         const res = await esportTimNameAvaliableCheck(data.namaTim);
          return res.success;
       },
       {
@@ -55,7 +52,7 @@ export const formPendaftaranTimSchema = z
    )
    .refine(
       async (data) => {
-         const res = await cekKetersediaanNoWa(data.noWa);
+         const res = await esportNoWaAvaliableCheck(data.noWa);
          return res.success;
       },
       {
@@ -128,10 +125,10 @@ export const formPendaftaranTimSchema = z
       }
    );
 
-export type FormPendaftaranTimSchemaType = z.infer<
-   typeof formPendaftaranTimSchema
+export type EsportTimMahasiswaFormSchemaType = z.infer<
+   typeof esportTimMahasiswaFormSchema
 >;
 
-export type FormPendaftaranPesertaSchemaType = z.infer<
-   typeof formPendaftaranPesertaSchema
+export type EsportPesertaMahasiswaFormSchema = z.infer<
+   typeof esportPesertaMahasiswaFormSchema
 >;

@@ -6,13 +6,13 @@ import {
    TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { exportDataPendaftaranToExcel } from "@/utils/home/detal-pendaftaran/export-data-pendaftaran-esport";
-import { TimDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/tim-display-schema";
+import type { EsportRegistrationDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/display";
 import { Download } from "lucide-react";
 
 interface Props {
-   team: TimDisplaySchemaType;
+   team: EsportRegistrationDisplaySchemaType;
 }
-export function ExportDataPendaftaran({ team }: Props) {
+export function ExportRegistrationData({ team }: Props) {
    const handleDownload = () => {
       if (team) {
          exportDataPendaftaranToExcel(team);

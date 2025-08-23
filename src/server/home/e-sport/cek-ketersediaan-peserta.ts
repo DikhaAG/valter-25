@@ -18,11 +18,11 @@ import { db } from "@/db/drizzle";
 import { pesertaEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
 import { isNumeric } from "@/utils/home/is-numeric";
-import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
-import { FormPendaftaranPesertaUmumSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-umum-schema";
+import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/mahasiswa-form";
+import { EsportPesertaUmumFormSchemaType } from "@/zod/home/e-sport/umum-form";
 import { eq } from "drizzle-orm";
 
-export async function cekKetersediaanPeserta(
+export async function esportPesertaAvailableCheck(
    pesertas:
       | FormPendaftaranPesertaSchemaType[]
       | FormPendaftaranPesertaUmumSchemaType[],

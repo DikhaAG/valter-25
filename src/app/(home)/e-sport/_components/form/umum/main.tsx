@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/nb/button";
 import { Input } from "@/components/ui/nb/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFieldArray, FormProvider } from "react-hook-form";
+import { useForm, useFieldArray, FormProvider, FieldErrors } from "react-hook-form";
 import {
    FormField,
    FormItem,
@@ -11,9 +11,8 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Plus, Trash2 } from "lucide-react";
-import { UploadBuktiPembayaranField } from "../_components/upload-bukti-pembayaran-field";
+import { UploadBuktiPembayaranField } from "../upload-bukti-pembayaran-field";
 import { v4 as uuidv4 } from "uuid";
-import { submitFormAction } from "@/server/home/e-sport/submit-form-action";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,25 +20,23 @@ import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import {
-   formPendaftaranTimSchema,
-   FormPendaftaranTimSchemaType,
-} from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+   esportTimUmumFormSchema,
+   EsportTimUmumFormSchemaType,
+} from "@/zod/home/e-sport/umum-form";
 import { Spinner } from "@/components/ui/nb/Spinner";
-import { cekKetersediaanNpm } from "@/server/home/e-sport/cek-ketersediaan-npm";
-import { cekKetersediaanIdMl } from "@/server/home/e-sport/cek-ketersediaan-id-ml";
+import { esportIdMlAvailableCheck } from "@/server/home/e-sport/cek-ketersediaan-id-ml";
+import { esportUmumSubmitFormAction } from "@/server/home/e-sport/umum-submit-form-action";
 
-export function FormPendaftaranMahasiswa() {
+export function EsportUmumForm() {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);
    const [loading, setLoading] = useState(false);
    const router = useRouter();
-   const form = useForm<FormPendaftaranTimSchemaType>({
-      resolver: zodResolver(formPendaftaranTimSchema),
+   const form = useForm<EsportTimUmumFormSchemaType>({
+      resolver: zodResolver(esportTimUmumFormSchema),
       defaultValues: {
-         as: "mahasiswa",
          namaTim: "",
-         instansi: "",
          noWa: "",
-         peserta: [{ id: uuidv4(), idML: "", nama: "", npm: "" }], // Baris pertama secara default
+         peserta: [{ id: uuidv4(), idML: "", nama: "" }], // Baris pertama secara default
       },
       mode: "onBlur",
    });
@@ -49,24 +46,16 @@ export function FormPendaftaranMahasiswa() {
       name: "peserta",
    });
 
-   async function onSubmit(data: FormPendaftaranTimSchemaType) {
+   async function onSubmit(data: EsportTimUmumFormSchemaType) {
       setLoading(true);
 
       let hasError = false;
       for (const [i, p] of data.peserta.entries()) {
-         const cekIdMl = await cekKetersediaanIdMl(p);
-         const cekNpm = await cekKetersediaanNpm(p);
+         const cekIdMl = await esportIdMlAvailableCheck(p);
          if (!cekIdMl.success) {
             form.setError(`peserta.${i}.idML`, {
                type: "server",
                message: cekIdMl.message, // Gunakan pesan dari server
-            });
-            hasError = true;
-         }
-         if (!cekNpm.success) {
-            form.setError(`peserta.${i}.npm`, {
-               type: "server",
-               message: cekNpm.message, // Gunakan pesan dari server
             });
             hasError = true;
          }
@@ -77,16 +66,15 @@ export function FormPendaftaranMahasiswa() {
          return;
       }
 
-      const res = await submitFormAction(data);
+      const res = await esportUmumSubmitFormAction(data);
       if (!res.success) {
-         setLoading(false);
          CustomToast({
             variant: "error",
             message: `${res.message} 😂💀`,
          });
+         setLoading(false);
          return;
       } else {
-         setLoading(false);
          CustomToast({
             variant: "success",
             message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
@@ -97,14 +85,17 @@ export function FormPendaftaranMahasiswa() {
          router.refresh();
       }
    }
-
+   
+   function formError(e:FieldErrors<EsportTimUmumFormSchemaType>) {
+      console.log(e)
+   }
    return (
       <FormProvider {...form}>
-         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+         <form onSubmit={form.handleSubmit(onSubmit, formError)} className="space-y-8">
             <FormField
                control={form.control}
                name="as"
-               defaultValue="mahasiswa"
+               defaultValue="umum"
                render={({}) => <FormItem hidden></FormItem>}
             />
             <div>
@@ -126,7 +117,7 @@ export function FormPendaftaranMahasiswa() {
                />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div>
                <div className="">
                   <FormField
                      control={form.control}
@@ -148,29 +139,7 @@ export function FormPendaftaranMahasiswa() {
                      )}
                   />
                </div>
-               <div className="pt-4 md:pt-0">
-                  <FormField
-                     control={form.control}
-                     name={`instansi`}
-                     render={({ field }) => (
-                        <FormItem className="flex-1">
-                           <FormLabel className="text-xs">
-                              Asal Instansi
-                           </FormLabel>
-                           <FormControl>
-                              <Input
-                                 className="text-xs"
-                                 placeholder="ex: Politeknik Negeri Sriwijaya"
-                                 {...field}
-                              />
-                           </FormControl>
-                           <FormMessage />
-                        </FormItem>
-                     )}
-                  />
-               </div>
             </div>
-
             <div>
                <FormField
                   control={form.control}
@@ -188,7 +157,7 @@ export function FormPendaftaranMahasiswa() {
             </div>
             <h2>Daftar Peserta</h2>
             {fields.map((field, index) => (
-               <div key={field.id} className="grid md:grid-cols-8 gap-6">
+               <div key={field.id} className="grid md:grid-cols-6 gap-6">
                   <div className="">
                      {wrapSymbols("#")}
                      {index + 1}
@@ -207,21 +176,6 @@ export function FormPendaftaranMahasiswa() {
                               <FormLabel>ID ML</FormLabel>
                               <FormControl>
                                  <Input placeholder="ex: 6969" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                  </div>
-                  <div className="col-span-2">
-                     <FormField
-                        control={form.control}
-                        name={`peserta.${index}.npm`}
-                        render={({ field }) => (
-                           <FormItem className="flex-1">
-                              <FormLabel>NPM</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="ex: 0624..." {...field} />
                               </FormControl>
                               <FormMessage />
                            </FormItem>
@@ -266,7 +220,6 @@ export function FormPendaftaranMahasiswa() {
                      append({
                         idML: "",
                         nama: "",
-                        npm: "",
                      })
                   }
                   disabled={form.getValues("peserta").length === 7}
@@ -293,7 +246,7 @@ export function FormPendaftaranMahasiswa() {
                </Label>
             </div>
             <FormField
-               name="pesertaError"
+               name="npmatauidsama"
                render={({}) => (
                   <FormItem>
                      <FormMessage className="p-4 bg-red-200 border-4 rounded-lg font-semibold border-foreground shadow-[7px_7px_0px_#00000040]" />

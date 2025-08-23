@@ -22,19 +22,16 @@ import { DrizzleQueryError, eq } from "drizzle-orm";
 import { ServerResponseType } from "@/types/server-response-type";
 import { pesertaEsportTable, timEsportTable } from "@/db/schemas/esport-schema";
 import {
-   formPendaftaranTimSchema,
-   FormPendaftaranTimSchemaType,
-} from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
-import { FormPendaftaranTimUmumSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-umum-schema";
+   esportTimUmumFormSchema,
+   EsportTimUmumFormSchemaType,
+} from "@/zod/home/e-sport/umum-form";
 
-export async function submitFormAction(
-   registrasiFormData:
-      | FormPendaftaranTimSchemaType
-      | FormPendaftaranTimUmumSchemaType
+export async function esportUmumSubmitFormAction(
+   registrasiFormData: EsportTimUmumFormSchemaType
 ): Promise<ServerResponseType<string>> {
-   const result = await formPendaftaranTimSchema.parseAsync(registrasiFormData);
+   const result = await esportTimUmumFormSchema.parseAsync(registrasiFormData);
 
-   const { namaTim, noWa, instansi, buktiPembayaran, peserta } = result;
+   const { namaTim, noWa, buktiPembayaran, peserta } = result;
    let buktiPembayaranUrl: string | null = null;
 
    try {
@@ -52,9 +49,9 @@ export async function submitFormAction(
          .insert(timEsportTable)
          .values({
             id: uuidv4(),
+            as: "umum",
             namaTim: namaTim,
             noWa,
-            instansi,
             buktiPembayaran: buktiPembayaranUrl,
          })
          .returning({ insertedId: timEsportTable.id });
@@ -65,7 +62,6 @@ export async function submitFormAction(
          namaTim: namaTim,
          idML: p.idML,
          nama: p.nama,
-         npm: p.npm,
       }));
 
       await db.insert(pesertaEsportTable).values(pesertaToInsert);
@@ -83,13 +79,6 @@ export async function submitFormAction(
             return {
                success: false,
                message: "ID telah terdaftar.",
-            };
-         } else if (
-            (error as DrizzleQueryError).cause?.message.includes("npm")
-         ) {
-            return {
-               success: false,
-               message: "NPM telah terdaftar.",
             };
          }
       }

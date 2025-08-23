@@ -3,11 +3,11 @@
 import { db } from "@/db/drizzle";
 import { pesertaEsportTable } from "@/db/schemas/esport-schema";
 import { ServerResponseType } from "@/types/server-response-type";
-import { FormPendaftaranPesertaSchemaType } from "@/zod/home/e-sport/form-pendaftaran-tim-schema";
+import type { EsportPesertaMahasiswaFormSchema } from "@/zod/home/e-sport/mahasiswa-form";
 import { eq } from "drizzle-orm";
 
-export async function cekKetersediaanNpm(
-   peserta: FormPendaftaranPesertaSchemaType
+export async function EsportPesertaNpmAvailableCheck(
+   peserta: EsportPesertaMahasiswaFormSchema
 ): Promise<ServerResponseType<unknown>> {
    try {
       const res = await db.query.pesertaEsportTable.findFirst({
