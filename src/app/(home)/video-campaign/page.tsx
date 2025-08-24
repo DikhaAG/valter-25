@@ -1,7 +1,7 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { FormPendaftaranSection } from "./_sections/form-pendaftaran-section/form-pendaftaran-section";
+import { VideoCampaignForm } from "./_components/form/main";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
 import { headerData } from "@/data/home/video-campaign/header-data";
@@ -26,7 +26,7 @@ export default function VideoCampaignPage() {
          <TimelineSection data={timelineData} isVisible={isVisible} />
 
          {/* Registration Form Section */}
-         <FormPendaftaranSection isVisible={isVisible} />
+         <VideoCampaignForm isVisible={isVisible} />
       </div>
    );
 }

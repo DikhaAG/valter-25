@@ -17,12 +17,12 @@ import { db } from "@/db/drizzle";
 import { emotError, emotSuccess } from "@/data/emot-response";
 import { ServerResponseType } from "@/types/server-response-type";
 import { eq } from "drizzle-orm";
-import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
+import { WebDesignRegistrationDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/display";
 import { timWebDesignTable } from "@/db/schemas/web-design-schema";
 
-export async function getTimById(
+export async function getTimWebDesignById(
    id: string
-): Promise<ServerResponseType<TimDisplaySchemaType>> {
+): Promise<ServerResponseType<WebDesignRegistrationDisplaySchemaType>> {
    try {
       const res = await db.query.timWebDesignTable.findFirst({
          with: { peserta: true },

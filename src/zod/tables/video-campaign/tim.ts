@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { pesertaVideoCampaignTableSchema } from "./peserta";
+import { enumSchema } from "@/db/schemas/enum-schema";
 
 /**
  * Skema validasi untuk data tim lomba web design yang diambil dari database.
@@ -42,6 +43,8 @@ export const timVideoCampaignTableSchema = z.object({
     * Digunakan sebagai indikator di antarmuka pengguna.
     */
    statusPembayaran: z.boolean().default(false),
+   tanggalKonfirmasi: z.string().nullable,
+
 
    /**
     * Timestamp saat data pertama kali dibuat.
@@ -60,6 +63,7 @@ export const timVideoCampaignTableSchema = z.object({
     * Tipe datanya divalidasi oleh `pesertaEsportTableSchema`.
     */
    pesertaWebDesign: z.array(pesertaVideoCampaignTableSchema),
+   as: enumSchema
 });
 
 /**

@@ -1,0 +1,32 @@
+"use server";
+
+import { db } from "@/db/drizzle";
+import { timVideoCampaignTable } from "@/db/schemas/video-campaign-schema";
+import { ServerResponseType } from "@/types/server-response-type";
+import { eq } from "drizzle-orm";
+
+export async function videoCampaignTimRegistrationCodeCheck(
+   kode: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      const res = await db.query.timVideoCampaignTable.findFirst({
+         where: eq(timVideoCampaignTable.id, kode),
+      });
+      if (!res) {
+         return {
+            success: false,
+            message: "Kode tidak ditemukan",
+         };
+      }
+      return {
+         success: true,
+      };
+   } catch (error) {
+      console.log(error);
+      return {
+         success: false,
+         message: "Terjadi kesalahan dalam mengecek kode unik.",
+         error: error,
+      };
+   }
+}

@@ -5,7 +5,8 @@ import {
    TooltipContent,
    TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { exportDataPendaftaranToExcel } from "@/utils/home/detal-pendaftaran/export-data-pendaftaran-esport";
+import { esportExportRegistrationDataMahasiswaToExcel } from "@/utils/home/detal-pendaftaran/mahasiswa/esport-export-data-pendaftaran";
+import { esportExportRegistrationDataUmumToExcel } from "@/utils/home/detal-pendaftaran/umum/esport-export-data-pendaftaran";
 import type { EsportRegistrationDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/display";
 import { Download } from "lucide-react";
 
@@ -15,7 +16,11 @@ interface Props {
 export function ExportRegistrationData({ team }: Props) {
    const handleDownload = () => {
       if (team) {
-         exportDataPendaftaranToExcel(team);
+         if (team.as === "mahasiswa") {
+            esportExportRegistrationDataMahasiswaToExcel(team);
+         } else {
+            esportExportRegistrationDataUmumToExcel(team);
+         }
       }
    };
    return (
