@@ -1,8 +1,8 @@
 "use client";
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
-import { ImageDialog } from "@/components/home/detail-pendaftaran/image-dialog";
-import { UpdateImageDialog } from "./_components/update-image-dialog";
+import { ImageDialog } from "../../../../components/home/detail-pendaftaran/image-dialog";
+import { WebDesignUpdateImageDialog } from "./_components/update-image-dialog";
 import {
    Table,
    TableBody,
@@ -12,20 +12,22 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import { cekKodeUnik } from "@/server/home/web-design/cek-kode-unik";
 import { Button } from "@/components/ui/nb/button";
 import { useRouter } from "next/navigation";
-import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
-import { getTimById } from "@/server/queries/web-design/get-tim-by-id";
-import { PesertaWebDesignTableSchemaType } from "@/zod/tables/web-design/peserta";
+import { getTimWebDesignById } from "@/server/queries/web-design/get-tim-by-id";
+import { PesertaWebDesignShemaType } from "@/zod/tables/web-design/peserta";
 import { CopyTeamCode } from "@/components/home/detail-pendaftaran/salin-kode";
-import { ExportDataPendaftaran } from "./_components/export-data-pendaftaran";
+import { WebDesignExportRegistrationData } from "./_components/export-data-pendaftaran";
 import { gcUrl } from "@/data/home/web-design/gc-url";
 import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran/detail-pendaftaran-tim-skeleton";
 import { RegistrationDetailHeader } from "@/components/home/detail-pendaftaran/header";
+import { WebDesignRegistrationDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/display";
+import { webDesignTimRegistrationCodeCheck } from "@/server/home/web-design/validate/registration-code-check";
 
 export default function DetailPendaftaranPage() {
-   const [team, setTeam] = useState<TimDisplaySchemaType | undefined>();
+   const [team, setTeam] = useState<
+      WebDesignRegistrationDisplaySchemaType | undefined
+   >();
    const router = useRouter();
 
    useEffect(() => {
@@ -33,11 +35,11 @@ export default function DetailPendaftaranPage() {
       if (!kodeStored) {
          return;
       }
-      cekKodeUnik(kodeStored).then((res) => {
+      webDesignTimRegistrationCodeCheck(kodeStored).then((res) => {
          if (!res.success) {
             return;
          }
-         getTimById(kodeStored).then((res) => {
+         getTimWebDesignById(kodeStored).then((res) => {
             if (!res.success) {
                return;
             }
@@ -62,13 +64,19 @@ export default function DetailPendaftaranPage() {
                      />
                      <div className="flex flex-col space-y-2 justify-end items-end">
                         <CopyTeamCode kode={team.id} />
-                        <ExportDataPendaftaran team={team} />
+                        <WebDesignExportRegistrationData team={team} />
                      </div>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <div className="space-y-2">
-                           <Label>Instansi</Label>
-                           <Input readOnly value={team.instansi!} />
-                        </div>
+                     <div
+                        className={`grid grid-cols-1 ${
+                           team.instansi && "md:grid-cols-2"
+                        }  gap-4 text-xs`}
+                     >
+                        {team.as === "mahasiswa" && (
+                           <div className="space-y-2">
+                              <Label>Instansi</Label>
+                              <Input readOnly value={team.instansi!} />
+                           </div>
+                        )}
                         <div className="space-y-2">
                            <Label>Nomor Whatsapp</Label>
                            <Input readOnly value={team.noWa!} />
@@ -77,7 +85,7 @@ export default function DetailPendaftaranPage() {
 
                      <div className="mt-6 space-y-4">
                         <h4 className="font-semibold mb-2">Bukti Pembayaran</h4>
-                        <UpdateImageDialog team={team} />
+                        <WebDesignUpdateImageDialog team={team} />
                         {team.buktiPembayaran ? (
                            <ImageDialog
                               buktiPembayaran={team.buktiPembayaran}
@@ -97,28 +105,29 @@ export default function DetailPendaftaranPage() {
                               <TableHeader className="rounded-t-xl">
                                  <TableRow className="bg-foreground hover:bg-foreground/90 text-background rounded-t-xl">
                                     <TableHead className="border text-left text-sm text-background">
-                                       ID ML
-                                    </TableHead>
-                                    <TableHead className="border text-left text-sm text-background">
                                        Nama
                                     </TableHead>
-                                    <TableHead className="border text-left text-sm text-background">
-                                       NPM
-                                    </TableHead>
+                                    {team.as === "mahasiswa" && (
+                                       <TableHead className="border text-left text-sm text-background">
+                                          NPM
+                                       </TableHead>
+                                    )}
                                  </TableRow>
                               </TableHeader>
                               <TableBody>
                                  {team.peserta
                                     ? (
-                                         team.peserta as Array<PesertaWebDesignTableSchemaType>
+                                         team.peserta as Array<PesertaWebDesignShemaType>
                                       ).map((p) => (
                                          <TableRow key={p.id}>
                                             <TableCell className="border border-gray-300 px-4 py-2 text-sm">
                                                {p.nama}
                                             </TableCell>
-                                            <TableCell className="border border-gray-300 px-4 py-2 text-sm">
-                                               {p.npm}
-                                            </TableCell>
+                                            {team.as === "mahasiswa" && (
+                                               <TableCell className="border border-gray-300 px-4 py-2 text-sm">
+                                                  {p.npm}
+                                               </TableCell>
+                                            )}
                                          </TableRow>
                                       ))
                                     : "tidak ada peserta"}

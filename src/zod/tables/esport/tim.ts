@@ -43,6 +43,7 @@ export const timEsportTableSchema = z.object({
     * Digunakan sebagai indikator di antarmuka pengguna.
     */
    statusPembayaran: z.boolean().default(false),
+   tanggalKonfirmasi: z.string().nullable,
 
    /**
     * Timestamp saat data pertama kali dibuat.

@@ -5,17 +5,22 @@ import {
    TooltipContent,
    TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { exportDataPendaftaranToExcel } from "@/utils/home/detal-pendaftaran/export-data-pendaftaran-web-design";
-import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
+import { webDesignExportRegistrationDataMahaisiswaToExcel } from "@/utils/home/detal-pendaftaran/mahasiswa/web-design-export-data-pendaftaran";
+import { webDesignExportRegistrationDataUmumToExcel } from "@/utils/home/detal-pendaftaran/umum/web-design-export-data-pendaftaran";
+import { WebDesignRegistrationDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/display";
 import { Download } from "lucide-react";
 
 interface Props {
-   team: TimDisplaySchemaType;
+   team: WebDesignRegistrationDisplaySchemaType;
 }
-export function ExportDataPendaftaran({ team }: Props) {
+export function WebDesignExportRegistrationData({ team }: Props) {
    const handleDownload = () => {
       if (team) {
-         exportDataPendaftaranToExcel(team);
+         if (team.as === "mahasiswa") {
+            webDesignExportRegistrationDataMahaisiswaToExcel(team);
+         } else {
+            webDesignExportRegistrationDataUmumToExcel(team);
+         }
       }
    };
    return (

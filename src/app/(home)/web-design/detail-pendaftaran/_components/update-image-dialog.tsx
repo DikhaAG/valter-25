@@ -18,7 +18,6 @@ import {
    DialogTitle,
    DialogDescription,
 } from "@/components/ui/dialog";
-import { updateBuktiPembayaran } from "@/server/home/web-design/detail-pendaftaran/update-bukti-pembayaran";
 import { Pencil, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -28,15 +27,16 @@ import {
    isValidImageType,
    isFileSizeValid,
 } from "@/utils/home/image-upload-requirements";
-import { TimDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/tim-display-schema";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { ImageUploadField } from "@/components/home/detail-pendaftaran/image-upload-field";
+import { WebDesignRegistrationDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/display";
+import { webDesignUpdateBuktiPembayaran } from "@/server/home/web-design/detail-pendaftaran/update/update-bukti-pembayaran";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {
-   team: TimDisplaySchemaType;
+   team: WebDesignRegistrationDisplaySchemaType;
 }
-export const UpdateImageDialog = ({ team }: Props) => {
+export const WebDesignUpdateImageDialog = ({ team }: Props) => {
    /**
     * State untuk menyimpan objek file yang dipilih oleh pengguna.
     * @default null
@@ -80,7 +80,7 @@ export const UpdateImageDialog = ({ team }: Props) => {
 
       startTransition(async () => {
          // Memanggil Server Action untuk mengunggah dan memperbarui data
-         const res = await updateBuktiPembayaran({
+         const res = await webDesignUpdateBuktiPembayaran({
             file: file,
             namaTim: team.namaTim,
          });

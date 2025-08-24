@@ -6,6 +6,7 @@
  */
 import { sql } from "drizzle-orm";
 import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
+import { asEnumTable } from "./enum-schema";
 
 /**
  * @constant timVideoCampaignTable
@@ -13,6 +14,7 @@ import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
  * dasar setiap tim yang mendaftar.
  */
 export const timVideoCampaignTable = pgTable("tim_video_campaign", {
+   as: asEnumTable("as").notNull(),
    /**
     * ID unik tim.
     * Merupakan kunci utama (primary key).
@@ -48,6 +50,7 @@ export const timVideoCampaignTable = pgTable("tim_video_campaign", {
     * Nilai default-nya adalah `false` dan tidak boleh kosong.
     */
    statusPembayaran: boolean("status_pembayaran").default(false).notNull(),
+   tanggalKonfirmasi: timestamp("tanggal_konfirmasi", {mode: "string"}),
 
    /**
     * Timestamp saat data pertama kali dibuat.
@@ -93,7 +96,7 @@ export const pesertaVideoCampaignTable = pgTable("peserta_video_campaign", {
     * Nomor Pokok Mahasiswa (NPM).
     * Tidak boleh kosong dan harus unik.
     */
-   npm: text("npm").unique().notNull(),
+   npm: text("npm"),
 
    /**
     * Nama lengkap peserta.

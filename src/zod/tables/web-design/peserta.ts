@@ -40,6 +40,6 @@ export const pesertaWebDesignTableSchema = z.object({
  * Tipe inferensi untuk skema `pesertaEsportTableSchema`.
  * Digunakan untuk memastikan keamanan tipe data peserta yang diambil dari tabel database.
  */
-export type PesertaWebDesignTableSchemaType = z.infer<
+export type PesertaWebDesignShemaType = z.infer<
    typeof pesertaWebDesignTableSchema
 >;

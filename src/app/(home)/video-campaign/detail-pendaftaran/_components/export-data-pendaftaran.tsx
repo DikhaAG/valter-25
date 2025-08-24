@@ -5,17 +5,22 @@ import {
    TooltipContent,
    TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { exportDataPendaftaranToExcel } from "@/utils/home/detal-pendaftaran/export-data-pendaftaran-video-campaign";
-import { TimDisplaySchemaType } from "@/zod/home/video-campaign/detail-pendaftaran/tim-display-schema";
+import { videoCampaignExportRegistrationDataMahasiswaToExcel } from "@/utils/home/detal-pendaftaran/mahasiswa/video-campaign-export-data-pendaftaran";
+import { videoCampaignExportRegistrationDataUmumToExcel } from "@/utils/home/detal-pendaftaran/umum/video-campaign-export-data-pendaftaran";
+import { VideoCampaignRegistrationDisplaySchemaType } from "@/zod/home/video-campaign/detail-pendaftaran/display";
 import { Download } from "lucide-react";
 
 interface Props {
-   team: TimDisplaySchemaType;
+   team: VideoCampaignRegistrationDisplaySchemaType;
 }
-export function ExportDataPendaftaran({ team }: Props) {
+export function VideoCampaignExportRegistrationData({ team }: Props) {
    const handleDownload = () => {
       if (team) {
-         exportDataPendaftaranToExcel(team);
+         if (team.as === "mahasiswa") {
+            videoCampaignExportRegistrationDataMahasiswaToExcel(team);
+         } else {
+            videoCampaignExportRegistrationDataUmumToExcel(team);
+         }
       }
    };
    return (

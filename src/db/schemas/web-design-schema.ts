@@ -6,6 +6,7 @@
  */
 import { sql } from "drizzle-orm";
 import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
+import { asEnumTable } from "./enum-schema";
 
 /**
  * @constant timWebDesignTable
@@ -13,6 +14,8 @@ import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
  * dasar setiap tim yang mendaftar.
  */
 export const timWebDesignTable = pgTable("tim_web_design", {
+   as: asEnumTable("as").notNull(),
+
    /**
     * ID unik tim.
     * Merupakan kunci utama (primary key).
@@ -48,6 +51,7 @@ export const timWebDesignTable = pgTable("tim_web_design", {
     * Nilai default-nya adalah `false` dan tidak boleh kosong.
     */
    statusPembayaran: boolean("status_pembayaran").default(false).notNull(),
+   tanggalKonfirmasi: timestamp("tanggal_konfirmasi", {mode: "string"}),
 
    /**
     * Timestamp saat data pertama kali dibuat.
@@ -93,7 +97,7 @@ export const pesertaWebDesignTable = pgTable("peserta_web_design", {
     * Nomor Pokok Mahasiswa (NPM).
     * Tidak boleh kosong dan harus unik.
     */
-   npm: text("npm").unique().notNull(),
+   npm: text("npm"),
 
    /**
     * Nama lengkap peserta.
