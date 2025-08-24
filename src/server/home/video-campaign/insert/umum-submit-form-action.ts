@@ -42,7 +42,7 @@ export async function videoCampaignUmumSubmitFormAction(
             as: "umum",
             namaTim: namaTim,
             noWa,
-            buktiPembayaran: buktiPembayaranUrl,
+            buktiPembayaran: buktiPembayaranUrl!,
          })
          .returning({ insertedId: timVideoCampaignTable.id });
 

@@ -52,7 +52,7 @@ export async function esportUmumSubmitFormAction(
             as: "umum",
             namaTim: namaTim,
             noWa,
-            buktiPembayaran: buktiPembayaranUrl,
+            buktiPembayaran: buktiPembayaranUrl!,
          })
          .returning({ insertedId: timEsportTable.id });
 

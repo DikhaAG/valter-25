@@ -26,7 +26,7 @@ export const pesertaMahasiswaSeminarFormSchema = z
          message: "Asal instansi tidak boleh kosong.",
       }),
       buktiPembayaran: z.any(),
-      peserta: z.array(webDesignPesertaMahasiswaFormSchema),
+      peserta: z.array(seminarPesertaMahasiswaFormSchemsa),
    })
    .refine(
       async (data) => {
@@ -92,10 +92,6 @@ export const pesertaMahasiswaSeminarFormSchema = z
       }
    );
 
-export type WebDesignTimMahasiswaFormSchemaType = z.infer<
-   typeof webDesignTimMahasiswaFormSchema
->;
-
-export type WebDesignPesertaMahasiswaFormSchemaType = z.infer<
-   typeof webDesignPesertaMahasiswaFormSchema
+export type SeminarPesertaMahasiswaFormSchemaType = z.infer<
+   typeof seminarPesertaMahasiswaFormSchemsa
 >;

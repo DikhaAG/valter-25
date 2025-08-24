@@ -55,7 +55,7 @@ export async function esportMahasiswaSubmitFormAction(
             namaTim: namaTim,
             noWa,
             instansi,
-            buktiPembayaran: buktiPembayaranUrl,
+            buktiPembayaran: buktiPembayaranUrl!,
          })
          .returning({ insertedId: timEsportTable.id });
 

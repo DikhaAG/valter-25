@@ -42,7 +42,7 @@ export async function webDesignUmumSubmitFormAction(
             as: "umum",
             namaTim: namaTim,
             noWa,
-            buktiPembayaran: buktiPembayaranUrl,
+            buktiPembayaran: buktiPembayaranUrl!,
          })
          .returning({ insertedId: timWebDesignTable.id });
 
