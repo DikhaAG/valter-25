@@ -44,7 +44,7 @@ export async function videoCampaignMahasiswaSubmitFormAction(
             namaTim: namaTim,
             noWa,
             instansi,
-            buktiPembayaran: buktiPembayaranUrl,
+            buktiPembayaran: buktiPembayaranUrl!,
          })
          .returning({ insertedId: timVideoCampaignTable.id });
 
