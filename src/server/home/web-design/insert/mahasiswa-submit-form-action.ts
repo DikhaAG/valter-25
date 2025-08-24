@@ -44,7 +44,7 @@ export async function webDesignMahasiswaSubmitFormAction(
             namaTim: namaTim,
             noWa,
             instansi,
-            buktiPembayaran: buktiPembayaranUrl,
+            buktiPembayaran: buktiPembayaranUrl!,
          })
          .returning({ insertedId: timWebDesignTable.id });
 
