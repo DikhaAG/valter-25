@@ -31,7 +31,7 @@ export const timEsportTable = pgTable("tim_esport", {
     * Nomor WhatsApp kapten tim.
     * Tipe data teks.
     */
-   noWa: text("no_wa"),
+   noWa: text("no_wa").notNull(),
 
    /**
     * Nama instansi atau asal tim.
@@ -43,7 +43,7 @@ export const timEsportTable = pgTable("tim_esport", {
     * URL bukti pembayaran.
     * Nilai harus unik untuk setiap tim.
     */
-   buktiPembayaran: text("bukti_pembayaran").unique(),
+   buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
 
    /**
     * Status pembayaran tim.

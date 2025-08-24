@@ -31,7 +31,7 @@ export const timVideoCampaignTable = pgTable("tim_video_campaign", {
     * Nomor WhatsApp kapten tim.
     * Tipe data teks.
     */
-   noWa: text("no_wa"),
+   noWa: text("no_wa").notNull(),
 
    /**
     * Nama instansi atau asal tim.
@@ -43,14 +43,14 @@ export const timVideoCampaignTable = pgTable("tim_video_campaign", {
     * URL bukti pembayaran.
     * Nilai harus unik untuk setiap tim.
     */
-   buktiPembayaran: text("bukti_pembayaran").unique(),
+   buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
 
    /**
     * Status pembayaran tim.
     * Nilai default-nya adalah `false` dan tidak boleh kosong.
     */
    statusPembayaran: boolean("status_pembayaran").default(false).notNull(),
-   tanggalKonfirmasi: timestamp("tanggal_konfirmasi", {mode: "string"}),
+   tanggalKonfirmasi: timestamp("tanggal_konfirmasi", { mode: "string" }),
 
    /**
     * Timestamp saat data pertama kali dibuat.

@@ -14,6 +14,7 @@ import { webDesignSchema } from "./schemas/web-design-schema";
 import { webDesignRelations } from "./relations/web-design-relation";
 import { videoCampaignSchema } from "./schemas/video-campaign-schema";
 import { videoCampaignRelation } from "./relations/video-campaign-relation";
+import { enumSchema } from "./schemas/enum-schema";
 
 // Memuat variabel lingkungan dari file .env
 config({
@@ -42,5 +43,6 @@ export const db = drizzle({
       ...webDesignRelations,
       ...videoCampaignSchema,
       ...videoCampaignRelation,
+      ...enumSchema
    },
 });
