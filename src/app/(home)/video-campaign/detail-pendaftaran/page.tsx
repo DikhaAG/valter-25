@@ -1,8 +1,8 @@
 "use client";
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
-import { ImageDialog } from "../../../../components/home/detail-pendaftaran/image-dialog";
-import { VideoCampaignUpdateImageDialog } from "./_components/update-image-dialog";
+import { ImageDialog } from "../../../../components/home/image-dialog";
+import { VideoCampaignUpdateImageDialog } from "../../../../components/home/video-campaign/registration-detail/update-image-dialog";
 import {
    Table,
    TableBody,
@@ -14,20 +14,17 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/nb/button";
 import { useRouter } from "next/navigation";
-import { getTimVideoCampaignById } from "@/server/queries/video-campaign/get-tim-by-id";
-import { PesertaVideoCampaignShemaType } from "@/zod/tables/video-campaign/peserta";
-import { CopyTeamCode } from "@/components/home/detail-pendaftaran/salin-kode";
-import { VideoCampaignExportRegistrationData } from "./_components/export-data-pendaftaran";
+import { CopyTeamCode } from "@/components/home/salin-kode";
+import { VideoCampaignExportRegistrationData } from "../../../../components/home/video-campaign/registration-detail/export-data-pendaftaran";
 import { gcUrl } from "@/data/home/video-campaign/gc-url";
-import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran/detail-pendaftaran-tim-skeleton";
-import { RegistrationDetailHeader } from "@/components/home/detail-pendaftaran/header";
-import { VideoCampaignRegistrationDisplaySchemaType } from "@/zod/home/video-campaign/detail-pendaftaran/display";
-import { videoCampaignTimRegistrationCodeCheck } from "@/server/home/video-campaign/validate/registration-code-check";
+import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran-tim-skeleton";
+import { RegistrationDetailHeader } from "@/components/home/header";
+import { ParticipantTable, TeamTable } from "@/models/video-campaign/table";
+import { codeCheck } from "@/server/services/video-campaign/code-check";
+import { getTeamById } from "@/server/actions/queries/video-campaign";
 
 export default function DetailPendaftaranPage() {
-   const [team, setTeam] = useState<
-      VideoCampaignRegistrationDisplaySchemaType | undefined
-   >();
+   const [team, setTeam] = useState<TeamTable | undefined>();
    const router = useRouter();
 
    useEffect(() => {
@@ -35,11 +32,11 @@ export default function DetailPendaftaranPage() {
       if (!kodeStored) {
          return;
       }
-      videoCampaignTimRegistrationCodeCheck(kodeStored).then((res) => {
+      codeCheck(kodeStored).then((res) => {
          if (!res.success) {
             return;
          }
-         getTimVideoCampaignById(kodeStored).then((res) => {
+         getTeamById(kodeStored).then((res) => {
             if (!res.success) {
                return;
             }
@@ -117,7 +114,7 @@ export default function DetailPendaftaranPage() {
                               <TableBody>
                                  {team.peserta
                                     ? (
-                                         team.peserta as Array<PesertaVideoCampaignShemaType>
+                                         team.peserta as Array<ParticipantTable>
                                       ).map((p) => (
                                          <TableRow key={p.id}>
                                             <TableCell className="border border-gray-300 px-4 py-2 text-sm">

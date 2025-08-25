@@ -1,8 +1,8 @@
 "use client";
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
-import { ImageDialog } from "../../../../components/home/detail-pendaftaran/image-dialog";
-import { WebDesignUpdateImageDialog } from "./_components/update-image-dialog";
+import { ImageDialog } from "../../../../components/home/image-dialog";
+import { WebDesignUpdateImageDialog } from "../../../../components/home/web-design/registration-detail/update-image-dialog";
 import {
    Table,
    TableBody,
@@ -14,20 +14,17 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/nb/button";
 import { useRouter } from "next/navigation";
-import { getTimWebDesignById } from "@/server/queries/web-design/get-tim-by-id";
-import { PesertaWebDesignShemaType } from "@/zod/tables/web-design/peserta";
-import { CopyTeamCode } from "@/components/home/detail-pendaftaran/salin-kode";
-import { WebDesignExportRegistrationData } from "./_components/export-data-pendaftaran";
+import { CopyTeamCode } from "@/components/home/salin-kode";
+import { WebDesignExportRegistrationData } from "../../../../components/home/web-design/registration-detail/export-data-pendaftaran";
 import { gcUrl } from "@/data/home/web-design/gc-url";
-import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran/detail-pendaftaran-tim-skeleton";
-import { RegistrationDetailHeader } from "@/components/home/detail-pendaftaran/header";
-import { WebDesignRegistrationDisplaySchemaType } from "@/zod/home/web-design/detail-pendaftaran/display";
-import { webDesignTimRegistrationCodeCheck } from "@/server/home/web-design/validate/registration-code-check";
+import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran-tim-skeleton";
+import { RegistrationDetailHeader } from "@/components/home/header";
+import { ParticipantTable, TeamTable } from "@/models/web-design/table";
+import { codeCheck } from "@/server/services/web-design/code-check";
+import { getTeamById } from "@/server/actions/queries/web-design";
 
 export default function DetailPendaftaranPage() {
-   const [team, setTeam] = useState<
-      WebDesignRegistrationDisplaySchemaType | undefined
-   >();
+   const [team, setTeam] = useState<TeamTable | undefined>();
    const router = useRouter();
 
    useEffect(() => {
@@ -35,11 +32,11 @@ export default function DetailPendaftaranPage() {
       if (!kodeStored) {
          return;
       }
-      webDesignTimRegistrationCodeCheck(kodeStored).then((res) => {
+      codeCheck(kodeStored).then((res) => {
          if (!res.success) {
             return;
          }
-         getTimWebDesignById(kodeStored).then((res) => {
+         getTeamById(kodeStored).then((res) => {
             if (!res.success) {
                return;
             }
@@ -117,7 +114,7 @@ export default function DetailPendaftaranPage() {
                               <TableBody>
                                  {team.peserta
                                     ? (
-                                         team.peserta as Array<PesertaWebDesignShemaType>
+                                         team.peserta as Array<ParticipantTable>
                                       ).map((p) => (
                                          <TableRow key={p.id}>
                                             <TableCell className="border border-gray-300 px-4 py-2 text-sm">
