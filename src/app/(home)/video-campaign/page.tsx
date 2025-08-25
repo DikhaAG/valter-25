@@ -1,8 +1,8 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { HeaderSection } from "../_sections/header-section";
-import { TimelineSection } from "../_sections/timeline-section";
+import { HeaderSection } from "../../../components/home/header-section";
+import { TimelineSection } from "../../../components/home/timeline-section";
 import { headerData } from "@/data/home/video-campaign/header-data";
 import { timelineData } from "@/data/home/video-campaign/timeline-data";
 import { Form } from "@/components/home/video-campaign/form-registration/main";

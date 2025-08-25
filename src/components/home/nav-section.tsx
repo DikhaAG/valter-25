@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { TimeLeft } from "../layout";
+import { TimeLeft } from "../../app/(home)/layout";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/nb/button";
