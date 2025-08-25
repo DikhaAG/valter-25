@@ -1,4 +1,4 @@
-import { HeaderDataType } from "@/types/home/acara/header-data-type";
+import { HeaderDataType } from "@/types/header";
 
 export const headerData: HeaderDataType = {
    title: "Web Design (UI/UX)",

@@ -1,3 +1,3 @@
-import { TimelineDataType } from "@/types/home/acara/timeline-data-type";
+import { TimelineDataType } from "@/types/timeline";
 
 export const timelineData: TimelineDataType[] = [];

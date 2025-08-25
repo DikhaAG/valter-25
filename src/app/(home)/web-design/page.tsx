@@ -1,11 +1,11 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { WebDesignForm } from "./_components/form/main";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
 import { headerData } from "@/data/home/web-design/header-data";
 import { timelineData } from "@/data/home/web-design/timeline-data";
+import { Form } from "@/components/home/web-design/form-registration/main";
 
 export default function WebDesignPage() {
    const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +26,7 @@ export default function WebDesignPage() {
          <TimelineSection data={timelineData} isVisible={isVisible} />
 
          {/* Registration Form Section */}
-         <WebDesignForm isVisible={isVisible} />
+         <Form isVisible={isVisible} />
       </div>
    );
 }

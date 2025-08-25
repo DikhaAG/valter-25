@@ -1,4 +1,4 @@
-import { TimelineDataType } from "@/types/home/acara/timeline-data-type";
+import { TimelineDataType } from "@/types/timeline";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 
 interface Props {

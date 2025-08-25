@@ -1,10 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { EsportRegistrationDisplaySchemaType } from "@/zod/home/e-sport/detail-pendaftaran/display";
-import { PesertaEsportTableSchemaType } from "@/zod/tables/esport/peserta";
-import { esportTimRegistrationCodeCheck } from "@/server/home/e-sport/validate/registration-code-check";
-import { getTimById } from "@/server/queries/e-sport/get-tim-by-id";
 import { gcUrl } from "@/data/home/e-sport/gc-url";
 // ---------------------------------------------------
 import { Label } from "@/components/ui/nb/label";
@@ -18,18 +14,19 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/nb/button";
-import { CopyTeamCode } from "@/components/home/detail-pendaftaran/salin-kode";
+import { CopyTeamCode } from "@/components/home/salin-kode";
 //-------------------------------------------------------------------
-import { ImageDialog } from "@/components/home/detail-pendaftaran/image-dialog";
-import { UpdateImageDialog } from "./_components/update-image-dialog";
-import { ExportRegistrationData } from "./_components/export-registration-data";
-import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran/detail-pendaftaran-tim-skeleton";
-import { RegistrationDetailHeader } from "@/components/home/detail-pendaftaran/header";
+import { ImageDialog } from "@/components/home/image-dialog";
+import { UpdateImageDialog } from "../../../../components/home/esport/registration-detail/update-image-dialog";
+import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran-tim-skeleton";
+import { RegistrationDetailHeader } from "@/components/home/header";
+import { ParticipantTable, TeamTable } from "@/models/esport/table";
+import { codeCheck } from "@/server/services/esport/code-check";
+import { getTeamById } from "@/server/actions/queries/esport";
+import { ExportData } from "@/components/home/esport/registration-detail/export-data";
 
 export default function EsportRegistrationDetailPage() {
-   const [team, setTeam] = useState<
-      EsportRegistrationDisplaySchemaType | undefined
-   >();
+   const [team, setTeam] = useState<TeamTable | undefined>();
    const router = useRouter();
 
    useEffect(() => {
@@ -37,11 +34,11 @@ export default function EsportRegistrationDetailPage() {
       if (!kodeStored) {
          return;
       }
-      esportTimRegistrationCodeCheck(kodeStored).then((res) => {
+      codeCheck(kodeStored).then((res) => {
          if (!res.success) {
             return;
          }
-         getTimById(kodeStored).then((res) => {
+         getTeamById(kodeStored).then((res) => {
             if (!res.success) {
                return;
             }
@@ -65,8 +62,8 @@ export default function EsportRegistrationDetailPage() {
                         gcUrl={gcUrl}
                      />
                      <div className="flex flex-col space-y-2 justify-end items-end">
-                        <CopyTeamCode kode={team.id} />
-                        <ExportRegistrationData team={team} />
+                        <CopyTeamCode kode={team.id!} />
+                        <ExportData team={team} />
                      </div>
                      <div
                         className={`grid grid-cols-1 ${
@@ -122,7 +119,7 @@ export default function EsportRegistrationDetailPage() {
                               <TableBody>
                                  {team.peserta
                                     ? (
-                                         team.peserta as Array<PesertaEsportTableSchemaType>
+                                         team.peserta as Array<ParticipantTable>
                                       ).map((p) => (
                                          <TableRow key={p.id}>
                                             <TableCell className="border border-gray-300 px-4 py-2 text-sm">

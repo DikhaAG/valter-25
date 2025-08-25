@@ -1,11 +1,11 @@
 "use client";
 import type React from "react";
 import { useState, useEffect } from "react";
-import { VideoCampaignForm } from "./_components/form/main";
 import { HeaderSection } from "../_sections/header-section";
 import { TimelineSection } from "../_sections/timeline-section";
 import { headerData } from "@/data/home/video-campaign/header-data";
 import { timelineData } from "@/data/home/video-campaign/timeline-data";
+import { Form } from "@/components/home/video-campaign/form-registration/main";
 
 export default function VideoCampaignPage() {
    const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +26,7 @@ export default function VideoCampaignPage() {
          <TimelineSection data={timelineData} isVisible={isVisible} />
 
          {/* Registration Form Section */}
-         <VideoCampaignForm isVisible={isVisible} />
+         <Form isVisible={isVisible} />
       </div>
    );
 }
