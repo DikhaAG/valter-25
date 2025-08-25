@@ -12,7 +12,7 @@ import { v2 as cloudinary } from "cloudinary";
 export async function uploadToCloudinary(
    file: unknown,
    originalFileName: string
-) {
+): Promise<string> {
    if (!(file instanceof File)) {
       throw new Error("Gambar tidak valid!.");
    }

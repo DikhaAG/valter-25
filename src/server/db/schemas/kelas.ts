@@ -13,4 +13,4 @@ export const kelasTable = pgTable("kelas", {
       .references(() => prodiTable.nama, { onDelete: "cascade" }),
 });
 
-export const kelasSchema = { kelasTable };
+export const kelasSchema = { kelasTable, prodiTable };

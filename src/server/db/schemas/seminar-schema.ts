@@ -53,12 +53,12 @@ export const pesertaSeminarTable = pgTable("peserta_seminar", {
    id: uuid("id").primaryKey().defaultRandom(),
    as: asEnumTable("as").notNull(),
    metode_daftar: metodeDaftarEnum("metode_daftar"),
-   kelas: text("kelas").references(() => pendaftaranSeminarKelas.kelas, {
+   kelas: text("kelas").references(() => pendaftaranSeminarKelasTable.kelas, {
       onDelete: "cascade",
    }),
    nama: text("nama").notNull(),
-   noWa: text("no_wa").notNull(),
-   email: text("email").notNull(),
+   noWa: text("no_wa").notNull().unique(),
+   email: text("email").notNull().unique(),
    instansi: text("instansi"),
    domisili: kabupatenkotaEnum("domisili").notNull(),
    buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
@@ -76,21 +76,27 @@ export const pesertaSeminarTable = pgTable("peserta_seminar", {
 /**
  * Setiap pendaftaran perkelas harus unique
  */
-export const pendaftaranSeminarKelas = pgTable("pendaftaran_seminar_kelas", {
-   id: uuid("id").primaryKey().defaultRandom(),
-   kelas: text("kelas")
-      .unique()
-      .notNull()
-      .references(() => kelasTable.nama, { onDelete: "set null" }),
-   nominal: integer("nominal").notNull(),
-   buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
-   createdat: timestamp("created_at", { mode: "string" })
-      .defaultNow()
-      .notNull(),
-   updatedat: timestamp("updated_at", { mode: "string" })
-      .defaultNow()
-      .notNull()
-      .$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
-});
+export const pendaftaranSeminarKelasTable = pgTable(
+   "pendaftaran_seminar_kelas",
+   {
+      id: uuid("id").primaryKey().defaultRandom(),
+      kelas: text("kelas")
+         .unique()
+         .notNull()
+         .references(() => kelasTable.nama, { onDelete: "set null" }),
+      nominal: integer("nominal").notNull(),
+      buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
+      createdat: timestamp("created_at", { mode: "string" })
+         .defaultNow()
+         .notNull(),
+      updatedat: timestamp("updated_at", { mode: "string" })
+         .defaultNow()
+         .notNull()
+         .$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
+   }
+);
 
-export const seminarSchema = { pesertaSeminarTable };
+export const seminarSchema = {
+   pesertaSeminarTable,
+   pendaftaranSeminarKelasTable,
+};

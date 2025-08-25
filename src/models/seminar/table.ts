@@ -36,11 +36,11 @@ import { asEnum, kotaEnum, metodeDaftarEnum } from "../enums";
  *
  */
 export const participantTable = z.object({
-   id: z.uuid(),
+   id: z.uuid().optional(),
    as: asEnum,
    metodeDaftar: metodeDaftarEnum,
    kelas: z.string().nullable(),
-   nama: z.string().nullable(),
+   nama: z.string(),
    noWa: z.string(),
    email: z.email(),
    instansi: z.string().nullable(),
@@ -52,7 +52,7 @@ export const participantTable = z.object({
    updatedat: z.string(),
 });
 
-export const classTable = z.object({
+export const classRegistraionTable = z.object({
    id: z.uuid(),
    kelas: z.string(),
    nominal: z.number(),
@@ -63,4 +63,4 @@ export const classTable = z.object({
 });
 
 export type ParticipantTable = z.infer<typeof participantTable>;
-export type ClassTable = z.infer<typeof classTable>;
+export type ClassRegistrationTable = z.infer<typeof classRegistraionTable>;

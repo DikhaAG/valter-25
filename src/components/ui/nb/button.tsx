@@ -14,7 +14,8 @@ const buttonVariants = cva(
                                 secondary: "bg-secondary/90 hover:bg-secondary text-secondary-foreground",
                                 gosong: "bg-foreground/90 border-4 border-foreground text-secondary-foreground",
                                 success: "bg-green-600/90 hover:bg-green-600 border-4 border-foreground text-secondary-foreground",
-                                destructive: "bg-red-600 hover:bg-red-700 border-4 border-foreground text-secondary-foreground"
+                                destructive: "bg-red-600 hover:bg-red-700 border-4 border-foreground text-secondary-foreground",
+                                select: "border-2 bg-background hover:shadow-[7px_7px_0px_#00000040] hover:-translate-y-1 hover:-translate-x-1"
                         },
                         size: {
                                 default: "h-9 px-4 py-2 has-[>svg]:px-3",

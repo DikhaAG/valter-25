@@ -11,3 +11,6 @@ export const prodiTableSchema = z.object({
    nama: z.string(),
    kelas: z.array(kelasTableSchema),
 });
+
+export type ProdiTableSchema = z.infer<typeof prodiTableSchema>;
+export type KelasTableSchema = z.infer<typeof kelasTableSchema>;
