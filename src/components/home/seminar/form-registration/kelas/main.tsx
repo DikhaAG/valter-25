@@ -244,7 +244,7 @@ export function KelasForm() {
                )}
             </div>
             {fields.length > 0 && (
-               <div className="max-h-screen overflow-x-scroll">
+               <div className="max-h-screen">
                   <h3 className="text-lg font-semibold mt-4">
                      Daftar Mahasiswa
                   </h3>
@@ -252,7 +252,7 @@ export function KelasForm() {
                      {watchedRows.map((row, index) => (
                         <div
                            key={index}
-                           className="border p-4 rounded-md bg-muted"
+                           className="border-4 border-dashed p-4 rounded-md bg-muted"
                         >
                            <p className="font-bold mb-2">
                               {wrapSymbols("#")}

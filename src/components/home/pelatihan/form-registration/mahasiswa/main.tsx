@@ -51,7 +51,6 @@ export function MahasiswaForm({
    });
 
    async function onSubmit(data: ParticipantAsMahasiswa) {
-      console.log(data);
       const res = await individualRegistration({ data });
       if (!res.success) {
          CustomToast({
@@ -67,7 +66,7 @@ export function MahasiswaForm({
          form.reset();
          sessionStorage.setItem("registrationId", res.data!);
          sessionStorage.setItem("metodeDaftar", "individu");
-         router.push("/seminar/detail-pendaftaran");
+         router.push("/pelatihan/detail-pendaftaran");
       }
    }
    function handleFormError(e: FieldErrors) {
