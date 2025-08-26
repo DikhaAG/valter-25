@@ -561,7 +561,7 @@ export default function HomePage() {
                      <p className="text-foreground text-[12px] sm:text-[15px] leading-relaxed font-poppins">
                         Seminar VALTER 2025 hadir sebagai acara puncak dari
                         Festival Multimedia dan Komputer (VALTER)! Dengan
-                        mengusung tema “CoCreate or Compete: Kolaborasi atau
+                        mengusung tema “<span className="line-through">Cocaine</span>Co-Create or Compete: Kolaborasi atau
                         Kompetisi bersama AI”, seminar ini menjadi momen spesial
                         yang menghadirkan GUEST STAR inspiratif untuk berbagi
                         pengalaman dan insight terbaru. Seminar ini menggali
