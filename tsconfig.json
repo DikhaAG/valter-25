@@ -29,6 +29,6 @@
       ".next/types/**/*.ts",
       "src/server/db/schemas/esport-umum-schema ts",
       "src/components/home/seminar/form-registration/prodi-selector.tsx"
-   ],
+, "tailwind.config.js"   ],
    "exclude": ["node_modules"]
 }
