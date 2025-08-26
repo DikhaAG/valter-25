@@ -17,7 +17,7 @@ export function HeaderSection({ isVisible, data }: Props) {
       >
          <div className="max-w-md md:max-w-4xl flex flex-col md:flex-row mx-auto gap-20 text-center">
             <div className="md:mb-6 flex justify-center">
-               <div className="relative md:w-80">
+               <div className="relative w-60 md:w-80">
                   {/* <Image
                      src={`/images/${data.img}`}
                      alt="Gaming Device"
@@ -31,41 +31,40 @@ export function HeaderSection({ isVisible, data }: Props) {
                      height={500}
                      width={500}
                   />
-                      <div className="absolute top-0 right-10 w-10 h-10 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute bottom-10 left-10 w-4 h-4 bg-pink-300 rounded-full animate-bounce opacity-60"></div>
-                        <div className="absolute top-1/3 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60"></div>
-                        <div className="absolute bottom-5 right-20 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute top-10 right-10 w-10 h-10 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute bottom-20 left-10 w-4 h-4 bg-pink-300 rounded-full animate-bounce opacity-60"></div>
-                        <div className="absolute top-1/4 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60"></div>
-                        <div className="absolute bottom-10 right-20 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute top-15 right-10 w-10 h-10 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute bottom-25 left-10 w-4 h-4 bg-pink-300 rounded-full animate-bounce opacity-60"></div>
-                        <div className="absolute top-3/2 right-10 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60"></div>
-                        <div className="absolute bottom-15 right-25 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute top-20 right-40 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-75"></div>
-                        <div className="absolute top-1/3 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-100"></div>
-                        <div className="absolute top-30 right-30 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-150"></div>
-                        <div className="absolute top-3/2 right-10 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-200"></div>
-                        <div className="absolute top-15 right-10 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-300"></div>
-                        <div className="absolute top-1/4 right-5 w-3 h-3 bg-sky-300 rounded-full animate-pulse opacity-60 delay-500"></div>
-                        <div className="absolute top-1/2 right-40 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-700"></div>
-                        <div className="absolute top-1/2 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-1000"></div>
-                        <div className="absolute top-1/2 right-30 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-initial"></div>
-                        <div className="absolute top-1/2 -left-0 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-75"></div>
-                        <div className="absolute top-1/2 -left-0 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-100"></div>
-                        <div className="absolute top-1/2 -left-5 w-3 h-3 bg-sku-300 rounded-full animate-pulse opacity-60 delay-1000"></div>
+                  <div className="absolute top-0 right-10 w-10 h-10 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute bottom-10 left-10 w-4 h-4 bg-pink-300 rounded-full animate-bounce opacity-60"></div>
+                  <div className="absolute top-1/3 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60"></div>
+                  <div className="absolute bottom-5 right-20 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute top-10 right-10 w-10 h-10 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute bottom-20 left-10 w-4 h-4 bg-pink-300 rounded-full animate-bounce opacity-60"></div>
+                  <div className="absolute top-1/4 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60"></div>
+                  <div className="absolute bottom-10 right-20 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute top-15 right-10 w-10 h-10 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute bottom-25 left-10 w-4 h-4 bg-pink-300 rounded-full animate-bounce opacity-60"></div>
+                  <div className="absolute top-3/2 right-10 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60"></div>
+                  <div className="absolute bottom-15 right-25 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute top-20 right-40 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-75"></div>
+                  <div className="absolute top-1/3 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-100"></div>
+                  <div className="absolute top-30 right-30 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-150"></div>
+                  <div className="absolute top-3/2 right-10 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-200"></div>
+                  <div className="absolute top-15 right-10 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-300"></div>
+                  <div className="absolute top-1/4 right-5 w-3 h-3 bg-sky-300 rounded-full animate-pulse opacity-60 delay-500"></div>
+                  <div className="absolute top-1/2 right-40 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-700"></div>
+                  <div className="absolute top-1/2 right-5 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-1000"></div>
+                  <div className="absolute top-1/2 right-30 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-initial"></div>
+                  <div className="absolute top-1/2 -left-0 w-3 h-3 bg-blue-300 rounded-full animate-pulse opacity-60 delay-75"></div>
+                  <div className="absolute top-1/2 -left-0 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-100"></div>
+                  <div className="absolute top-1/2 -left-5 w-3 h-3 bg-sku-300 rounded-full animate-pulse opacity-60 delay-1000"></div>
 
-                        <div className="absolute bottom-10 right-20 w-5 h-5 bg-indigo-300 rounded-full animate-ping opacity-60 delay-300"></div>
-                        <div className="absolute bottom-15 right-35 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60 delay-0"></div>
-                        <div className="absolute top-30 -right-40 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-100"></div>
-                        <div className="absolute -top-15 -right-30 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-250"></div>
-                        <div className="absolute -top-5 -right-10 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-500"></div>
+                  <div className="absolute bottom-10 right-20 w-5 h-5 bg-indigo-300 rounded-full animate-ping opacity-60 delay-300"></div>
+                  <div className="absolute bottom-15 right-35 w-5 h-5 bg-purple-300 rounded-full animate-ping opacity-60 delay-0"></div>
+                  <div className="absolute top-30 -right-40 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-100"></div>
+                  <div className="absolute -top-15 -right-30 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-250"></div>
+                  <div className="absolute -top-5 -right-10 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-500"></div>
 
-                        <div className="absolute top-0 -left-15 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-100"></div>
-                        <div className="absolute -top-5 -left-10 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-250"></div>
-                        <div className="absolute -top-5 -left-0 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-500"></div>
-
+                  <div className="absolute top-0 -left-15 w-12 h-12 bg-yellow-300 rounded-full animate-ping opacity-60 delay-100"></div>
+                  <div className="absolute -top-5 -left-10 w-10 h-10 bg-amber-300 rounded-full animate-ping opacity-60 delay-250"></div>
+                  <div className="absolute -top-5 -left-0 w-10 h-10 bg-red-300 rounded-full animate-ping opacity-60 delay-500"></div>
                </div>
             </div>
             <div className="flex flex-col gap-5">
