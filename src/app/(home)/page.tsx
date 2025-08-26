@@ -253,7 +253,7 @@ export default function HomePage() {
                      />
                   </div>
 
-                  <div className="flex items-center space-x-8 text-xs md:text-base">
+                  <div className="flex items-center justify-center space-x-8 text-xs md:text-base ml-5 sm:ml-0">
                      <Link
                         href="/"
                         className="text-white hover:text-secondary font-medium"

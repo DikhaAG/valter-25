@@ -157,7 +157,7 @@ export function HomeNavSection({ timeLeft }: Props) {
                         {isSidebarOpen ? (
                            <X className="h-8 w-8 border-2 border-foreground bg-background text-foreground rounded-md p-1.5 transition-all " />
                         ) : (
-                           <Menu className="h-8 w-8 border-2 border-foreground bg-background text-foreground rounded-md p-1.5 -translate-x-0.5 -translate-y-0.5 hover:translate-0 drop-shadow-[6px_6px_0px_#212121] hover:drop-shadow-none transition-all " />
+                           <Menu className="h-8 w-8 border-2 border-foreground bg-background text-foreground rounded-md p-1.5 -translate-x-0.5 -translate-y-0.5 hover:translate-0 drop-shadow-[4px_4px_0px_#212121] hover:drop-shadow-none transition-all " />
                         )}
                      </button>
                   </div>

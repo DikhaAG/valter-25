@@ -31,12 +31,13 @@ export function WhatsappContactButton({
                cursor-pointer
             flex items-center gap-2 
             bg-green-500 hover:bg-green-600 text-white 
-            rounded-full shadow-lg hover:shadow-xl
+            rounded-xl
+            -translate-y-1 -translate-x-1 hover:translate-0 shadow-[5px_5px_0px_#00000040] hover:shadow-none
             px-6 py-3 md:px-7 md:py-3.5 
             text-sm md:text-md font-semibold 
             transition-all duration-300 ease-in-out 
-            hover:scale-105 
             group
+            border-foreground
           "
             >
                <FaWhatsapp className="h-8 w-8 md:h-7 md:w-7 group-hover:scale-110 transition-transform" />
