@@ -29,14 +29,14 @@ import {
 } from "@/utils/image-upload-requirements";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { ImageUploadField } from "@/components/home/image-upload-field";
-import { TeamTable } from "@/models/video-campaign/table";
-import { updateBuktiPembayaran } from "@/server/services/video-campaign/update-bukti-pembayaran";
+import { updateBuktiPembayaranIndividu } from "@/server/services/seminar/update-bukti-pembayaran-individu";
+import { ParticipantTable } from "@/models/seminar/table";
 
 // --- KOMPONEN DIALOG UPDATE GAMBAR ---
 interface Props {
-   team: TeamTable;
+   data: ParticipantTable;
 }
-export const VideoCampaignUpdateImageDialog = ({ team }: Props) => {
+export const IndividuUpdateImageDialog = ({ data }: Props) => {
    /**
     * State untuk menyimpan objek file yang dipilih oleh pengguna.
     * @default null
@@ -79,10 +79,9 @@ export const VideoCampaignUpdateImageDialog = ({ team }: Props) => {
       }
 
       startTransition(async () => {
-         // Memanggil Server Action untuk mengunggah dan memperbarui data
-         const res = await updateBuktiPembayaran({
+         const res = await updateBuktiPembayaranIndividu({
             file: file,
-            namaTim: team.namaTim,
+            id: data.id!,
          });
 
          // Menangani respons dari Server Action
@@ -119,7 +118,7 @@ export const VideoCampaignUpdateImageDialog = ({ team }: Props) => {
             <DialogHeader>
                <DialogTitle>Ubah Bukti Pembayaran</DialogTitle>
                <DialogDescription>
-                  Pilih gambar baru untuk bukti pembayaran {team.namaTim}.
+                  Pilih gambar baru untuk bukti pembayaran {data.nama}.
                </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">

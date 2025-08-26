@@ -52,7 +52,7 @@ import { kelasTable } from "./kelas";
 export const pesertaSeminarTable = pgTable("peserta_seminar", {
    id: uuid("id").primaryKey().defaultRandom(),
    as: asEnumTable("as").notNull(),
-   metode_daftar: metodeDaftarEnum("metode_daftar"),
+   metodeDaftar: metodeDaftarEnum("metode_daftar").notNull(),
    kelas: text("kelas").references(() => pendaftaranSeminarKelasTable.kelas, {
       onDelete: "cascade",
    }),
@@ -61,7 +61,7 @@ export const pesertaSeminarTable = pgTable("peserta_seminar", {
    email: text("email").notNull().unique(),
    instansi: text("instansi"),
    domisili: kabupatenkotaEnum("domisili").notNull(),
-   buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
+   buktiPembayaran: text("bukti_pembayaran").notNull(),
    statusPembayaran: boolean("status_pembayaran").default(false).notNull(),
    tanggalKonfirmasi: timestamp("tanggal_konfirmasi", { mode: "string" }),
    createdat: timestamp("created_at", { mode: "string" })
@@ -86,6 +86,8 @@ export const pendaftaranSeminarKelasTable = pgTable(
          .references(() => kelasTable.nama, { onDelete: "set null" }),
       nominal: integer("nominal").notNull(),
       buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
+      statusPembayaran: boolean("status_pembayaran").default(false).notNull(),
+      tanggalKonfirmasi: timestamp("tanggal_konfirmasi", { mode: "string" }),
       createdat: timestamp("created_at", { mode: "string" })
          .defaultNow()
          .notNull(),

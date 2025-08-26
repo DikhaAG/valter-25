@@ -96,13 +96,13 @@ export function RegistrationCheckButton() {
                      Cek Status Pendaftaran
                   </DialogTitle>
                   <DialogDescription>
-                     Masukan kode unik tim kamu untuk melihat status apakah
-                     pembayaran telah berhasil dikonfirmasi
+                     Masukan kode registrasi tim kamu untuk melihat status
+                     apakah pembayaran telah berhasil dikonfirmasi
                   </DialogDescription>
                </DialogHeader>
                <div className="grid gap-4">
                   <div className="grid gap-3">
-                     <Label htmlFor="name-1">Masukan Kode Unik</Label>
+                     <Label htmlFor="name-1">Masukan Kode Registrasi</Label>
                      <Input
                         id="team-name"
                         name="team-name"

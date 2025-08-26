@@ -34,8 +34,11 @@ import { getAllProdiWithKelas } from "@/server/actions/queries/kelas";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { read, utils } from "xlsx";
 import { wrapSymbols } from "@/utils/wrap-symbols";
+import { classRegistration } from "@/server/services/seminar/class-registration";
+import { handleFileChange } from "@/server/services/seminar/handle-excel-field";
+import { validateNominal } from "@/server/services/seminar/validate-nominal";
 
-type ExcelRow = {
+export type MahasiswaExcelRow = {
    nama: string;
    noWa: string;
    email: string;
@@ -59,132 +62,41 @@ export function KelasForm() {
       control: form.control,
       name: "participants",
    });
-   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) {
-         setFileError("Pilih file terlebih dahulu.");
-         return;
-      }
-      setFileError("");
-      setColumnsError("");
-      form.setValue("excelFile", file, { shouldValidate: true });
-   };
-
-   const handleProcessFile = async () => {
-      const file = form.getValues("excelFile");
-      if (!file) {
-         setFileError("Pilih file terlebih dahulu.");
-         return;
-      }
-      setFileError("");
-      setColumnsError("");
-
-      try {
-         const data = await file.arrayBuffer();
-         const workbook = read(data);
-         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-         const json = utils.sheet_to_json(sheet) as ExcelRow[];
-
-         if (json.length > 0) {
-            console.log(json);
-            const firstRow = json[0];
-            const requiredColumns = ["nama", "noWa", "email"];
-            const existingColumns = Object.keys(firstRow);
-
-            const missingColumns = requiredColumns.filter(
-               (col) => !existingColumns.includes(col)
-            );
-
-            if (missingColumns.length > 0) {
-               setColumnsError(
-                  `File Excel tidak memiliki kolom yang diperlukan: ${missingColumns.join(
-                     ", "
-                  )}`
-               );
-               form.resetField("participants");
-               return;
-            }
-
-            // Validasi keunikan NPM
-            const noWaValues = json.map((row) => row.noWa);
-            const emailValues = json.map((row) => row.email);
-            const uniqueNoWa = new Set(noWaValues);
-            const uniqueEmail = new Set(emailValues);
-
-            if (uniqueNoWa.size !== noWaValues.length) {
-               setColumnsError(
-                  "Tidak boleh terdapat lebih dari satu nomor whatsapp yang sama"
-               );
-               form.resetField("participants");
-               return;
-            }
-            if (uniqueEmail.size !== emailValues.length) {
-               setColumnsError(
-                  "Tidak boleh terdapat lebih dari satu email yang sama"
-               );
-               form.resetField("participants");
-               return;
-            }
-
-            replace(json);
-         } else {
-            setColumnsError("File Excel tidak berisi data.");
-            form.resetField("participants");
-         }
-      } catch (error) {
-         console.error("Gagal memproses file:", error);
-         setFileError("Gagal membaca file. Pastikan formatnya benar.");
-         form.resetField("participants");
-      }
-   };
 
    async function onSubmit(data: ClassRegstrationSchema) {
-      console.log(data);
-      const { nominal, participants } = data;
-      const htm = 60_000;
-      const nominalSeharusnya = participants.length * htm;
-      if (nominal < nominalSeharusnya) {
+      const isNominalValid = validateNominal({ data });
+      if (!isNominalValid.success) {
+         const { message } = isNominalValid;
+         form.setError("nominal", { message });
          CustomToast({
             variant: "warning",
-            message: "Nominal bayar kurang dari total yang seharusnya",
-         });
-         form.setError("nominal", {
-            message: "Nominal bayar kurang dari total yang seharusnya",
-         });
-         return;
-      } else if (nominal > nominalSeharusnya) {
-         CustomToast({
-            variant: "warning",
-            message: "Nominal bayar lebih dari total yang seharusnya",
-         });
-         form.setError("nominal", {
-            message: "Nominal bayar lebih dari total yang seharusnya",
+            message: message!,
          });
          return;
       }
-      console.log(data)
+
+      console.log(data);
       CustomToast({
          variant: "success",
          message: "Berhasil!",
       });
-      return;
-      // const res = await classRegistration({ data });
-      // if (!res.success) {
-      //    CustomToast({
-      //       variant: "warning",
-      //       message: `${res.message} 😂💀`,
-      //    });
-      //    setLoading(false);
-      //    return;
-      // } else {
-      //    CustomToast({
-      //       variant: "success",
-      //       message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
-      //    });
-      //    form.reset();
-      //    sessionStorage.setItem("kodeTim", res.data!);
-      //    router.push("/seminar/detail-pendaftaran");
-      // }
+      const res = await classRegistration({ data });
+      if (!res.success) {
+         CustomToast({
+            variant: "warning",
+            message: `${res.message} 😂💀`,
+         });
+         return;
+      } else {
+         CustomToast({
+            variant: "success",
+            message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
+         });
+         form.reset();
+         sessionStorage.setItem("registrationId", res.data!.registrationId);
+         sessionStorage.setItem("metodeDaftar", "kelas");
+         router.push(`/seminar/detail-pendaftaran/${res.data!.kelas}`);
+      }
    }
    useEffect(() => {
       getAllProdiWithKelas().then((res) => {
@@ -195,18 +107,16 @@ export function KelasForm() {
    }, []);
    function handleFormError(e: FieldErrors) {
       console.log(e);
-      if (Object.keys(e).includes("buktiPembayaran")) {
+      if (
+         Object.keys(e).includes("pesertaError") ||
+         Object.keys(e).includes("participants")
+      ) {
          CustomToast({
             variant: "warning",
-            message: "Bukti pembayaran belum diupload!.",
+            message: "Data mahasiswa tidak valid",
          });
       }
-      if (Object.keys(e).includes("participants")) {
-         CustomToast({
-            variant: "warning",
-            message: "Data mahasiswa belum diupload!.",
-         });
-      }
+      return;
    }
    return (
       <FormProvider {...form}>
@@ -294,7 +204,15 @@ export function KelasForm() {
                            <Input
                               type="file"
                               accept=".xlsx"
-                              onChange={handleFileChange}
+                              onChange={(e) =>
+                                 handleFileChange({
+                                    e,
+                                    form,
+                                    replace,
+                                    setColumnsError,
+                                    setFileError,
+                                 })
+                              }
                               className="cursor-pointer"
                            />
                         </FormControl>
@@ -311,7 +229,7 @@ export function KelasForm() {
                   )}
                />
             </div>
-            <div className="">
+            {/* <div className="">
                <Button
                   type="button"
                   onClick={handleProcessFile}
@@ -319,7 +237,7 @@ export function KelasForm() {
                >
                   Tampilkan Data
                </Button>
-            </div>
+            </div> */}
             <div className="">
                {columnsError && (
                   <p className="text-sm font-medium text-destructive">
@@ -343,30 +261,32 @@ export function KelasForm() {
                               {index + 1}
                            </p>
                            <div className="grid lg:grid-cols-3 gap-4">
-                              {Object.keys(row as ExcelRow).map((key) => (
-                                 <FormField
-                                    key={key}
-                                    control={form.control}
-                                    name={`participants.${index}.${
-                                       key as keyof ExcelRow
-                                    }`}
-                                    render={({ field }) => (
-                                       <FormItem>
-                                          <FormLabel className="capitalize">
-                                             {key}
-                                          </FormLabel>
-                                          <FormControl>
-                                             <Input
-                                                {...field}
-                                                type="text"
-                                                value={String(field.value)}
-                                             />
-                                          </FormControl>
-                                          <FormMessage />
-                                       </FormItem>
-                                    )}
-                                 />
-                              ))}
+                              {Object.keys(row as MahasiswaExcelRow).map(
+                                 (key) => (
+                                    <FormField
+                                       key={key}
+                                       control={form.control}
+                                       name={`participants.${index}.${
+                                          key as keyof MahasiswaExcelRow
+                                       }`}
+                                       render={({ field }) => (
+                                          <FormItem>
+                                             <FormLabel className="capitalize">
+                                                {key}
+                                             </FormLabel>
+                                             <FormControl>
+                                                <Input
+                                                   {...field}
+                                                   type="text"
+                                                   value={String(field.value)}
+                                                />
+                                             </FormControl>
+                                             <FormMessage />
+                                          </FormItem>
+                                       )}
+                                    />
+                                 )
+                              )}
                            </div>
                         </div>
                      ))}
@@ -389,10 +309,10 @@ export function KelasForm() {
                </Label>
             </div>
             <FormField
-               name="npmatauidsama"
+               name="pesertaError"
                render={({}) => (
                   <FormItem>
-                     <FormMessage className="p-4 bg-red-200 border-4 rounded-lg font-semibold border-foreground shadow-[7px_7px_0px_#00000040]" />
+                     <FormMessage className="p-4 bg-background border-4 rounded-lg font-semibold border-foreground shadow-[7px_7px_0px_#00000040]" />
                   </FormItem>
                )}
             />

@@ -25,7 +25,7 @@ export async function codeCheck(
       console.log(error);
       return {
          success: false,
-         message: "Terjadi kesalahan dalam mengecek kode unik.",
+         message: "Terjadi kesalahan dalam mengecek kode registrasi.",
          error: error,
       };
    }

@@ -3,7 +3,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trash2 } from "lucide-react";
 // UTILS
 import { wrapSymbols } from "@/utils/wrap-symbols";
 // COMPONENTS

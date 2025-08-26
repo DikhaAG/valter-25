@@ -17,7 +17,8 @@ import { videoCampaignSchema } from "@/server/db/schemas/video-campaign-schema";
 import { webDesignSchema } from "@/server/db/schemas/web-design-schema";
 import { seminarSchema } from "@/server/db/schemas/seminar-schema";
 import { kelasSchema } from "@/server/db/schemas/kelas";
-import {  kelasRelations } from "@/server/db/relations/kelas-relation";
+import { kelasRelations } from "@/server/db/relations/kelas-relation";
+import { seminarRelations } from "@/server/db/relations/seminar-relation";
 
 // Memuat variabel lingkungan dari file .env
 config({
@@ -47,8 +48,9 @@ export const db = drizzle({
       ...videoCampaignSchema,
       ...videoCampaignRelation,
       ...seminarSchema,
+      ...seminarRelations,
       ...kelasSchema,
       ...kelasRelations,
-      ...enumSchema
+      ...enumSchema,
    },
 });

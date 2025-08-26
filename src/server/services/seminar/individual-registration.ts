@@ -53,7 +53,7 @@ export async function individualRegistration({
          .values({
             id: uuidv4(),
             as: result.as,
-            metode_daftar: "individu",
+            metodeDaftar: "individu",
             nama: result.nama,
             noWa: result.noWa,
             email: result.email,

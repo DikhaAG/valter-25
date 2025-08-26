@@ -117,9 +117,11 @@ export const classRegstrationSchema = z
       nominal: z
          .number()
          .min(60000, { error: "Nominal bayar tidak boleh dibawah Rp 60.000" }),
-      buktiPembayaran: z.any(),
+      buktiPembayaran: z.instanceof(File, {
+         error: "Bukti pembayaran belum diupload.",
+      }),
       excelFile: z
-         .instanceof(File, {error: "Gambar belum diupload!."})
+         .instanceof(File, { error: "File belum diupload!." })
          .refine((file) => file.name.endsWith(".xlsx"), {
             message: "File harus berformat .xlsx",
          }),
@@ -167,7 +169,6 @@ export const classRegstrationSchema = z
    })
    .refine(
       ({ nominal }) => {
-         console.log(nominal % 60000);
          return nominal % 60000 === 0;
       },
       {
@@ -175,6 +176,41 @@ export const classRegstrationSchema = z
          path: ["nominal"],
       }
    )
+   .superRefine(({ participants }, ctx) => {
+      const uniqueWa: string[] = [];
+      participants.forEach((p, i) => {
+         if (uniqueWa.length > 0) {
+            if (uniqueWa.includes(p.noWa)) {
+               console.log("==============");
+               ctx.addIssue({
+                  code: "custom",
+                  message: `Nomor Whatsapp ini sudah dimasukan!.`,
+                  path: ["participants", i, "noWa"],
+               });
+            }
+         } else {
+            uniqueWa.push(p.noWa);
+         }
+      });
+   })
+   .superRefine(({ participants }, ctx) => {
+      const uniqueEmail: string[] = [];
+      participants.forEach((p, i) => {
+         if (uniqueEmail.length > 0) {
+            if (uniqueEmail.includes(p.email)) {
+               console.log("==============");
+
+               ctx.addIssue({
+                  code: "custom",
+                  message: `Email ini sudah dimasukan!.`,
+                  path: ["participants", i, "email"],
+               });
+            }
+         } else {
+            uniqueEmail.push(p.noWa);
+         }
+      });
+   })
    .refine(
       (data) => {
          // Mengambil semua nilai NPM dari array
@@ -189,7 +225,7 @@ export const classRegstrationSchema = z
       },
       {
          // Pesan error jika validasi gagal
-         error: `Tidak boleh ada NPM yang sama!.`,
+         error: `Tidak boleh ada nomor Whatsapp yang sama!.`,
          // Path di mana error akan ditampilkan
          path: [`pesertaError`],
       }

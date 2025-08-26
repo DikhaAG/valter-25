@@ -15,12 +15,13 @@ import {
 import { uploadToCloudinary } from "@/server/services/upload-to-cloudinary";
 import { db } from "@/lib/drizzle";
 import { ParticipantTable } from "@/models/seminar/table";
+import { getCurrentPostgresTimestamp } from "@/utils/get-current-postgres-timestamp";
 
 export async function classRegistration({
    data,
 }: {
    data: ClassRegstrationSchema;
-}): Promise<ServerResponseType<string>> {
+}): Promise<ServerResponseType<{ registrationId: string; kelas: string }>> {
    const result = await classRegstrationSchema.parseAsync(data);
 
    if (!result) {
@@ -45,7 +46,10 @@ export async function classRegistration({
             nominal: result.nominal,
             buktiPembayaran: buktiPembayaranUrl,
          })
-         .returning({ insertedId: pesertaSeminarTable.id });
+         .returning({
+            insertedId: pendaftaranSeminarKelasTable.id,
+            insertedKelas: pendaftaranSeminarKelasTable.kelas,
+         });
 
       // Setelah berhasil, insert ke tabel pesertaML
       const participants: ParticipantTable[] = result.participants.map((p) => ({
@@ -69,7 +73,10 @@ export async function classRegistration({
 
       return {
          success: true,
-         data: classInsert[0].insertedId,
+         data: {
+            registrationId: classInsert[0].insertedId,
+            kelas: classInsert[0].insertedKelas,
+         },
       };
    } catch (error) {
       await db

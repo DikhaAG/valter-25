@@ -57,6 +57,8 @@ export const classRegistraionTable = z.object({
    kelas: z.string(),
    nominal: z.number(),
    buktiPembayaran: z.any(),
+   statusPembayaran: z.boolean().default(false),
+   tanggalKonfirmasi: z.string().nullable(),
    createdat: z.string(),
    updatedat: z.string(),
    peserta: z.array(participantTable),

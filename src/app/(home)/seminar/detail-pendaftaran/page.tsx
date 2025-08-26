@@ -2,7 +2,6 @@
 import { Label } from "@/components/ui/nb/label";
 import { Input } from "@/components/ui/nb/input";
 import { ImageDialog } from "../../../../components/home/image-dialog";
-import { VideoCampaignUpdateImageDialog } from "../../../../components/home/seminar/registration-detail/update-image-dialog";
 import {
    Table,
    TableBody,
@@ -15,24 +14,19 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/nb/button";
 import { useRouter } from "next/navigation";
 import { CopyTeamCode } from "@/components/home/salin-kode";
-import { VideoCampaignExportRegistrationData } from "../../../../components/home/seminar/registration-detail/export-data-pendaftaran";
 import { gcUrl } from "@/data/home/seminar/gc-url";
 import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran-tim-skeleton";
 import { RegistrationDetailHeader } from "@/components/home/header";
 import { ParticipantTable } from "@/models/seminar/table";
 import { codeCheck } from "@/server/services/seminar/code-check";
 import {
-   ClassRegstrationSchema,
    ParticipantAsGeneral,
    ParticipantAsMahasiswa,
 } from "@/models/seminar/registration-form";
 
 export default function DetailPendaftaranPage() {
-   const [team, setTeam] = useState<
-      | ParticipantAsMahasiswa
-      | ParticipantAsGeneral
-      | ClassRegstrationSchema
-      | undefined
+   const [participant, setParticipant] = useState<
+      ParticipantAsMahasiswa | ParticipantAsGeneral | undefined
    >();
    const router = useRouter();
 
@@ -60,7 +54,7 @@ export default function DetailPendaftaranPage() {
             <div className="p-4 flex justify-end md:justify-start">
                <Button onClick={() => router.back()}>Kembali</Button>
             </div>
-            {team ? (
+            {participant ? (
                // <>
                //    <div className="p-6 flex flex-col gap-y-8 md:gap-y-6">
                //       <RegistrationDetailHeader

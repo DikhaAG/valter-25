@@ -13,6 +13,10 @@
 
 import { db } from "@/lib/drizzle";
 import {
+   ClassRegistrationTable,
+   ParticipantTable,
+} from "@/models/seminar/table";
+import {
    pendaftaranSeminarKelasTable,
    pesertaSeminarTable,
 } from "@/server/db/schemas/seminar-schema";
@@ -21,15 +25,19 @@ import { eq } from "drizzle-orm";
 
 export async function codeCheck(
    kode: string
-): Promise<ServerResponseType<unknown>> {
+): Promise<ServerResponseType<ClassRegistrationTable | ParticipantTable>> {
    try {
-      const pesertaRes = await db.query.pesertaSeminarTable.findFirst({
+      let res: ClassRegistrationTable | ParticipantTable | undefined;
+      res = await db.query.pesertaSeminarTable.findFirst({
          where: eq(pesertaSeminarTable.id, kode),
       });
-      const kelasRes = await db.query.pendaftaranSeminarKelasTable.findFirst({
+      res = await db.query.pendaftaranSeminarKelasTable.findFirst({
+         with: {
+            peserta: true,
+         },
          where: eq(pendaftaranSeminarKelasTable.id, kode),
       });
-      if (!kelasRes || !pesertaRes) {
+      if (!res) {
          return {
             success: false,
             message: "Kode tidak ditemukan",
@@ -37,12 +45,13 @@ export async function codeCheck(
       }
       return {
          success: true,
+         data: res,
       };
    } catch (error) {
       console.log(error);
       return {
          success: false,
-         message: "Terjadi kesalahan dalam mengecek kode unik.",
+         message: "Terjadi kesalahan dalam mengecek kode registrasi.",
          error: error,
       };
    }
