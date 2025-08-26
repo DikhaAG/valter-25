@@ -94,8 +94,8 @@ export function HomeNavSection({ timeLeft }: Props) {
                   {/* Logo */}
                   <div className="flex items-center">
                      <Image
-                        width={2000}
-                        height={2000}
+                        width={500}
+                        height={500}
                         src="/images/brand-logo.png"
                         alt="Brand Logo"
                         className="w-12 h-12"

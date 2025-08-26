@@ -245,15 +245,15 @@ export default function HomePage() {
                <div className="flex items-center justify-between h-16">
                   <div className="flex items-center">
                      <Image
-                        width={2000}
-                        height={2000}
+                        width={500}
+                        height={500}
                         src="/images/brand-logo.png"
                         alt="Brand Logo"
-                        className="w-12 h-12"
+                        className="w-8 sm:w-12 h-8 sm:h-12"
                      />
                   </div>
 
-                  <div className="flex items-center justify-center space-x-8 text-xs md:text-base ml-5 sm:ml-0">
+                  <div className="flex items-center justify-center space-x-8 text-xs md:text-base ">
                      <Link
                         href="/"
                         className="text-white hover:text-secondary font-medium"
@@ -292,8 +292,8 @@ export default function HomePage() {
             <div className="text-center z-10">
                <div className="mb-8">
                   <Image
-                     width={1000}
-                     height={1000}
+                     width={500}
+                     height={500}
                      src="/images/hero-logo.png"
                      alt="VALTER 2026"
                      className="w-60 sm:w-96 h-auto mx-auto"
@@ -343,7 +343,7 @@ export default function HomePage() {
                <p className="text-white font-medium mb-4 font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   Scroll ke bawah
                </p>
-               <div className="w-12 h-12 border-2 border-white rounded-full flex items-center justify-center mx-auto animate-bounce group-hover:bg-white/20 transition-all duration-300">
+               <div className="mb-15 sm:mb-0 w-12 h-12 border-2 border-white rounded-full flex items-center justify-center mx-auto animate-bounce group-hover:bg-white/20 transition-all duration-300">
                   <ChevronDown className="w-10 h-10 text-white" />
                </div>
             </div>
@@ -368,8 +368,8 @@ export default function HomePage() {
                }}
             >
                <Image
-                  width={2000}
-                  height={2000}
+                  width={500}
+                  height={500}
                   src="/images/hand.png"
                   alt="Hand gesture"
                   className="w-full h-full object-contain rotate-200 drop-shadow-[-7px_-7px_0px_#00000040]"
@@ -389,8 +389,8 @@ export default function HomePage() {
                }}
             >
                <Image
-                  width={2000}
-                  height={2000}
+                  width={500}
+                  height={500}
                   src="/images/hand.png"
                   alt="Hand gesture"
                   className="w-full h-full object-contain rotate-14 drop-shadow-[7px_9px_0px_#00000040]"
@@ -654,8 +654,8 @@ export default function HomePage() {
                   <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                      <div className="w-full h-[360px] sm:h-[480px] bg-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                         <Image
-                           width={1000}
-                           height={1000}
+                           width={500}
+                           height={500}
                            src="/images/hero-logo.png"
                            alt="VALTER 2026 Logo"
                            className="w-48 sm:w-72 h-auto"
@@ -715,8 +715,8 @@ export default function HomePage() {
                         className="w-5 h-10 rotate-180"
                         src={"/images/arrow-icon.png"}
                         alt="arrow"
-                        width={1000}
-                        height={1000}
+                        width={500}
+                        height={500}
                      />
                   </button>
 
@@ -850,8 +850,8 @@ export default function HomePage() {
                         className="w-5 h-10"
                         src={"/images/arrow-icon.png"}
                         alt="arrow"
-                        width={1000}
-                        height={1000}
+                        width={500}
+                        height={500}
                      />
                   </button>
                </div>
@@ -947,8 +947,8 @@ export default function HomePage() {
                }}
             >
                <Image
-                  width={2000}
-                  height={2000}
+                  width={500}
+                  height={500}
                   src="/images/hand.png"
                   alt="Hand gesture"
                   className="w-full h-full object-contain rotate-200 drop-shadow-[-7px_-7px_0px_#00000040]"
@@ -968,8 +968,8 @@ export default function HomePage() {
                }}
             >
                <Image
-                  width={2000}
-                  height={2000}
+                  width={500}
+                  height={500}
                   src="/images/hand.png"
                   alt="Hand gesture"
                   className="w-full h-full object-contain rotate-14 drop-shadow-[7px_9px_0px_#00000040]"

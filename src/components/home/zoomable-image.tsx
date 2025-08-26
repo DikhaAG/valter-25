@@ -73,8 +73,8 @@ export const ZoomableImage = ({ src, alt }: Props) => {
                                 priority
                                 src={src}
                                 alt={alt}
-                                width={800}
-                                height={800}
+                                width={1000}
+                                height={1000}
                                 style={{
                                         transform: isZoomed
                                                 ? "scale(2)"
