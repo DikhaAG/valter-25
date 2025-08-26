@@ -3,7 +3,7 @@ import { HeaderDataType } from "@/types/header";
 export const headerData: HeaderDataType = {
    title: "Pelatihan Konten Kreator",
    desc: `Pelatihan Konten Kreator VALTER 2025 adalah program intensif selama tiga hari bersama narasumber profesional untuk mengasah keterampilan editing dan produksi konten. Mengusung tema “Optimalisasi Produksi & Penyajian Konten Digital Berkelanjutan”, pelatihan ini membantu peserta meningkatkan personal branding, kreativitas, daya saing, sekaligus mendapatkan pengalaman praktis, fasilitas lengkap, dan sertifikat nasional sebagai nilai tambah di era pesatnya perkembangan content creator.`,
-   img: "training.png",
+   img: "safira.png",
    htm: "70.000",
    cp: [
       {
