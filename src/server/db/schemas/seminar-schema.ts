@@ -55,6 +55,7 @@ export const pesertaSeminarTable = pgTable("peserta_seminar", {
    metodeDaftar: metodeDaftarEnum("metode_daftar").notNull(),
    kelas: text("kelas").references(() => pendaftaranSeminarKelasTable.kelas, {
       onDelete: "cascade",
+      onUpdate: "cascade",
    }),
    nama: text("nama").notNull(),
    noWa: text("no_wa").notNull().unique(),
@@ -83,7 +84,10 @@ export const pendaftaranSeminarKelasTable = pgTable(
       kelas: text("kelas")
          .unique()
          .notNull()
-         .references(() => kelasTable.nama, { onDelete: "set null" }),
+         .references(() => kelasTable.nama, {
+            onDelete: "set null",
+            onUpdate: "set default",
+         }),
       nominal: integer("nominal").notNull(),
       buktiPembayaran: text("bukti_pembayaran").unique().notNull(),
       statusPembayaran: boolean("status_pembayaran").default(false).notNull(),

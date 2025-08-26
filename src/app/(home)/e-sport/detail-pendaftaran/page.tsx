@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { gcUrl } from "@/data/home/e-sport/gc-url";
 // ---------------------------------------------------
 import { Label } from "@/components/ui/nb/label";
@@ -13,7 +12,6 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/nb/button";
 import { CopyTeamCode } from "@/components/home/salin-kode";
 //-------------------------------------------------------------------
 import { ImageDialog } from "@/components/home/image-dialog";
@@ -24,10 +22,10 @@ import { ParticipantTable, TeamTable } from "@/models/esport/table";
 import { codeCheck } from "@/server/services/esport/code-check";
 import { getTeamById } from "@/server/actions/queries/esport";
 import { ExportData } from "@/components/home/esport/registration-detail/export-data";
+import { BackButton } from "@/components/home/back-button";
 
 export default function EsportRegistrationDetailPage() {
    const [team, setTeam] = useState<TeamTable | undefined>();
-   const router = useRouter();
 
    useEffect(() => {
       const kodeStored = sessionStorage.getItem("kodeTim");
@@ -51,7 +49,7 @@ export default function EsportRegistrationDetailPage() {
       <div className="">
          <div className="w-full md:max-w-xl md:mx-auto space-y-8 border-none md:border-2 md:border-dashed md:border-foreground/80 md:rounded-md md:shadow-[7px_7px_0px_#00000040]">
             <div className="p-4 flex justify-end md:justify-start">
-               <Button onClick={() => router.back()}>Kembali</Button>
+               <BackButton />
             </div>
             {team ? (
                <>

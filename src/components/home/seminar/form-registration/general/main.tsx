@@ -1,10 +1,8 @@
 "use client";
 // PACKAGES
-import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trash2 } from "lucide-react";
 // UTILS
 import { wrapSymbols } from "@/utils/wrap-symbols";
 // COMPONENTS
@@ -13,51 +11,47 @@ import { Input } from "@/components/ui/nb/input";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
-import { useForm, useFieldArray, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, FieldErrors } from "react-hook-form";
 import {
    FormField,
    FormItem,
    FormLabel,
    FormControl,
    FormMessage,
+   FormDescription,
 } from "@/components/ui/form";
 import { Spinner } from "@/components/ui/nb/Spinner";
 import { UploadBuktiPembayaranField } from "../upload-bukti-pembayaran-field";
 import {
-   teamAsGeneral,
-   TeamAsGeneral,
-} from "@/models/video-campaign/registration-form";
-import { registration } from "@/server/services/video-campaign/registration";
+   participantAsGeneral,
+   ParticipantAsGeneral,
+} from "@/models/seminar/registration-form";
+import { individualRegistration } from "@/server/services/seminar/individual-registration";
+import DomisiliSelector from "../domisili-selector";
+import { KABUPATEN_KOTA_SUMSEL } from "@/data/kabupaten-kote-sumsel";
 
 export function GeneralForm() {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);
-   const [loading, setLoading] = useState(false);
    const router = useRouter();
-   const form = useForm<TeamAsGeneral>({
-      resolver: zodResolver(teamAsGeneral),
+   const form = useForm<ParticipantAsGeneral>({
+      resolver: zodResolver(participantAsGeneral),
       defaultValues: {
-         namaTim: "",
+         as: "umum",
+         metodeDaftar: "individu",
+         nama: "",
          noWa: "",
-         peserta: [{ id: uuidv4(), nama: "" }], // Baris pertama secara default
+         email: "",
       },
       mode: "onBlur",
    });
 
-   const { fields, append, remove } = useFieldArray({
-      control: form.control,
-      name: "peserta",
-   });
-
-   async function onSubmit(data: TeamAsGeneral) {
-      setLoading(true);
-
-      const res = await registration({ data });
+   async function onSubmit(data: ParticipantAsGeneral) {
+      const res = await individualRegistration({ data });
       if (!res.success) {
          CustomToast({
-            variant: "warning",
+            variant: "error",
             message: `${res.message} 😂💀`,
          });
-         setLoading(false);
          return;
       } else {
          CustomToast({
@@ -65,31 +59,35 @@ export function GeneralForm() {
             message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
          });
          form.reset();
-         sessionStorage.setItem("kodeTim", res.data!);
-         router.push("/video-campaign/detail-pendaftaran");
+         sessionStorage.setItem("registrationId", res.data!);
+         sessionStorage.setItem("metodeDaftar", "individu");
+         router.push("/seminar/detail-pendaftaran");
       }
+   }
+   function handleFormError(e: FieldErrors) {
+      console.log(e);
    }
    return (
       <FormProvider {...form}>
-         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+         <form
+            onSubmit={form.handleSubmit(onSubmit, handleFormError)}
+            className="space-y-8"
+         >
             <FormField
                control={form.control}
                name="as"
-               defaultValue="umum"
+               defaultValue="mahasiswa"
                render={({}) => <div></div>}
             />
             <div>
                <FormField
                   control={form.control}
-                  name={`namaTim`}
+                  name={`nama`}
                   render={({ field }) => (
                      <FormItem className="flex-1">
-                        <FormLabel>Nama Tim</FormLabel>
+                        <FormLabel>Nama Lengkap</FormLabel>
                         <FormControl>
-                           <Input
-                              placeholder="ex: Aruna Agnivesha."
-                              {...field}
-                           />
+                           <Input placeholder="ex: John Doe." {...field} />
                         </FormControl>
                         <FormMessage />
                      </FormItem>
@@ -97,7 +95,7 @@ export function GeneralForm() {
                />
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-2 gap-4">
                <div className="">
                   <FormField
                      control={form.control}
@@ -119,8 +117,56 @@ export function GeneralForm() {
                      )}
                   />
                </div>
+               <div className="">
+                  <FormField
+                     control={form.control}
+                     name={`email`}
+                     render={({ field }) => (
+                        <FormItem className="flex-1">
+                           <FormLabel className="text-xs">
+                              Email Aktif
+                           </FormLabel>
+                           <FormControl>
+                              <Input
+                                 className="text-xs"
+                                 placeholder="ex: example@example.org..."
+                                 {...field}
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+               </div>
             </div>
-
+            <div>
+               <FormField
+                  control={form.control}
+                  name={`domisili`}
+                  render={({ field }) => (
+                     <FormItem className="flex-1">
+                        <FormLabel>
+                           Domisili {wrapSymbols(`(Kota/kabupaten)`)}
+                        </FormLabel>
+                        <FormControl>
+                           <DomisiliSelector
+                              domisiliData={KABUPATEN_KOTA_SUMSEL}
+                              onDomisiliChange={(domisili) => {
+                                 form.setValue(
+                                    field.name,
+                                    domisili || "Lainnya"
+                                 );
+                              }}
+                           />
+                        </FormControl>
+                        <FormDescription className="font-poppins">
+                           Pilih {`"Lainnya"`} jika domisili tidak ditemukan.
+                        </FormDescription>
+                        <FormMessage />
+                     </FormItem>
+                  )}
+               />
+            </div>
             <div>
                <FormField
                   control={form.control}
@@ -129,66 +175,12 @@ export function GeneralForm() {
                      <FormItem>
                         <FormLabel className="mb-2">Bukti Pembayaran</FormLabel>
                         <FormControl>
-                           {/* <UploadBuktiPembayaranField form={form} /> */}
+                           <UploadBuktiPembayaranField form={form} />
                         </FormControl>
                         <FormMessage />
                      </FormItem>
                   )}
                />
-            </div>
-            <h2>Daftar Peserta</h2>
-            {fields.map((field, index) => (
-               <div key={field.id} className="grid md:grid-cols-6 gap-6">
-                  <div className="">
-                     {wrapSymbols("#")}
-                     {index + 1}
-                  </div>
-                  <div className="col-span-4">
-                     <FormField
-                        control={form.control}
-                        name={`peserta.${index}.nama`}
-                        render={({ field }) => (
-                           <FormItem className="flex-1">
-                              <FormLabel>Nama</FormLabel>
-                              <FormControl>
-                                 <Input
-                                    placeholder="ex: Timothy R."
-                                    {...field}
-                                 />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                  </div>
-                  <div className=" mt-6.5 flex">
-                     <Button
-                        type="button"
-                        size={"icon"}
-                        variant={"destructive"}
-                        onClick={() => remove(index)}
-                        disabled={form.getValues("peserta").length === 1}
-                     >
-                        <Trash2 className="h-4 w-4" />
-                     </Button>
-                  </div>
-               </div>
-            ))}
-            <div className="flex justify-end">
-               <Button
-                  type="button"
-                  onClick={() =>
-                     append({
-                        nama: "",
-                     })
-                  }
-                  disabled={form.getValues("peserta").length === 3}
-                  variant="gosong"
-                  className="text-center items-center"
-               >
-                  <Plus className="size-5 font-bold" />{" "}
-                  <span className="flex">Tambah peserta</span>
-               </Button>
             </div>
             <div className="flex text-center items-center gap-x-2">
                <Checkbox
@@ -205,14 +197,6 @@ export function GeneralForm() {
                   2025.
                </Label>
             </div>
-            <FormField
-               name="npmatauidsama"
-               render={({}) => (
-                  <FormItem>
-                     <FormMessage className="p-4 bg-red-200 border-4 rounded-lg font-semibold border-foreground shadow-[7px_7px_0px_#00000040]" />
-                  </FormItem>
-               )}
-            />
 
             <Button
                type="submit"
@@ -220,12 +204,12 @@ export function GeneralForm() {
                className="w-full max-w-lg flex justify-self-center"
                disabled={
                   form.formState.isLoading ||
+                  form.formState.isSubmitting ||
                   form.formState.isDirty === false ||
-                  termsChecked === false ||
-                  loading
+                  termsChecked === false
                }
             >
-               {loading ? <Spinner /> : "Submit"}
+               {form.formState.isSubmitting ? <Spinner /> : "Submit"}
             </Button>
          </form>
       </FormProvider>

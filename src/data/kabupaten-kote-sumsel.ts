@@ -1,3 +1,5 @@
+import { kotaEnum } from "@/models/enums";
+
 export const KABUPATEN_KOTA_SUMSEL = [
    "Palembang",
    "Pagar Alam",
@@ -16,5 +18,7 @@ export const KABUPATEN_KOTA_SUMSEL = [
    "Ogan Komering Ulu Selatan (OKU Selatan)",
    "Ogan Komering Ulu Timur (Oku Timur)",
    "Penukal Abab Lematang Ilir (PALI)",
-   "Lainnya"
+   "Lainnya",
 ] as const;
+
+export type KABUPATEN_KOTA_SUMSEL_TYPE = readonly kotaEnum[];

@@ -12,8 +12,6 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/nb/button";
-import { useRouter } from "next/navigation";
 import { CopyTeamCode } from "@/components/home/salin-kode";
 import { VideoCampaignExportRegistrationData } from "../../../../components/home/video-campaign/registration-detail/export-data-pendaftaran";
 import { gcUrl } from "@/data/home/video-campaign/gc-url";
@@ -22,10 +20,10 @@ import { RegistrationDetailHeader } from "@/components/home/header";
 import { ParticipantTable, TeamTable } from "@/models/video-campaign/table";
 import { codeCheck } from "@/server/services/video-campaign/code-check";
 import { getTeamById } from "@/server/actions/queries/video-campaign";
+import { BackButton } from "@/components/home/back-button";
 
 export default function DetailPendaftaranPage() {
    const [team, setTeam] = useState<TeamTable | undefined>();
-   const router = useRouter();
 
    useEffect(() => {
       const kodeStored = sessionStorage.getItem("kodeTim");
@@ -49,7 +47,7 @@ export default function DetailPendaftaranPage() {
       <div className="">
          <div className="w-full md:max-w-xl md:mx-auto space-y-8 border-none md:border-2 md:border-dashed md:border-foreground/80 md:rounded-md md:shadow-[7px_7px_0px_#00000040]">
             <div className="p-4 flex justify-end md:justify-start">
-               <Button onClick={() => router.back()}>Kembali</Button>
+               <BackButton />
             </div>
             {team ? (
                <>

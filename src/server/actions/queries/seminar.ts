@@ -1,8 +1,14 @@
 "use server";
 import { emotError, emotSuccess } from "@/data/emot-response";
 import { db } from "@/lib/drizzle";
-import { ClassRegistrationTable } from "@/models/seminar/table";
-import { pendaftaranSeminarKelasTable } from "@/server/db/schemas/seminar-schema";
+import {
+   ClassRegistrationTable,
+   ParticipantTable,
+} from "@/models/seminar/table";
+import {
+   pendaftaranSeminarKelasTable,
+   pesertaSeminarTable,
+} from "@/server/db/schemas/seminar-schema";
 import { ServerResponseType } from "@/types/server-response";
 import { eq } from "drizzle-orm";
 
@@ -19,18 +25,45 @@ export async function getClassRegistrationById(
       if (!res) {
          return {
             success: false,
-            message: `Data pendaftaran kelas tidak ditemukan ${emotError}`,
+            message: `Data peserta tidak ditemukan ${emotError}`,
          };
       }
       return {
          success: true,
-         message: `Berhasil mengambil data pendaftaran kelas. ${emotSuccess}`,
+         message: `Berhasil mengambil data peserta. ${emotSuccess}`,
          data: res,
       };
    } catch (error) {
       return {
          success: false,
-         message: `Terjadi kesalahan dalam mengambil data pendaftaran kelas ${emotError}`,
+         message: `Terjadi kesalahan dalam mengambil data peserta ${emotError}`,
+         error,
+      };
+   }
+}
+
+export async function getParticipantById(
+   id: string
+): Promise<ServerResponseType<ParticipantTable>> {
+   try {
+      const res = await db.query.pesertaSeminarTable.findFirst({
+         where: eq(pesertaSeminarTable.id, id),
+      });
+      if (!res) {
+         return {
+            success: false,
+            message: `Data peserta tidak ditemukan ${emotError}`,
+         };
+      }
+      return {
+         success: true,
+         message: `Berhasil mengambil data peserta. ${emotSuccess}`,
+         data: res,
+      };
+   } catch (error) {
+      return {
+         success: false,
+         message: `Terjadi kesalahan dalam mengambil data peserta ${emotError}`,
          error,
       };
    }

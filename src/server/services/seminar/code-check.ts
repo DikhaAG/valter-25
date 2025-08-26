@@ -31,12 +31,15 @@ export async function codeCheck(
       res = await db.query.pesertaSeminarTable.findFirst({
          where: eq(pesertaSeminarTable.id, kode),
       });
-      res = await db.query.pendaftaranSeminarKelasTable.findFirst({
-         with: {
-            peserta: true,
-         },
-         where: eq(pendaftaranSeminarKelasTable.id, kode),
-      });
+      if (!res) {
+         res = await db.query.pendaftaranSeminarKelasTable.findFirst({
+            with: {
+               peserta: true,
+            },
+            where: eq(pendaftaranSeminarKelasTable.id, kode),
+         });
+      }
+
       if (!res) {
          return {
             success: false,

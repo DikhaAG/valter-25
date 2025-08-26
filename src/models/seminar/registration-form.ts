@@ -4,52 +4,60 @@ import { asEnum, kotaEnum, metodeDaftarEnum } from "@/models/enums";
 import { z } from "zod";
 import { noWaCheck } from "@/server/services/seminar/no-wa-available-check";
 import { emailCheck } from "@/server/services/seminar/email-check";
-import { CustomToast } from "@/components/ui/nb/custom-toast";
 
 export const participantAsMahasiswa = z
    .object({
       as: asEnum,
       metodeDaftar: metodeDaftarEnum,
       nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
-      noWa: z.string().min(11, {
-         message: "Nomor Whatsapp minimal 11 angka.",
-      }),
-      email: z.email(),
+      noWa: z
+         .string()
+         .min(11, {
+            message: "Nomor Whatsapp minimal 11 angka.",
+         })
+         .refine(
+            (noWa) => {
+               console.log(isNumeric(noWa));
+               return isNumeric(noWa);
+            },
+            {
+               error: `Nomor Whatsapp tidak validsss!.`,
+            }
+         )
+         .refine(
+            async (noWa) => {
+               const res = await noWaCheck(noWa);
+               return res.success;
+            },
+            {
+               error: "Nomor Whatsapp telah terdaftar!.",
+            }
+         ),
+      email: z.email({ error: "Email tidak valid!." }).refine(
+         async (email) => {
+            const res = await emailCheck(email);
+            return res.success;
+         },
+         {
+            error: "Email telah terdaftar!.",
+         }
+      ),
       instansi: z.string().min(1, {
          message: "Asal instansi tidak boleh kosong.",
       }),
-      domisili: kotaEnum,
-      buktiPembayaran: z.any(),
+      domisili: kotaEnum.refine(
+         (domisili) => {
+            return domisili !== undefined || domisili !== null;
+         },
+         {
+            error: `Domisili tidak boleh kosong!.`,
+            path: ["domisili"],
+         }
+      ),
+      buktiPembayaran: z.instanceof(File, {
+         error: "Bukti pembayaran tidak boleh kosong!.",
+      }),
    })
-   .refine(
-      (data) => {
-         return isNumeric(data.noWa);
-      },
-      {
-         error: `Nomor Whatsapp tidak validsss!.`,
-         path: ["noWa"],
-      }
-   )
-   .refine(
-      async (data) => {
-         const res = await noWaCheck(data.noWa);
-         return res.success;
-      },
-      {
-         error: "Nomor Whatsapp telah terdaftar!.",
-         path: ["noWa"],
-      }
-   )
-   .refine(
-      async (data) => {
-         const res = await emailCheck(data.email);
-         return res.success;
-      },
-      {
-         error: "Nomor Whatsapp telah terdaftar!.",
-         path: ["email"],
-      }
-   )
    .refine(
       (data) => {
          return data.buktiPembayaran;
@@ -65,42 +73,51 @@ export const participantAsGeneral = z
       as: asEnum,
       metodeDaftar: metodeDaftarEnum,
       nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
-      noWa: z.string().min(11, {
-         message: "Nomor Whatsapp minimal 11 angka.",
+      noWa: z
+         .string()
+         .min(11, {
+            message: "Nomor Whatsapp minimal 11 angka.",
+         })
+         .refine(
+            (noWa) => {
+               console.log(isNumeric(noWa));
+               return isNumeric(noWa);
+            },
+            {
+               error: `Nomor Whatsapp tidak validsss!.`,
+            }
+         )
+         .refine(
+            async (noWa) => {
+               const res = await noWaCheck(noWa);
+               return res.success;
+            },
+            {
+               error: "Nomor Whatsapp telah terdaftar!.",
+            }
+         ),
+      email: z.email().refine(
+         async (email) => {
+            const res = await emailCheck(email);
+            return res.success;
+         },
+         {
+            error: "Email telah terdaftar!.",
+         }
+      ),
+      domisili: kotaEnum.refine(
+         (domisili) => {
+            return domisili !== undefined || domisili !== null;
+         },
+         {
+            error: `Domisili tidak boleh kosong!.`,
+            path: ["domisili"],
+         }
+      ),
+      buktiPembayaran: z.instanceof(File, {
+         error: "Bukti pembayaran tidak boleh kosong!.",
       }),
-      email: z.email(),
-      domisili: kotaEnum,
-      buktiPembayaran: z.any(),
    })
-   .refine(
-      (data) => {
-         return isNumeric(data.noWa);
-      },
-      {
-         error: `Nomor Whatsapp tidak validsss!.`,
-         path: ["noWa"],
-      }
-   )
-   .refine(
-      async (data) => {
-         const res = await noWaCheck(data.noWa);
-         return res.success;
-      },
-      {
-         error: "Nomor Whatsapp telah terdaftar!.",
-         path: ["noWa"],
-      }
-   )
-   .refine(
-      async (data) => {
-         const res = await emailCheck(data.email);
-         return res.success;
-      },
-      {
-         error: "Nomor Whatsapp telah terdaftar!.",
-         path: ["email"],
-      }
-   )
    .refine(
       (data) => {
          return data.buktiPembayaran;

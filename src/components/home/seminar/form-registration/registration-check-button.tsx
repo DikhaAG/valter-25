@@ -73,7 +73,7 @@ export function RegistrationCheckButton() {
       if (!res.success) {
          setOnSubmit(false);
          CustomToast({
-            variant: "error",
+            variant: "warning",
             message: `${res.message} ${emotError}`,
          });
          return;
@@ -106,7 +106,7 @@ export function RegistrationCheckButton() {
                      Cek Status Pendaftaran
                   </DialogTitle>
                   <DialogDescription>
-                     Masukan kode registrasi kelas kamu untuk melihat status
+                     Masukan kode registrasi kamu untuk melihat status
                      apakah pembayaran telah berhasil dikonfirmasi
                   </DialogDescription>
                </DialogHeader>

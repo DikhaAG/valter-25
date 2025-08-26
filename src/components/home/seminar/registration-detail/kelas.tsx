@@ -26,12 +26,12 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
+import { BackButton } from "../../back-button";
 
 export default function DetailPendaftaranKelasPage() {
    const [classRegistrationData, setClassRegistrationData] = useState<
       ClassRegistrationTable | undefined
    >();
-   const router = useRouter();
 
    useEffect(() => {
       const registrationId = sessionStorage.getItem("registrationId");
@@ -57,7 +57,7 @@ export default function DetailPendaftaranKelasPage() {
       <div className="">
          <div className="w-full md:max-w-xl md:mx-auto space-y-8 border-none md:border-2 md:border-dashed md:border-foreground/80 md:rounded-md md:shadow-[7px_7px_0px_#00000040]">
             <div className="p-4 flex justify-end md:justify-start">
-               <Button onClick={() => router.back()}>Kembali</Button>
+               <BackButton />
             </div>
             {classRegistrationData ? (
                <>

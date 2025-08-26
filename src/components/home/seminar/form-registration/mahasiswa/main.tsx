@@ -11,13 +11,14 @@ import { Input } from "@/components/ui/nb/input";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
 import { Checkbox } from "@/components/ui/nb/checkbox";
 import { Label } from "@/components/ui/nb/label";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, FieldErrors } from "react-hook-form";
 import {
    FormField,
    FormItem,
    FormLabel,
    FormControl,
    FormMessage,
+   FormDescription,
 } from "@/components/ui/form";
 import { Spinner } from "@/components/ui/nb/Spinner";
 import { UploadBuktiPembayaranField } from "../upload-bukti-pembayaran-field";
@@ -26,6 +27,8 @@ import {
    ParticipantAsMahasiswa,
 } from "@/models/seminar/registration-form";
 import { individualRegistration } from "@/server/services/seminar/individual-registration";
+import DomisiliSelector from "../domisili-selector";
+import { KABUPATEN_KOTA_SUMSEL } from "@/data/kabupaten-kote-sumsel";
 
 export function MahasiswaForm({
    handleTabsValue,
@@ -33,7 +36,6 @@ export function MahasiswaForm({
    handleTabsValue: Dispatch<SetStateAction<string>>;
 }) {
    const [termsChecked, setTermsChecked] = useState<boolean>(false);
-   const [loading, setLoading] = useState(false);
    const router = useRouter();
    const form = useForm<ParticipantAsMahasiswa>({
       resolver: zodResolver(participantAsMahasiswa),
@@ -49,15 +51,13 @@ export function MahasiswaForm({
    });
 
    async function onSubmit(data: ParticipantAsMahasiswa) {
-      setLoading(true);
-
+      console.log(data);
       const res = await individualRegistration({ data });
       if (!res.success) {
          CustomToast({
-            variant: "warning",
+            variant: "error",
             message: `${res.message} 😂💀`,
          });
-         setLoading(false);
          return;
       } else {
          CustomToast({
@@ -65,21 +65,25 @@ export function MahasiswaForm({
             message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
          });
          form.reset();
-         sessionStorage.setItem("kodeTim", res.data!);
+         sessionStorage.setItem("registrationId", res.data!);
+         sessionStorage.setItem("metodeDaftar", "individu");
          router.push("/seminar/detail-pendaftaran");
       }
+   }
+   function handleFormError(e: FieldErrors) {
+      console.log(e);
    }
    return (
       <FormProvider {...form}>
          <form
-            onSubmit={form.handleSubmit(onSubmit, (e) => console.log(e))}
+            onSubmit={form.handleSubmit(onSubmit, handleFormError)}
             className="space-y-8"
          >
-            <div className="flex font-poppins">
-               <div className="flex flex-row">
-                  ribet daftar satu-satu?
+            <div className="flex font-poppins justify-end">
+               <div className="flex flex-row gap-x-2 items-center text-center">
+                  ribet daftar satu²?
                   <span
-                     className="font-glofium-demo text-xs cursor-pointer"
+                     className="hover:underline font-glofium-demo text-xs cursor-pointer text-secondary text-center items-center"
                      onClick={() => handleTabsValue("kelas")}
                   >
                      {wrapSymbols(`daftar sekelas!`)}
@@ -180,11 +184,19 @@ export function MahasiswaForm({
                            Domisili {wrapSymbols(`(Kota/kabupaten)`)}
                         </FormLabel>
                         <FormControl>
-                           <Input
-                              placeholder="ex: Politeknik Negeri Sriwijaya."
-                              {...field}
+                           <DomisiliSelector
+                              domisiliData={KABUPATEN_KOTA_SUMSEL}
+                              onDomisiliChange={(domisili) => {
+                                 form.setValue(
+                                    field.name,
+                                    domisili || "Lainnya"
+                                 );
+                              }}
                            />
                         </FormControl>
+                        <FormDescription className="font-poppins">
+                           Pilih {`"Lainnya"`} jika domisili tidak ditemukan.
+                        </FormDescription>
                         <FormMessage />
                      </FormItem>
                   )}
@@ -227,12 +239,12 @@ export function MahasiswaForm({
                className="w-full max-w-lg flex justify-self-center"
                disabled={
                   form.formState.isLoading ||
+                  form.formState.isSubmitting ||
                   form.formState.isDirty === false ||
-                  termsChecked === false ||
-                  loading
+                  termsChecked === false
                }
             >
-               {loading ? <Spinner /> : "Submit"}
+               {form.formState.isLoading ? <Spinner /> : "Submit"}
             </Button>
          </form>
       </FormProvider>

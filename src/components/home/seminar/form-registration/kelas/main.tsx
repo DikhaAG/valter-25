@@ -32,7 +32,6 @@ import ProdiSelector from "@/components/home/seminar/form-registration/prodi-sel
 import { ProdiTableSchema } from "@/models/kelas/table";
 import { getAllProdiWithKelas } from "@/server/actions/queries/kelas";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
-import { read, utils } from "xlsx";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import { classRegistration } from "@/server/services/seminar/class-registration";
 import { handleFileChange } from "@/server/services/seminar/handle-excel-field";
@@ -75,15 +74,10 @@ export function KelasForm() {
          return;
       }
 
-      console.log(data);
-      CustomToast({
-         variant: "success",
-         message: "Berhasil!",
-      });
       const res = await classRegistration({ data });
       if (!res.success) {
          CustomToast({
-            variant: "warning",
+            variant: "error",
             message: `${res.message} 😂💀`,
          });
          return;
@@ -169,6 +163,10 @@ export function KelasForm() {
                               }
                            />
                         </FormControl>
+                        <FormDescription className="font-poppins">
+                           Pastikan nominal bayar sudah pas dengan total
+                           keseluruhan mahasiswa.
+                        </FormDescription>
                         <FormMessage />
                      </FormItem>
                   )}
