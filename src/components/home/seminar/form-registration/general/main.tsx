@@ -117,7 +117,7 @@ export function GeneralForm() {
                      )}
                   />
                </div>
-               <div className="">
+               <div className="pt-4 md:pt-0">
                   <FormField
                      control={form.control}
                      name={`email`}
