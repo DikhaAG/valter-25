@@ -253,7 +253,7 @@ export default function HomePage() {
                      />
                   </div>
 
-                  <div className="flex items-center justify-center space-x-8 text-xs md:text-base ">
+                  <div className="flex items-center justify-center space-x-8 text-xs md:text-base">
                      <Link
                         href="/"
                         className="text-white hover:text-secondary font-medium"
@@ -274,7 +274,7 @@ export default function HomePage() {
                      </Link>
                   </div>
 
-                  <div className="w-12"></div>
+                  <div className=""></div>
                </div>
             </div>
          </nav>
