@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { HomeNavSection } from "../../components/home/nav-section";
 import { HomeFooterSection } from "../../components/home/footer-section";
+import { WhatsappContactButton } from "@/components/home/whatsapp-contact-button";
 interface Props {
    children: React.ReactNode;
 }
@@ -66,6 +67,11 @@ export default function HomeLayout({ children }: Props) {
 
          {/* Footer */}
          <HomeFooterSection />
+         <WhatsappContactButton
+            phoneNumber="628123456789" // Ganti dengan nomor kontak Anda
+            contactName="Kami"
+            message="Halo, saya ingin bertanya tentang seminar VALTER 2025."
+         />
       </div>
    );
 }
