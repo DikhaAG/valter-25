@@ -4,6 +4,7 @@ import {
    participantTable,
    ParticipantTable,
 } from "@/models/seminar/table";
+
 type data = ParticipantTable | ClassRegistrationTable;
 export function isSeminarParticipantsTable(data: data): boolean {
    return participantTable.safeParse(data).success;

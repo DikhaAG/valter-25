@@ -30,7 +30,7 @@ import { codeCheck } from "@/server/services/seminar/code-check";
 import {
    isSeminarClassTable,
    isSeminarParticipantsTable,
-} from "@/server/type-guard-custom";
+} from "@/server/services/seminar/type-guard-custom";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validate } from "uuid";
