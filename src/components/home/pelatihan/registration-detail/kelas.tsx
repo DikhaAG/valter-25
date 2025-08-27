@@ -41,7 +41,6 @@ export default function DetailPendaftaranKelasPage() {
          if (!res.success) {
             return;
          }
-         console.log(res.data!);
          setClassRegistrationData(res.data!);
       });
    }, []);

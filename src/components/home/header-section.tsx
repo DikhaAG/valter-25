@@ -1,6 +1,5 @@
 import { HeaderDataType } from "@/types/header";
 import { wrapSymbols } from "@/utils/wrap-symbols";
-import Image from "next/image";
 import { AnimatedCoinImage } from "../animated-coin.image";
 
 interface Props {
@@ -71,9 +70,9 @@ export function HeaderSection({ isVisible, data }: Props) {
                <h1 className="text-2xl text-start md:text-3xl font-bold text-secondary mb-4">
                   {wrapSymbols(data.title, "text-4xl")}
                </h1>
-               <p className="text-sm md:text-base font-poppins leading-relaxed text-justify mb-6">
+               <span className="text-sm md:text-base font-poppins leading-relaxed text-justify mb-6">
                   {data.desc}
-               </p>
+               </span>
                <div className="text-3xl md:text-4xl font-bold text-secondary">
                   Rp {wrapSymbols(data.htm)}
                </div>

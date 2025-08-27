@@ -4,6 +4,6 @@ import DetailPendaftaranKelasPage from "@/components/home/pelatihan/registration
 interface Props {
    params: Promise<{ kelas: string }>;
 }
-export default async function Page({ params }: Props) {
+export default async function Page({ }: Props) {
    return <DetailPendaftaranKelasPage />;
 }

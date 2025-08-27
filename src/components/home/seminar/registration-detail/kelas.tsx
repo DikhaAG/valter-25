@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/nb/button";
-import { useRouter } from "next/navigation";
 import { DetailPendaftaranTimSkeleton } from "@/components/home/detail-pendaftaran-tim-skeleton";
 import { ClassRegistrationTable } from "@/models/seminar/table";
 import { getClassRegistrationById } from "@/server/actions/queries/seminar";
@@ -42,7 +41,6 @@ export default function DetailPendaftaranKelasPage() {
          if (!res.success) {
             return;
          }
-         console.log(res.data!);
          setClassRegistrationData(res.data!);
       });
    }, []);
