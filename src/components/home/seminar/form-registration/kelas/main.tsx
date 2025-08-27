@@ -36,6 +36,7 @@ import { wrapSymbols } from "@/utils/wrap-symbols";
 import { classRegistration } from "@/server/services/seminar/class-registration";
 import { handleFileChange } from "@/server/services/seminar/handle-excel-field";
 import { validateNominal } from "@/server/services/seminar/validate-nominal";
+import { downloadFormatDataKelasExcel } from "@/utils/download-format-data-kelas-excel";
 
 export type MahasiswaExcelRow = {
    nama: string;
@@ -112,6 +113,9 @@ export function KelasForm() {
       }
       return;
    }
+   const handleDownloadFormatExcel = () => {
+      downloadFormatDataKelasExcel();
+   };
    return (
       <FormProvider {...form}>
          <form
@@ -217,6 +221,12 @@ export function KelasForm() {
                         <FormDescription className="font-poppins">
                            Unggah file Excel (.xlsx) yang berisi data mahasiswa.
                         </FormDescription>
+                        <span
+                           className="cursor-pointer text-secondary underline text-xs"
+                           onClick={handleDownloadFormatExcel}
+                        >
+                           unduh format excel
+                        </span>
                         {fileError && (
                            <p className="font-poppins text-sm font-medium text-destructive">
                               {fileError}
