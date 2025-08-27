@@ -43,7 +43,7 @@ export function WhatsappContactButton({
                <FaWhatsapp className="h-8 w-8 md:h-7 md:w-7 group-hover:scale-110 transition-transform" />
 
                <span className="hidden sm:inline">Hubungi {contactName}</span>
-               <span className="sm:hidden">Chat Kami</span>
+               <span className="sm:hidden">Chat {contactName}</span>
             </Button>
          </a>
       </div>

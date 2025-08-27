@@ -7,6 +7,7 @@ import Link from "next/link";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import { Button } from "@/components/ui/nb/button";
 import { AnimatedCoinImage } from "@/components/animated-coin.image";
+import { WhatsappContactButton } from "@/components/home/whatsapp-contact-button";
 
 export default function HomePage() {
    const [timeLeft, setTimeLeft] = useState({
@@ -1335,6 +1336,11 @@ export default function HomePage() {
                }
             }
          `}</style>
+         <WhatsappContactButton
+            phoneNumber="6285353612531" // Ganti dengan nomor kontak Anda
+            contactName="Ica"
+            message="Halo kak Ica, saya ingin bertanya tentang VALTER 2025."
+         />
       </div>
    );
 }

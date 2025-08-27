@@ -27,6 +27,7 @@ export default function PelatihanPage() {
 
          {/* Registration Form Section */}
          <Form isVisible={isVisible} />
+       
       </div>
    );
 }

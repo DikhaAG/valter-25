@@ -27,6 +27,7 @@ export default function EsportPage() {
 
          {/* Registration Form Section */}
          <Form isVisible={isVisible} />
+      
       </div>
    );
 }
