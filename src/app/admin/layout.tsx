@@ -1,12 +1,33 @@
 import React from "react";
+import { AppSidebar } from "@/components/app-sidebar"
+import { SiteHeader } from "@/components/site-header"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
+
 interface Props {
-          children: React.ReactNode
+  children: React.ReactNode
 }
-export default function AdminLayout({children}: Props) {
-          return (
-                    <div className="">
-                              <div className="">Admin Layout</div>
-                              <div className="">{children}</div>
-                    </div>
-          )
+export default function AdminLayout({ children }: Props) {
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            {children}
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
