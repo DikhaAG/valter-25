@@ -82,7 +82,7 @@
    --sidebar-border: #d4cfc0;
    --sidebar-ring: oklch(0.708 0 0);
 }
-
+/* 
 .dark {
    --background: #212121;
    --foreground: oklch(0.985 0 0);
@@ -115,7 +115,7 @@
    --sidebar-accent-foreground: oklch(0.985 0 0);
    --sidebar-border: oklch(1 0 0 / 10%);
    --sidebar-ring: oklch(0.556 0 0);
-}
+} */
 
 @layer base {
    * {
@@ -161,11 +161,23 @@
    }
 }
 
+ @keyframes goldBorder {
+            0%, 100% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+          }
+
 /* Tambahkan animasi ke layer utilities agar bisa digunakan sebagai kelas Tailwind */
 @layer utilities {
    .animate-coin-flip-once {
       animation: coinFlip 1.5s ease-out forwards;
    }
+    .animate-gold-border {
+        animation: goldBorder 2s infinite 
+    }
 }
 
 /* Sisa kode CSS lainnya */
