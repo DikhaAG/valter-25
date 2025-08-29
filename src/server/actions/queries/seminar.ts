@@ -68,3 +68,24 @@ export async function getParticipantById(
       };
    }
 }
+
+export async function getAllClassRegistration(): Promise<
+   ServerResponseType<ClassRegistrationTable[]>
+> {
+   try {
+      const res = await db.query.pendaftaranSeminarKelasTable.findMany({
+         with: {
+            peserta: true,
+         },
+      });
+      return {
+         success: true,
+         data: res,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
+}
