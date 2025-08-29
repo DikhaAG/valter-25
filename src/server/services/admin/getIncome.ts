@@ -1,5 +1,7 @@
 import { db } from "@/lib/drizzle"
 import { timEsportTable } from "@/server/db/schemas/esport-schema"
+import { pesertaPelatihanTable } from "@/server/db/schemas/pelatihan"
+import { pesertaSeminarTable } from "@/server/db/schemas/seminar-schema"
 import { timWebDesignTable } from "@/server/db/schemas/web-design-schema"
 import { ServerResponseType } from "@/types/server-response"
 import { eq } from "drizzle-orm"
@@ -61,9 +63,47 @@ export async function getVideoCampaignIncome(): Promise<ServerResponseType<numbe
 
 }
 
+export async function getSeminarIncome(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaSeminarTable.findMany({
+            where: eq(pesertaSeminarTable.statusPembayaran, true)
+        })
+        const htm = 60000
+        const income = res.length * htm
+        return {
+            success: true
+            , data: income
+        }
+    } catch (e) {
+        return {
+            success: false, message: `${e}`
+        }
+    }
+
+}
+
+export async function getPelatihanIncome(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaPelatihanTable.findMany({
+            where: eq(pesertaPelatihanTable.statusPembayaran, true)
+        })
+        const htm = 75000
+        const income = res.length * htm
+        return {
+            success: true
+            , data: income
+        }
+    } catch (e) {
+        return {
+            success: false, message: `${e}`
+        }
+    }
+
+}
+
 export async function getAllIncome(): Promise<ServerResponseType<number>> {
     try {
-        const incomes = [await getEsportIncome(), await getWebDesignIncome(), await getVideoCampaignIncome()]
+        const incomes = [await getSeminarIncome(), await getPelatihanIncome(), await getEsportIncome(), await getWebDesignIncome(), await getVideoCampaignIncome()]
         let count = 0
         incomes.map(income => count += income.data ?? 0)
         return {
