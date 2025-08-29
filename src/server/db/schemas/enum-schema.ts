@@ -7,4 +7,6 @@ export const kabupatenkotaEnum = pgEnum(
 );
 export const metodeDaftarEnum = pgEnum("metode_daftar", ["individu", "kelas"]);
 
-export const enumSchema = { asEnumTable };
+export const actionHistoryEnum = pgEnum("action_history", ["konfirmasi"])
+
+export const enumSchema = { asEnumTable, kabupatenkotaEnum, metodeDaftarEnum, actionHistoryEnum };
