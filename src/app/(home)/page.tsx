@@ -560,16 +560,7 @@ export default function HomePage() {
                      </h2>
 
                      <p className="text-foreground text-[12px] sm:text-[15px] leading-relaxed font-poppins">
-                        Seminar VALTER 2025 hadir sebagai acara puncak dari
-                        Festival Multimedia dan Komputer (VALTER)! Dengan
-                        mengusung tema “CoCreate or Compete: Kolaborasi atau
-                        Kompetisi bersama AI”, seminar ini menjadi momen spesial
-                        yang menghadirkan Kevin Anggara, content creator dan
-                        penulis muda sebagai GUEST STAR inspiratif untuk berbagi
-                        pengalaman dan insight terbaru. Seminar ini menggali
-                        bagaimana kreativitas, teknologi, dan AI dapat berjalan
-                        berdampingan, sekaligus menjadi tantangan di era digital
-                        dan content creation
+                        Seminar VALTER 2025 hadir sebagai acara puncak dari Festival Multimedia dan Komputer (VALTER)! Dengan mengusung tema “CoCreate or Compete: Kolaborasi atau Kompetisi bersama AI”, seminar ini menjadi momen spesial yang menghadirkan Kevin Anggara, content creator dan penulis muda sebagai GUEST STAR inspiratif untuk berbagi pengalaman dan insight terbaru. Seminar ini menggali bagaimana kreativitas, teknologi, dan AI dapat berjalan berdampingan, sekaligus menjadi tantangan di era digital dan content creation
                      </p>
 
                      <div className="my-4"></div>
