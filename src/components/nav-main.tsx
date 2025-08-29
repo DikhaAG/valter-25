@@ -1,6 +1,6 @@
 "use client"
 
-import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
+import { IconCirclePlusFilled, IconDashboard, IconMail, type Icon } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -10,48 +10,55 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Image from "next/image"
+import Link from "next/link"
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string
-    url: string
-    icon?: Icon
-  }[]
-}) {
+export function NavMain() {
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-2">
-            <SidebarMenuButton
-              tooltip="Quick Create"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-            >
-              <IconCirclePlusFilled />
-              <span>Quick Create</span>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href={"/admin"}>
+                <IconDashboard />
+                <span>Dashboard</span>
+              </Link>
             </SidebarMenuButton>
-            <Button
-              size="icon"
-              className="size-8 group-data-[collapsible=icon]:opacity-0"
-              variant="outline"
-            >
-              <IconMail />
-              <span className="sr-only">Inbox</span>
-            </Button>
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild className="py-5">
+              <Link href={"/admin/seminar"} className="relative py-4 overflow-hidden w-full transition-all duration-300 transform-gpu hover:-translate-y-1">
+                
+                  <Image src={"/images/guest-star.png"} alt="Seminar" height={20} width={20} />
+                  <span>Seminar</span>
+                  <div
+                    className="absolute inset-0 z-0 rounded-lg animate-[goldBorder_3s_linear_infinite]"
+                    style={{
+                      background: 'linear-gradient(45deg, #FFD700, #FFA500, #212121, #FFD700, #FFA500)',
+                      backgroundSize: '200% 100%', // Ukuran gradien yang lebih besar
+                      mask: 'linear-gradient(#fff, #fff) content-box, linear-gradient(#fff, #fff)',
+                      maskComposite: 'exclude',
+                      padding: '3px',
+                    }}
+                  ></div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href={"/admin/pelatihan"}>
+                <Image src={"/images/training.png"} alt="Pelatihan" height={20} width={20} />
+                <span>Pelatihan</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+
       </SidebarGroupContent>
     </SidebarGroup>
   )
