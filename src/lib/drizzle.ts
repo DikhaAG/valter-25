@@ -21,10 +21,12 @@ import { kelasRelations } from "@/server/db/relations/kelas-relation";
 import { seminarRelations } from "@/server/db/relations/seminar-relation";
 import { pelatihanSchema } from "@/server/db/schemas/pelatihan";
 import { pelatihanRelation } from "@/server/db/relations/pelatihan";
+import { authSchema } from "@/server/db/schemas/auth-schema";
+import { historySchema } from "@/server/db/schemas/history";
 
 // Memuat variabel lingkungan dari file .env
 config({
-   path: ".env",
+    path: ".env",
 });
 
 /**
@@ -41,20 +43,22 @@ const sql = neon(process.env.DATABASE_URL!);
  * skema serta relasi database yang telah ditentukan.
  */
 export const db = drizzle({
-   client: sql,
-   schema: {
-      ...esportSchema,
-      ...esportRelations,
-      ...webDesignSchema,
-      ...webDesignRelations,
-      ...videoCampaignSchema,
-      ...videoCampaignRelation,
-      ...seminarSchema,
-      ...seminarRelations,
-      ...pelatihanSchema,
-      ...pelatihanRelation,
-      ...kelasSchema,
-      ...kelasRelations,
-      ...enumSchema,
-   },
+    client: sql,
+    schema: {
+        ...esportSchema,
+        ...esportRelations,
+        ...webDesignSchema,
+        ...webDesignRelations,
+        ...videoCampaignSchema,
+        ...videoCampaignRelation,
+        ...seminarSchema,
+        ...seminarRelations,
+        ...pelatihanSchema,
+        ...pelatihanRelation,
+        ...kelasSchema,
+        ...kelasRelations,
+        ...enumSchema,
+        ...authSchema,
+        ...historySchema
+    },
 });
