@@ -1,18 +1,18 @@
 import {
-  IconCamera,
-  IconChartBar,
+  // IconCamera,
+  // IconChartBar,
   IconDashboard,
   IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconListDetails,
+  // IconFileAi,
+  // IconFileDescription,
+  // IconFileWord,
+  // IconFolder,
+  // IconHelp,
+  // IconListDetails,
   IconReport,
-  IconSearch,
+  // IconSearch,
   IconSettings,
-  IconUsers,
+  // IconUsers,
 } from "@tabler/icons-react"
 
 export const appSidebarData = {
@@ -24,110 +24,39 @@ export const appSidebarData = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/admin",
       icon: IconDashboard,
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
     },
   ],
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/admin/settings",
       icon: IconSettings,
     },
+   ],
+  navLomba: [
     {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
+      name: "Data Pendaftaran",
       url: "#",
       icon: IconDatabase,
     },
     {
-      name: "Reports",
+      name: "Utilities",
       url: "#",
       icon: IconReport,
     },
+  ],
+  navLainnya: [
     {
-      name: "Word Assistant",
+      name: "Data Pendaftaran",
       url: "#",
-      icon: IconFileWord,
+      icon: IconDatabase,
+    },
+    {
+      name: "Utilities",
+      url: "#",
+      icon: IconReport,
     },
   ],
 }
