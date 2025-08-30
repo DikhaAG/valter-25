@@ -1,6 +1,4 @@
 "use server";
-import { SeminarDataTable } from "@/components/admin/seminar/data-table";
-import { SectionCards } from "@/components/section-cards";
 
 import { getSeminarIncome } from "@/server/services/admin/getIncome";
 import {
@@ -8,6 +6,8 @@ import {
   getTotalPesertaSeminarTerkonfirmasi,
 } from "@/server/services/admin/getTotalPeserta";
 import { getAllClassRegistration } from "@/server/actions/queries/seminar";
+import { SectionCards } from "@/components/admin/section-cards.tsx";
+import { SeminarTabsTable } from "@/components/admin/seminar/tabs-table";
 export default async function Page() {
   const countIncome = await getSeminarIncome();
   const countTotalSemuaPendaftarTerkonfirmasi =
@@ -32,7 +32,7 @@ export default async function Page() {
           countTotalSemuaPendaftarBelumTerkonfirmasi.data ?? 0
         }
       />
-      <SeminarDataTable data={classRegistions.data!} />
+      <SeminarTabsTable dataPendaftaranKelas={classRegistions.data!} />
     </div>
   );
 }
