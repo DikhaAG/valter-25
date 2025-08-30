@@ -9,40 +9,41 @@ import { ClassRegistrationTable } from "@/models/seminar/table";
  * @param {object} data - Objek data tim.
  */
 export const exportKelasToExcel = ({
-   data,
+    data,
 }: {
-   data: ClassRegistrationTable;
+    data: ClassRegistrationTable;
 }) => {
-   const kelasData = [
-      ["Informasi Kelas"],
-      ["Nama Kelas", data.kelas],
-      ["Nominal", data.nominal],
-      [
-         "Status Pembayaran",
-         data.statusPembayaran ? "Terkonfirmasi" : "Menunggu dikonfirmasi",
-      ],
-      [""],
-      ["Daftar Peserta"],
-      ["Nama", "Nomor Whatsapp", "Email"],
-      ...data.peserta.map((p) => [p.nama, p.noWa, p.email]),
-   ];
+    const kelasData = [
+        ["Informasi Kelas"],
+        ["Kode registrasi", data.id],
+        ["Nama Kelas", data.kelas],
+        ["Nominal", data.nominal],
+        [
+            "Status Pembayaran",
+            data.statusPembayaran ? "Terkonfirmasi" : "Menunggu dikonfirmasi",
+        ],
+        [""],
+        ["Daftar Peserta"],
+        ["Nama", "NPM", "Nomor Whatsapp", "Email"],
+        ...data.peserta.map((p) => [p.nama,p.npm, p.noWa, p.email]),
+    ];
 
-   // Siapkan data untuk sheet kedua (daftar peserta)
+    // Siapkan data untuk sheet kedua (daftar peserta)
 
-   // Buat workbook dan sheets
-   const workbook = XLSX.utils.book_new();
-   const kelasSheet = XLSX.utils.aoa_to_sheet(kelasData!);
+    // Buat workbook dan sheets
+    const workbook = XLSX.utils.book_new();
+    const kelasSheet = XLSX.utils.aoa_to_sheet(kelasData!);
 
-   XLSX.utils.book_append_sheet(workbook, kelasSheet, "Informasi Kelas");
+    XLSX.utils.book_append_sheet(workbook, kelasSheet, "Informasi Kelas");
 
-   // Tulis workbook ke buffer dan simpan sebagai file
-   const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-   });
-   const blob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-   });
+    // Tulis workbook ke buffer dan simpan sebagai file
+    const excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
 
-   saveAs(blob, `data_pendaftaran_seminar_valter_${data.kelas}.xlsx`);
+    saveAs(blob, `data_pendaftaran_seminar_valter_${data.kelas}.xlsx`);
 };

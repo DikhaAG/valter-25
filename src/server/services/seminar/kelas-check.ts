@@ -15,7 +15,7 @@ export async function kelasCheck(
       if (res) {
          return {
             success: false,
-            message: "Kelas telah terdaftar.",
+            message: "Kelas telah melakukan pendaftaran.",
          };
       }
       return {

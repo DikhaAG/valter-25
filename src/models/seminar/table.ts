@@ -41,6 +41,7 @@ export const participantTable = z.object({
    metodeDaftar: metodeDaftarEnum,
    kelas: z.string().nullable(),
    nama: z.string(),
+   npm: z.string().nullable(),
    noWa: z.string(),
    email: z.email(),
    instansi: z.string().nullable(),

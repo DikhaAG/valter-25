@@ -1,15 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  IconInnerShadowTop,
-} from "@tabler/icons-react"
 
-import { NavLainnya } from "@/components/nav-lainnya"
-import { NavLomba } from "@/components/nav-lomba"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -21,7 +13,12 @@ import {
 } from "@/components/ui/sidebar"
 import { appSidebarData } from "@/data/admin/app-sidebar-data"
 import Link from "next/link"
-import { AnimatedCoinImage } from "./animated-coin.image"
+import { AnimatedCoinImage } from "../animated-coin.image"
+import { NavMain } from "./nav-main"
+import { NavLomba } from "./nav-lomba"
+import { NavLainnya } from "./nav-lainnya"
+import { NavSecondary } from "./nav-secondary"
+import { NavUser } from "./nav-user"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (

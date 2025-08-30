@@ -1,9 +1,9 @@
-import { KABUPATEN_KOTA_SUMSEL } from "@/data/kabupaten-kote-sumsel";
+import { KABUPATEN_KOTA_INDONESIA } from "@/data/kabupaten-kote-indonesia";
 import { pgEnum } from "drizzle-orm/pg-core";
 export const asEnumTable = pgEnum("as_enum", ["mahasiswa", "umum"]);
 export const kabupatenkotaEnum = pgEnum(
    "kabupaten_kota_enum",
-   KABUPATEN_KOTA_SUMSEL
+   KABUPATEN_KOTA_INDONESIA
 );
 export const metodeDaftarEnum = pgEnum("metode_daftar", ["individu", "kelas"]);
 

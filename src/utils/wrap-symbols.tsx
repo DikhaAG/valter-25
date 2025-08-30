@@ -21,7 +21,7 @@ export function wrapSymbols(
       // Periksa apakah bagian ini adalah simbol yang cocok dengan regex
       if (regex.test(part) && part.length === 1) {
          return (
-            <span key={index} className={`${className} ${size}`}>
+            <span key={index} className={`${className} ${size} m-0 p-0`}>
                {part}
             </span>
          );

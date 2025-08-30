@@ -44,7 +44,7 @@ export function ImageDialog({ buktiPembayaran, namaTim }: Props) {
             </div>
          </DialogTrigger>
          {/* Konten dialog yang muncul saat trigger diklik */}
-         <DialogContent className="sm:max-w-[500px] overflow-hidden p-4">
+         <DialogContent className="w-full sm:max-w-[500px] overflow-hidden p-4">
             <DialogTitle className="font-glofium-demo">
                Bukti Pembayaran
             </DialogTitle>

@@ -58,6 +58,7 @@ export const pesertaSeminarTable = pgTable("peserta_seminar", {
       onUpdate: "cascade",
    }),
    nama: text("nama").notNull(),
+   npm: text("npm"),
    noWa: text("no_wa").notNull().unique(),
    email: text("email").notNull().unique(),
    instansi: text("instansi"),

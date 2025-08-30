@@ -17,13 +17,13 @@ import {
 } from "@/components/ui/nb/popover";
 import { cn } from "@/lib/utils";
 import { SelectorSkeleton } from "../../selector-skeleton";
-import { KABUPATEN_KOTA_SUMSEL_TYPE } from "@/data/kabupaten-kote-sumsel";
+import { KABUPATEN_KOTA_INDONESIA_TYPE } from "@/data/kabupaten-kote-indonesia";
 import { kotaEnum } from "@/models/enums";
 
 interface DomisiliSelectorProps {
    disabled?: boolean;
    onDomisiliChange?: (domisili: kotaEnum | null) => void;
-   domisiliData: KABUPATEN_KOTA_SUMSEL_TYPE;
+   domisiliData: KABUPATEN_KOTA_INDONESIA_TYPE;
 }
 
 const DomisiliSelector = ({

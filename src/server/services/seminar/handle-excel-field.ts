@@ -45,7 +45,7 @@ export const handleFileChange = async ({
       if (json.length > 0) {
          console.log(json);
          const firstRow = json[0];
-         const requiredColumns = ["nama", "noWa", "email"];
+         const requiredColumns = ["nama", "npm", "noWa", "email"];
          const existingColumns = Object.keys(firstRow);
 
          const missingColumns = requiredColumns.filter(
