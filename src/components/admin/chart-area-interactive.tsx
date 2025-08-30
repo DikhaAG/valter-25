@@ -5,7 +5,6 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -17,17 +16,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group"
 import { AnalyticsChartData } from "@/server/services/admin/getAnalyticsChartData"
 
 export const description = "An interactive area chart"
@@ -64,26 +52,29 @@ interface Props {
 export function ChartAreaInteractive({ chartData }: Props) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
+  const [filteredData, setFilteredData] = React.useState(chartData)
 
   React.useEffect(() => {
     if (isMobile) {
       setTimeRange("7d")
     }
-  }, [isMobile])
+    const filterData = chartData.filter((item) => {
+      const date = new Date(item.date)
+      const referenceDate = new Date("2024-06-30")
+      let daysToSubtract = 90
+      if (timeRange === "30d") {
+        daysToSubtract = 30
+      } else if (timeRange === "7d") {
+        daysToSubtract = 7
+      }
+      const startDate = new Date(referenceDate)
+      startDate.setDate(startDate.getDate() - daysToSubtract)
+      return date >= startDate
+    })
+    setFilteredData(filterData)
+  }, [isMobile, timeRange])
 
-  const filteredData = chartData.filter((item) => {
-    const date = new Date(item.date)
-    const referenceDate = new Date("2024-06-30")
-    let daysToSubtract = 90
-    if (timeRange === "30d") {
-      daysToSubtract = 30
-    } else if (timeRange === "7d") {
-      daysToSubtract = 7
-    }
-    const startDate = new Date(referenceDate)
-    startDate.setDate(startDate.getDate() - daysToSubtract)
-    return date >= startDate
-  })
+
 
   return (
     <Card className="@container/card">
@@ -95,39 +86,39 @@ export function ChartAreaInteractive({ chartData }: Props) {
           {/* </span> */}
           {/* <span className="@[540px]/card:hidden">Last 3 months</span> */}
         </CardDescription>
-        <CardAction>
-          <ToggleGroup
-            type="single"
-            value={timeRange}
-            onValueChange={setTimeRange}
-            variant="outline"
-            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
-          >
-            <ToggleGroupItem value="90d">3 bulan terakhir</ToggleGroupItem>
-            <ToggleGroupItem value="30d">Sebulan terakhir</ToggleGroupItem>
-            <ToggleGroupItem value="7d">Seminggu terakhir</ToggleGroupItem>
-          </ToggleGroup>
-          <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger
-              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
-              size="sm"
-              aria-label="Select a value"
-            >
-              <SelectValue placeholder="Last 3 months" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="90d" className="rounded-lg">
-                3 bulan terakhir
-              </SelectItem>
-              <SelectItem value="30d" className="rounded-lg">
-                Sebulan terakhir
-              </SelectItem>
-              <SelectItem value="7d" className="rounded-lg">
-                Seminggu terakhir
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </CardAction>
+        {/* <CardAction> */}
+        {/*   <ToggleGroup */}
+        {/*     type="single" */}
+        {/*     value={timeRange} */}
+        {/*     onValueChange={setTimeRange} */}
+        {/*     variant="outline" */}
+        {/*     className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex" */}
+        {/*   > */}
+        {/*     <ToggleGroupItem value="90d">3 bulan terakhir</ToggleGroupItem> */}
+        {/*     <ToggleGroupItem value="30d">Sebulan terakhir</ToggleGroupItem> */}
+        {/*     <ToggleGroupItem value="7d">Seminggu terakhir</ToggleGroupItem> */}
+        {/*   </ToggleGroup> */}
+        {/*   <Select value={timeRange} onValueChange={setTimeRange}> */}
+        {/*     <SelectTrigger */}
+        {/*       className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden" */}
+        {/*       size="sm" */}
+        {/*       aria-label="Select a value" */}
+        {/*     > */}
+        {/*       <SelectValue placeholder="Last 3 months" /> */}
+        {/*     </SelectTrigger> */}
+        {/*     <SelectContent className="rounded-xl"> */}
+        {/*       <SelectItem value="90d" className="rounded-lg"> */}
+        {/*         3 bulan terakhir */}
+        {/*       </SelectItem> */}
+        {/*       <SelectItem value="30d" className="rounded-lg"> */}
+        {/*         Sebulan terakhir */}
+        {/*       </SelectItem> */}
+        {/*       <SelectItem value="7d" className="rounded-lg"> */}
+        {/*         Seminggu terakhir */}
+        {/*       </SelectItem> */}
+        {/*     </SelectContent> */}
+        {/*   </Select> */}
+        {/* </CardAction> */}
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer
@@ -136,27 +127,63 @@ export function ChartAreaInteractive({ chartData }: Props) {
         >
           <AreaChart data={filteredData}>
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillChart1" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-chart-1)"
                   stopOpacity={1.0}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-chart-1)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillChart2" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.8}
+                  stopColor="var(--color-chart-2)"
+                  stopOpacity={1.0}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-chart-2)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fillChart3" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-3)"
+                  stopOpacity={1.0}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-3)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fillChart4" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-4)"
+                  stopOpacity={1.0}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-4)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fillChart5" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-chart-5)"
+                  stopOpacity={1.0}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-chart-5)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -193,44 +220,37 @@ export function ChartAreaInteractive({ chartData }: Props) {
             <Area
               dataKey="esport"
               type="natural"
-              fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
+              fill="url(#fillChart1)"
+              stroke="var(--color-chart-1)"
               stackId="a"
             />
             <Area
               dataKey="webDesign"
               type="natural"
-              fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
-              stackId="a"
+              fill="url(#fillChart2)"
+              stroke="var(--color-chart-2)"
+              stackId="b"
             />
             <Area
               dataKey="videoCampaign"
               type="natural"
-              fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-<Area
-              dataKey="seminar"
-              type="natural"
-              fill="url(#fillMobile)"
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-<Area
-              dataKey="pelatihan"
-              type="natural"
-              fill="url(#fillDesktop)"
-              stroke="var(--color-desktop)"
-              stackId="a"
+              fill="url(#fillChart3)"
+              stroke="var(--color-chart-3)"
+              stackId="c"
             />
             <Area
-              dataKey="desktop"
+              dataKey="seminar"
               type="natural"
-              fill="url(#fillDesktop)"
-              stroke="var(--color-desktop)"
-              stackId="a"
+              fill="url(#fillChart4)"
+              stroke="var(--color-chart-4)"
+              stackId="d"
+            />
+            <Area
+              dataKey="pelatihan"
+              type="natural"
+              fill="url(#fillChart5)"
+              stroke="var(--color-chart-5)"
+              stackId="e"
             />
           </AreaChart>
         </ChartContainer>

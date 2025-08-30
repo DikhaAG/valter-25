@@ -48,7 +48,7 @@ export function SeminarTabsTable({ dataPendaftaranKelas, }: Props) {
         <SeminarKelasDataTable data={dataPendaftaranKelas} />
       </TabsContent>
       <TabsContent
-        value="kelas"
+        value="peserta"
         className="flex flex-col px-4 lg:px-6"
       >
         <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>

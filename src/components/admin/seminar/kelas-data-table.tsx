@@ -72,6 +72,7 @@ import {
 
 import { seminarColumns } from "./columns";
 import { ClassRegistrationTable } from "@/models/seminar/table";
+import { Input } from "@/components/ui/input";
 
 function DraggableRow({ row }: { row: Row<ClassRegistrationTable> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
@@ -201,6 +202,16 @@ export function SeminarKelasDataTable({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Cari kelas..."
+          value={(table.getColumn("kelas")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("kelas")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
       </div>
       <div className="overflow-hidden rounded-lg border">
 

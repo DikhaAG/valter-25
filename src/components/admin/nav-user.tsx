@@ -28,6 +28,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { SignOutButton } from "./signout-button"
 
 export function NavUser({
   user,
@@ -84,23 +85,22 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <IconUserCircle />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconCreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconNotification />
-                Notifications
-              </DropdownMenuItem>
+              {/* <DropdownMenuItem> */}
+              {/*   <IconUserCircle /> */}
+              {/*   Account */}
+              {/* </DropdownMenuItem> */}
+              {/* <DropdownMenuItem> */}
+              {/*   <IconCreditCard /> */}
+              {/*   Billing */}
+              {/* </DropdownMenuItem> */}
+              {/* <DropdownMenuItem> */}
+              {/*   <IconNotification /> */}
+              {/*   Notifications */}
+              {/* </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <IconLogout />
-              Log out
+              <SignOutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
