@@ -38,7 +38,7 @@ config({
  */
 // NEON
 // const sql = neon(process.env.DATABASE_URL!);
-const connectionString = process.env.DATABASE_URL!
+const connectionString = process.env.POSTGRES_URL!
 
 /**
  * @constant db
