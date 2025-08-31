@@ -7,7 +7,6 @@ import { timVideoCampaignTable } from "@/server/db/schemas/video-campaign-schema
 import { timWebDesignTable } from "@/server/db/schemas/web-design-schema";
 import { ServerResponseType } from "@/types/server-response";
 import { eq, isNotNull, isNull } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
 
 export async function getTotalTimEsportTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {

@@ -11,7 +11,6 @@ import {
 } from "@/server/db/schemas/seminar-schema";
 import { ServerResponseType } from "@/types/server-response";
 import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
 
 export async function getClassRegistrationById(
     id: string
@@ -81,7 +80,6 @@ export async function getPesertaIndividuSeminar(
                 message: `Data peserta tidak ditemukan ${emotError}`,
             };
         }
-revalidatePath("/admin/seminar")
         return {
             success: true,
             message: `Berhasil mengambil data peserta. ${emotSuccess}`,
@@ -105,7 +103,6 @@ export async function getAllClassRegistration(): Promise<
                 peserta: true,
             },
         });
-revalidatePath("/admin/seminar")
         return {
             success: true,
             data: res,

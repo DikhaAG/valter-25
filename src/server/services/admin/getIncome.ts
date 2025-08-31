@@ -1,7 +1,6 @@
 "use server"
 import { db } from "@/lib/drizzle"
 import { ServerResponseType } from "@/types/server-response"
-import { revalidatePath } from "next/cache"
 
 export async function getEsportIncome(): Promise<ServerResponseType<number>> {
     try {
