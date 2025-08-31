@@ -12,25 +12,21 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
-import { ParticipantTable } from "@/models/seminar/table";
-import { konfirmasiPendaftaranKelasSeminar } from "@/server/services/admin/konfirmasi-pendaftaran";
+import { konfirmasiPesertaIndividuSeminar } from "@/server/services/admin/konfirmasi-pendaftaran";
 import { Check } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface Props {
-  idKelas: string;
-  mahasiswas: ParticipantTable[];
+  id: string;
 }
-export function KonfirmasiAlertDialog({ idKelas, }: Props) {
-  const router = useRouter()
+export function KonfirmasiPesertaIndividuAlertDialog({ id, }: Props) {
   async function handleKonfirmasi() {
-    const res = await konfirmasiPendaftaranKelasSeminar(idKelas)
+    const res = await konfirmasiPesertaIndividuSeminar(id)
     if (!res.success) {
       CustomToast({ variant: "error", message: "Gagal mengkonfirmasi pendaftaran" })
       return
     }
     CustomToast({ variant: "success", message: "Berhasil mengkonfirmasi pendaftaran" })
-    router.refresh()
+    window.location.href = "/admin/seminar"
   }
   return (
     <AlertDialog>

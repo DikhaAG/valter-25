@@ -1,3 +1,4 @@
+"use server"
 import { db } from "@/lib/drizzle";
 import { timEsportTable } from "@/server/db/schemas/esport-schema";
 import { pesertaPelatihanTable } from "@/server/db/schemas/pelatihan";
@@ -5,7 +6,7 @@ import { pesertaSeminarTable } from "@/server/db/schemas/seminar-schema";
 import { timVideoCampaignTable } from "@/server/db/schemas/video-campaign-schema";
 import { timWebDesignTable } from "@/server/db/schemas/web-design-schema";
 import { ServerResponseType } from "@/types/server-response";
-import { eq } from "drizzle-orm";
+import { eq, isNotNull, isNull } from "drizzle-orm";
 
 export async function getTotalTimEsportTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
@@ -23,6 +24,19 @@ export async function getTotalTimEsportTerkonfirmasi(): Promise<ServerResponseTy
 export async function getTotalTimEsportBelumTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
         const res = await db.query.timEsportTable.findMany({ where: eq(timEsportTable.statusPembayaran, false) })
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalTimEsport(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.timEsportTable.findMany()
         return {
             success: true, data: res.length
         }
@@ -60,6 +74,19 @@ export async function getTotalTimWebDesignBelumTerkonfirmasi(): Promise<ServerRe
         }
     }
 }
+export async function getTotalTimWebDesign(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.timWebDesignTable.findMany()
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
 //============================================================
 export async function getTotalTimVideoCampaignTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
@@ -77,6 +104,19 @@ export async function getTotalTimVideoCampaignTerkonfirmasi(): Promise<ServerRes
 export async function getTotalTimVideoCampaignBelumTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
         const res = await db.query.timVideoCampaignTable.findMany({ where: eq(timVideoCampaignTable.statusPembayaran, false) })
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalTimVideoCampaign(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.timVideoCampaignTable.findMany()
         return {
             success: true, data: res.length
         }
@@ -114,6 +154,58 @@ export async function getTotalPesertaSeminarBelumTerkonfirmasi(): Promise<Server
         }
     }
 }
+export async function getTotalPesertaSeminarIndividu(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaSeminarTable.findMany({where: isNull(pesertaSeminarTable.kelas)})
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPesertaSeminarKelas(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaSeminarTable.findMany({where: isNotNull(pesertaSeminarTable.kelas)})
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPesertaSeminar(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaSeminarTable.findMany()
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPendaftaranKelasSeminar(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pendaftaranSeminarKelasTable.findMany()
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
 //============================================================
 export async function getTotalPesertaPelatihanTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
@@ -131,6 +223,58 @@ export async function getTotalPesertaPelatihanTerkonfirmasi(): Promise<ServerRes
 export async function getTotalPesertaPelatihanBelumTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
         const res = await db.query.pesertaPelatihanTable.findMany({ where: eq(pesertaPelatihanTable.statusPembayaran, false) })
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPesertaPelatihanIndividu(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaPelatihanTable.findMany({where: isNull(pesertaPelatihanTable.kelas)})
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPesertaPelatihanKelas(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaPelatihanTable.findMany({where: isNotNull(pesertaPelatihanTable.kelas)})
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPesertaPelatihan(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pesertaPelatihanTable.findMany()
+        return {
+            success: true, data: res.length
+        }
+    } catch (e) {
+        return {
+            success: false,
+            message: `${e}`
+        }
+    }
+}
+export async function getTotalPendaftaranKelasPelatihan(): Promise<ServerResponseType<number>> {
+    try {
+        const res = await db.query.pendaftaranPelatihanKelasTable.findMany()
         return {
             success: true, data: res.length
         }

@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 config({ path: '.env' });
 
 export default defineConfig({
-  out: './drizzle',
+ out: './supabase/migrations',
   schema: './src/server/db/schemas/*',
   dialect: 'postgresql',
   dbCredentials: {

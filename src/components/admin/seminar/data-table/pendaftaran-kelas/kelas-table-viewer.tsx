@@ -79,7 +79,7 @@ const mahasiswasColumn: ColumnDef<ParticipantTable>[] = [
    },
 ];
 
-export function KelasColumn({
+export function KelasTableViewer({
    kelas,
    mahasiswas,
 }: {

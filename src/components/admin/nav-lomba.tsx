@@ -13,7 +13,7 @@ import Image from "next/image"
 export function NavLomba() {
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className="">
       <SidebarGroupLabel>Lomba</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenu>

@@ -278,7 +278,7 @@ export function GeneralForm() {
           </Label>
         </div>
         <FormField
-          name="npmatauidsama"
+          name="pesertaError"
           render={({ }) => (
             <FormItem>
               <FormMessage className="p-4 bg-red-200 border-4 rounded-lg font-semibold border-foreground shadow-[7px_7px_0px_#00000040]" />

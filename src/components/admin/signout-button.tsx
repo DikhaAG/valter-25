@@ -34,6 +34,7 @@ export function SignOutButton() {
       variant="ghost"
       onClick={handleSignOut}
       disabled={isSigningOut}
+      className='w-full hover:bg-foreground'
     >
       {isSigningOut ? (
         <>

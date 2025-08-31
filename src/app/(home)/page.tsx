@@ -263,7 +263,7 @@ export default function HomePage() {
                 href="#activity-section"
                 className="text-white hover:text-secondary font-medium"
               >
-                Acara
+                Kegiatan
               </Link>
               <Link
                 href="#timeline-section"

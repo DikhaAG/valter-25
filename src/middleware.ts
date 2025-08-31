@@ -14,32 +14,15 @@ export async function middleware(request: NextRequest) {
             },
         }
     );
+
+    console.log(`clg from middleware +++++++++++++++++++++++`)
+    console.log(session)
     if (!session) {
-        return NextResponse.redirect(new URL("/auth/signin", request.url));
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
-    if (
-        request.nextUrl.pathname.startsWith("/admin") &&
-        session.user.role !== "admin"
-    ) {
-        return NextResponse.redirect(
-            new URL("/", request.url)
-        );
-    }
-
-    console.log("=========================")
-    if (request.nextUrl.pathname.startsWith("/auth")) {
-
-        const referer = request.headers.get('referer');
-
-        if (session.user.role === "admin") {
-            const previousUrl = referer ? new URL(referer).pathname : '/admin';
-
-            return NextResponse.redirect(new URL(previousUrl, request.url));
-        }
-
-        const previousUrl = referer ? new URL(referer).pathname : '/';
-        return NextResponse.redirect(new URL(previousUrl, request.url));
+    if (session.user.role !== "admin") {
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
     return NextResponse.next();
@@ -47,6 +30,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/admin", "/auth/signin", "/auth/register"
+        "/admin:path*", 
     ], // Specify the routes the middleware applies to
 };

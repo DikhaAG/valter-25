@@ -5,6 +5,7 @@ import { asEnum } from "@/models/enums";
 import { z } from "zod";
 import { teamNameCheck } from "@/server/services/esport/tim-name-available-check";
 import { noWaCheck } from "@/server/services/esport/no-wa-available-check";
+import { idMlCheck } from "@/server/services/esport/id-ml-check";
 
 /**
  * PESERTA MAHASISWa
@@ -18,6 +19,7 @@ export const participantAsMahasiswa = z.object({
     npm: z
         .string().min(1, { message: "NIM/NPM tidak boleh kosong." })
 
+
 });
 /**
  * PESERTA UMUM
@@ -26,7 +28,14 @@ export const participantAsGeneral = z.object({
     id: z.uuid().optional(),
     idML: z
         .string()
-        .min(1, { message: "ID Mobile Legends tidak boleh kosong." }),
+        .min(1, { message: "ID Mobile Legends tidak boleh kosong." })
+        .refine(async (idml) => {
+            const res = await idMlCheck(idml)
+        console.log(res)
+            return res.success
+        }, {
+            error: "ID telah terdaftar"
+        }),
     nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
 });
 // TIM MAHASISWA

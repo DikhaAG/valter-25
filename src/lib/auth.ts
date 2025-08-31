@@ -18,6 +18,8 @@ import { authSchema } from "@/server/db/schemas/auth-schema";
 import { historySchema } from "@/server/db/schemas/history";
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
+import { customSession } from "better-auth/plugins";
+import { getUserDivisi, getUserRole } from "@/server/services/admin/queries/user";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -42,6 +44,26 @@ export const auth = betterAuth({
     }),
     emailAndPassword: {
         enabled: true,
+        autoSignIn: false
     },
-    plugins: [admin(), nextCookies()], // make sure this is the last plugin in the array
+    plugins: [
+        customSession(async ({ user, session }) => {
+            const getUser = await getUserDivisi(user.id)
+            const getRole = await getUserRole(user.id)
+            const role = getRole.data!
+            const divisi = getUser.data!
+
+            return {
+                user: {
+                    ...user,
+                    role,
+                    divisi
+                },
+                session
+            };
+        }),
+        admin(),
+
+        nextCookies() // make sure this is the last plugin in the array
+    ],
 });

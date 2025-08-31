@@ -68,6 +68,31 @@ export async function getParticipantById(
       };
    }
 }
+export async function getPesertaIndividuSeminar(
+): Promise<ServerResponseType<ParticipantTable[]>> {
+   try {
+      const res = await db.query.pesertaSeminarTable.findMany({
+         where: eq(pesertaSeminarTable.metodeDaftar, "individu"),
+      });
+      if (!res) {
+         return {
+            success: false,
+            message: `Data peserta tidak ditemukan ${emotError}`,
+         };
+      }
+      return {
+         success: true,
+         message: `Berhasil mengambil data peserta. ${emotSuccess}`,
+         data: res,
+      };
+   } catch (error) {
+      return {
+         success: false,
+         message: `Terjadi kesalahan dalam mengambil data peserta ${emotError}`,
+         error,
+      };
+   }
+}
 
 export async function getAllClassRegistration(): Promise<
    ServerResponseType<ClassRegistrationTable[]>

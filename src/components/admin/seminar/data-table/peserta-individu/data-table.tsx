@@ -70,13 +70,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 
-import { seminarColumns } from "./columns";
-import { ClassRegistrationTable } from "@/models/seminar/table";
+import { ParticipantTable } from "@/models/seminar/table";
 import { Input } from "@/components/ui/input";
+import { pesertaIndividuSeminarColumns } from "./columns";
 
-function DraggableRow({ row }: { row: Row<ClassRegistrationTable> }) {
+function DraggableRow({ row }: { row: Row<ParticipantTable> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
-    id: row.original.id,
+    id: row.original.id!,
   });
   return (
     <TableRow
@@ -98,10 +98,10 @@ function DraggableRow({ row }: { row: Row<ClassRegistrationTable> }) {
   );
 }
 
-export function SeminarKelasDataTable({
+export function PesertaIndividuDataTable({
   data: initialData,
 }: {
-  data: ClassRegistrationTable[];
+  data: ParticipantTable[];
 }) {
   const [data, setData] = React.useState(() => initialData);
   const [rowSelection, setRowSelection] = React.useState({});
@@ -123,13 +123,13 @@ export function SeminarKelasDataTable({
   );
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
-    () => data?.map(({ id }) => id) || [],
+    () => data?.map(({ id }) => id!) || [],
     [data]
   );
 
   const table = useReactTable({
     data,
-    columns: seminarColumns,
+    columns: pesertaIndividuSeminarColumns,
     state: {
       sorting,
       columnVisibility,
@@ -137,7 +137,7 @@ export function SeminarKelasDataTable({
       columnFilters,
       pagination,
     },
-    getRowId: (row) => row.id.toString(),
+    getRowId: (row) => row.id!.toString(),
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -205,10 +205,10 @@ export function SeminarKelasDataTable({
       </div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Cari kelas..."
-          value={(table.getColumn("kelas")?.getFilterValue() as string) ?? ""}
+          placeholder="Cari peserta..."
+          value={(table.getColumn("nama")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("kelas")?.setFilterValue(event.target.value)
+            table.getColumn("nama")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -257,7 +257,7 @@ export function SeminarKelasDataTable({
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={seminarColumns.length}
+                    colSpan={pesertaIndividuSeminarColumns.length}
                     className="h-24 text-center"
                   >
                     No results.

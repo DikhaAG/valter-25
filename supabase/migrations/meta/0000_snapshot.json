@@ -1,0 +1,1933 @@
+{
+  "id": "be78744e-1cd2-414c-b7ed-ea3c59530db2",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.account": {
+      "name": "account",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider_id": {
+          "name": "provider_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token_expires_at": {
+          "name": "access_token_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refresh_token_expires_at": {
+          "name": "refresh_token_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "account_user_id_user_id_fk": {
+          "name": "account_user_id_user_id_fk",
+          "tableFrom": "account",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.session": {
+      "name": "session",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ip_address": {
+          "name": "ip_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "impersonated_by": {
+          "name": "impersonated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "session_user_id_user_id_fk": {
+          "name": "session_user_id_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "session_token_unique": {
+          "name": "session_token_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "token"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "divisi": {
+          "name": "divisi",
+          "type": "divisi",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "banned": {
+          "name": "banned",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ban_reason": {
+          "name": "ban_reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ban_expires": {
+          "name": "ban_expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.verification": {
+      "name": "verification",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.peserta_esport": {
+      "name": "peserta_esport",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_ml": {
+          "name": "id_ml",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "npm": {
+          "name": "npm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "peserta_esport_nama_tim_tim_esport_nama_tim_fk": {
+          "name": "peserta_esport_nama_tim_tim_esport_nama_tim_fk",
+          "tableFrom": "peserta_esport",
+          "tableTo": "tim_esport",
+          "columnsFrom": [
+            "nama_tim"
+          ],
+          "columnsTo": [
+            "nama_tim"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "peserta_esport_id_ml_unique": {
+          "name": "peserta_esport_id_ml_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id_ml"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tim_esport": {
+      "name": "tim_esport",
+      "schema": "",
+      "columns": {
+        "as": {
+          "name": "as",
+          "type": "as_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "no_wa": {
+          "name": "no_wa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instansi": {
+          "name": "instansi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tim_esport_nama_tim_unique": {
+          "name": "tim_esport_nama_tim_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nama_tim"
+          ]
+        },
+        "tim_esport_bukti_pembayaran_unique": {
+          "name": "tim_esport_bukti_pembayaran_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "bukti_pembayaran"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.history": {
+      "name": "history",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "action": {
+          "name": "action",
+          "type": "action_history",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "table_name": {
+          "name": "table_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.kelas": {
+      "name": "kelas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prodi": {
+          "name": "prodi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "kelas_prodi_prodi_nama_fk": {
+          "name": "kelas_prodi_prodi_nama_fk",
+          "tableFrom": "kelas",
+          "tableTo": "prodi",
+          "columnsFrom": [
+            "prodi"
+          ],
+          "columnsTo": [
+            "nama"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "kelas_nama_unique": {
+          "name": "kelas_nama_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nama"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.prodi": {
+      "name": "prodi",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "prodi_nama_unique": {
+          "name": "prodi_nama_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nama"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pendaftaran_pelatihan_kelas": {
+      "name": "pendaftaran_pelatihan_kelas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "kelas": {
+          "name": "kelas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nominal": {
+          "name": "nominal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pendaftaran_pelatihan_kelas_kelas_kelas_nama_fk": {
+          "name": "pendaftaran_pelatihan_kelas_kelas_kelas_nama_fk",
+          "tableFrom": "pendaftaran_pelatihan_kelas",
+          "tableTo": "kelas",
+          "columnsFrom": [
+            "kelas"
+          ],
+          "columnsTo": [
+            "nama"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "set default"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "pendaftaran_pelatihan_kelas_kelas_unique": {
+          "name": "pendaftaran_pelatihan_kelas_kelas_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "kelas"
+          ]
+        },
+        "pendaftaran_pelatihan_kelas_bukti_pembayaran_unique": {
+          "name": "pendaftaran_pelatihan_kelas_bukti_pembayaran_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "bukti_pembayaran"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.peserta_pelatihan": {
+      "name": "peserta_pelatihan",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "as": {
+          "name": "as",
+          "type": "as_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metode_daftar": {
+          "name": "metode_daftar",
+          "type": "metode_daftar",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kelas": {
+          "name": "kelas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "npm": {
+          "name": "npm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "no_wa": {
+          "name": "no_wa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instansi": {
+          "name": "instansi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "domisili": {
+          "name": "domisili",
+          "type": "kabupaten_kota_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "peserta_pelatihan_kelas_pendaftaran_pelatihan_kelas_kelas_fk": {
+          "name": "peserta_pelatihan_kelas_pendaftaran_pelatihan_kelas_kelas_fk",
+          "tableFrom": "peserta_pelatihan",
+          "tableTo": "pendaftaran_pelatihan_kelas",
+          "columnsFrom": [
+            "kelas"
+          ],
+          "columnsTo": [
+            "kelas"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "peserta_pelatihan_no_wa_unique": {
+          "name": "peserta_pelatihan_no_wa_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "no_wa"
+          ]
+        },
+        "peserta_pelatihan_email_unique": {
+          "name": "peserta_pelatihan_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pendaftaran_seminar_kelas": {
+      "name": "pendaftaran_seminar_kelas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "kelas": {
+          "name": "kelas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nominal": {
+          "name": "nominal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pendaftaran_seminar_kelas_kelas_kelas_nama_fk": {
+          "name": "pendaftaran_seminar_kelas_kelas_kelas_nama_fk",
+          "tableFrom": "pendaftaran_seminar_kelas",
+          "tableTo": "kelas",
+          "columnsFrom": [
+            "kelas"
+          ],
+          "columnsTo": [
+            "nama"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "set default"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "pendaftaran_seminar_kelas_kelas_unique": {
+          "name": "pendaftaran_seminar_kelas_kelas_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "kelas"
+          ]
+        },
+        "pendaftaran_seminar_kelas_bukti_pembayaran_unique": {
+          "name": "pendaftaran_seminar_kelas_bukti_pembayaran_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "bukti_pembayaran"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.peserta_seminar": {
+      "name": "peserta_seminar",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "as": {
+          "name": "as",
+          "type": "as_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metode_daftar": {
+          "name": "metode_daftar",
+          "type": "metode_daftar",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kelas": {
+          "name": "kelas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "npm": {
+          "name": "npm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "no_wa": {
+          "name": "no_wa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instansi": {
+          "name": "instansi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "domisili": {
+          "name": "domisili",
+          "type": "kabupaten_kota_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "peserta_seminar_kelas_pendaftaran_seminar_kelas_kelas_fk": {
+          "name": "peserta_seminar_kelas_pendaftaran_seminar_kelas_kelas_fk",
+          "tableFrom": "peserta_seminar",
+          "tableTo": "pendaftaran_seminar_kelas",
+          "columnsFrom": [
+            "kelas"
+          ],
+          "columnsTo": [
+            "kelas"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "peserta_seminar_no_wa_unique": {
+          "name": "peserta_seminar_no_wa_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "no_wa"
+          ]
+        },
+        "peserta_seminar_email_unique": {
+          "name": "peserta_seminar_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.peserta_video_campaign": {
+      "name": "peserta_video_campaign",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "npm": {
+          "name": "npm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "peserta_video_campaign_nama_tim_tim_video_campaign_nama_tim_fk": {
+          "name": "peserta_video_campaign_nama_tim_tim_video_campaign_nama_tim_fk",
+          "tableFrom": "peserta_video_campaign",
+          "tableTo": "tim_video_campaign",
+          "columnsFrom": [
+            "nama_tim"
+          ],
+          "columnsTo": [
+            "nama_tim"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tim_video_campaign": {
+      "name": "tim_video_campaign",
+      "schema": "",
+      "columns": {
+        "as": {
+          "name": "as",
+          "type": "as_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "no_wa": {
+          "name": "no_wa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instansi": {
+          "name": "instansi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tim_video_campaign_nama_tim_unique": {
+          "name": "tim_video_campaign_nama_tim_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nama_tim"
+          ]
+        },
+        "tim_video_campaign_bukti_pembayaran_unique": {
+          "name": "tim_video_campaign_bukti_pembayaran_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "bukti_pembayaran"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.peserta_web_design": {
+      "name": "peserta_web_design",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "npm": {
+          "name": "npm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "peserta_web_design_nama_tim_tim_web_design_nama_tim_fk": {
+          "name": "peserta_web_design_nama_tim_tim_web_design_nama_tim_fk",
+          "tableFrom": "peserta_web_design",
+          "tableTo": "tim_web_design",
+          "columnsFrom": [
+            "nama_tim"
+          ],
+          "columnsTo": [
+            "nama_tim"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tim_web_design": {
+      "name": "tim_web_design",
+      "schema": "",
+      "columns": {
+        "as": {
+          "name": "as",
+          "type": "as_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_tim": {
+          "name": "nama_tim",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "no_wa": {
+          "name": "no_wa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instansi": {
+          "name": "instansi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bukti_pembayaran": {
+          "name": "bukti_pembayaran",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status_pembayaran": {
+          "name": "status_pembayaran",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "tanggal_konfirmasi": {
+          "name": "tanggal_konfirmasi",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tim_web_design_nama_tim_unique": {
+          "name": "tim_web_design_nama_tim_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nama_tim"
+          ]
+        },
+        "tim_web_design_bukti_pembayaran_unique": {
+          "name": "tim_web_design_bukti_pembayaran_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "bukti_pembayaran"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.action_history": {
+      "name": "action_history",
+      "schema": "public",
+      "values": [
+        "konfirmasi"
+      ]
+    },
+    "public.as_enum": {
+      "name": "as_enum",
+      "schema": "public",
+      "values": [
+        "mahasiswa",
+        "umum"
+      ]
+    },
+    "public.divisi": {
+      "name": "divisi",
+      "schema": "public",
+      "values": [
+        "superadmin",
+        "bph",
+        "acara"
+      ]
+    },
+    "public.kabupaten_kota_enum": {
+      "name": "kabupaten_kota_enum",
+      "schema": "public",
+      "values": [
+        "Kab. Aceh Barat",
+        "Kab. Aceh Barat Daya",
+        "Kab. Aceh Besar",
+        "Kab. Aceh Jaya",
+        "Kab. Aceh Selatan",
+        "Kab. Aceh Singkil",
+        "Kab. Aceh Tamiang",
+        "Kab. Aceh Tengah",
+        "Kab. Aceh Tenggara",
+        "Kab. Aceh Timur",
+        "Kab. Aceh Utara",
+        "Kab. Agam",
+        "Kab. Alor",
+        "Kab. Asahan",
+        "Kab. Asmat",
+        "Kab. Badung",
+        "Kab. Balangan",
+        "Kab. Banggai",
+        "Kab. Banggai Laut",
+        "Kab. Bangka",
+        "Kab. Bangka Barat",
+        "Kab. Bangka Selatan",
+        "Kab. Bangka Tengah",
+        "Kab. Bangkalan",
+        "Kab. Bangli",
+        "Kab. Banjar",
+        "Kab. Banjarnegara",
+        "Kab. Bantul",
+        "Kab. Banyuasin",
+        "Kab. Banyumas",
+        "Kab. Banyuwangi",
+        "Kab. Barito Kuala",
+        "Kab. Barito Selatan",
+        "Kab. Barito Timur",
+        "Kab. Barito Utara",
+        "Kab. Barru",
+        "Kab. Batang",
+        "Kab. Batanghari",
+        "Kab. Belitung",
+        "Kab. Belitung Timur",
+        "Kab. Belu",
+        "Kab. Bener Meriah",
+        "Kab. Bengkalis",
+        "Kab. Bengkayang",
+        "Kab. Bengkulu Selatan",
+        "Kab. Bengkulu Tengah",
+        "Kab. Bengkulu Utara",
+        "Kab. Berau",
+        "Kab. Biak Numfor",
+        "Kab. Bima",
+        "Kab. Bintan",
+        "Kab. Bireun",
+        "Kab. Blitar",
+        "Kab. Blora",
+        "Kab. Boalemo",
+        "Kab. Bogor",
+        "Kab. Bojonegoro",
+        "Kab. Bolaang Mongondow",
+        "Kab. Bolaang Mongondow Selatan",
+        "Kab. Bolaang Mongondow Timur",
+        "Kab. Bolaang Mongondow Utara",
+        "Kab. Bombana",
+        "Kab. Bone",
+        "Kab. Bone Bolango",
+        "Kab. Bondowoso",
+        "Kab. Boven Digoel",
+        "Kab. Boyolali",
+        "Kab. Brebes",
+        "Kab. Buol",
+        "Kab. Buru",
+        "Kab. Buru Selatan",
+        "Kab. Buton",
+        "Kab. Buton Selatan",
+        "Kab. Buton Tengah",
+        "Kab. Buton Utara",
+        "Kab. Ciamis",
+        "Kab. Cianjur",
+        "Kab. Cilacap",
+        "Kab. Cirebon",
+        "Kab. Dairi",
+        "Kab. Deiyai",
+        "Kab. Demak",
+        "Kab. Dharmasraya",
+        "Kab. Dogiyai",
+        "Kab. Dompu",
+        "Kab. Donggala",
+        "Kab. Empat Lawang",
+        "Kab. Ende",
+        "Kab. Enrekang",
+        "Kab. Fakfak",
+        "Kab. Flores Timur",
+        "Kab. Garut",
+        "Kab. Gayo Lues",
+        "Kab. Gianyar",
+        "Kab. Gorontalo",
+        "Kab. Gorontalo Utara",
+        "Kab. Gowa",
+        "Kab. Gresik",
+        "Kab. Grobogan",
+        "Kab. Gunung Kidul",
+        "Kab. Gunung Mas",
+        "Kab. Halmahera Barat",
+        "Kab. Halmahera Selatan",
+        "Kab. Halmahera Tengah",
+        "Kab. Halmahera Timur",
+        "Kab. Halmahera Utara",
+        "Kab. Humbang Hasundutan",
+        "Kab. Hulu Sungai Selatan",
+        "Kab. Hulu Sungai Tengah",
+        "Kab. Hulu Sungai Utara",
+        "Kab. Indragiri Hilir",
+        "Kab. Indragiri Hulu",
+        "Kab. Indramayu",
+        "Kab. Intan Jaya",
+        "Kab. Jember",
+        "Kab. Jembrana",
+        "Kab. Jeneponto",
+        "Kab. Jepara",
+        "Kab. Jombang",
+        "Kab. Kaimana",
+        "Kab. Kampar",
+        "Kab. Kapuas",
+        "Kab. Kapuas Hulu",
+        "Kab. Karimun",
+        "Kab. Karo",
+        "Kab. Karanganyar",
+        "Kab. Karangasem",
+        "Kab. Karawang",
+        "Kab. Katingan",
+        "Kab. Kaur",
+        "Kab. Kayong Utara",
+        "Kab. Kebumen",
+        "Kab. Kediri",
+        "Kab. Keerom",
+        "Kab. Kendal",
+        "Kab. Kepahiang",
+        "Kab. Kepulauan Anambas",
+        "Kab. Kepulauan Aru",
+        "Kab. Kepulauan Mentawai",
+        "Kab. Kepulauan Meranti",
+        "Kab. Kepulauan Sangihe",
+        "Kab. Kepulauan Seribu",
+        "Kab. Kepulauan Sula",
+        "Kab. Kepulauan Talaud",
+        "Kab. Kepulauan Yapen",
+        "Kab. Kerinci",
+        "Kab. Ketapang",
+        "Kab. Klaten",
+        "Kab. Klungkung",
+        "Kab. Kolaka",
+        "Kab. Kolaka Timur",
+        "Kab. Kolaka Utara",
+        "Kab. Konawe Kepulauan",
+        "Kab. Konawe Selatan",
+        "Kab. Konawe Utara",
+        "Kab. Kotabaru",
+        "Kab. Kotamobagu",
+        "Kab. Kotawaringin Barat",
+        "Kab. Kotawaringin Timur",
+        "Kab. Kubu Raya",
+        "Kab. Kudus",
+        "Kab. Kulon Progo",
+        "Kab. Kuningan",
+        "Kab. Kupang",
+        "Kab. Kutai Barat",
+        "Kab. Kutai Kartanegara",
+        "Kab. Kutai Timur",
+        "Kab. Labuhanbatu",
+        "Kab. Lahat",
+        "Kab. Lamandau",
+        "Kab. Lamongan",
+        "Kab. Lampung Barat",
+        "Kab. Lampung Selatan",
+        "Kab. Lampung Tengah",
+        "Kab. Lampung Timur",
+        "Kab. Lampung Utara",
+        "Kab. Langkat",
+        "Kab. Lanny Jaya",
+        "Kab. Lebak",
+        "Kab. Lebong",
+        "Kab. Lembata",
+        "Kab. Lima Puluh Kota",
+        "Kab. Lingga",
+        "Kab. Lombok Barat",
+        "Kab. Lombok Tengah",
+        "Kab. Lombok Timur",
+        "Kab. Lombok Utara",
+        "Kab. Lumajang",
+        "Kab. Luwu",
+        "Kab. Luwu Timur",
+        "Kab. Luwu Utara",
+        "Kab. Madiun",
+        "Kab. Magelang",
+        "Kab. Magetan",
+        "Kab. Mahakam Ulu",
+        "Kab. Majalengka",
+        "Kab. Makassar",
+        "Kab. Malaka",
+        "Kab. Malang",
+        "Kab. Maluku Barat Daya",
+        "Kab. Maluku Tengah",
+        "Kab. Maluku Tenggara",
+        "Kab. Maluku Tenggara Barat",
+        "Kab. Mamberamo Raya",
+        "Kab. Mamberamo Tengah",
+        "Kab. Mandailing Natal",
+        "Kab. Manggarai",
+        "Kab. Manggarai Barat",
+        "Kab. Manggarai Timur",
+        "Kab. Manokwari",
+        "Kab. Manokwari Selatan",
+        "Kab. Mappi",
+        "Kab. Maros",
+        "Kab. Maybrat",
+        "Kab. Melawi",
+        "Kab. Mempawah",
+        "Kab. Merangin",
+        "Kab. Merauke",
+        "Kab. Mesuji",
+        "Kab. Mimika",
+        "Kab. Minahasa",
+        "Kab. Minahasa Selatan",
+        "Kab. Minahasa Tenggara",
+        "Kab. Minahasa Utara",
+        "Kab. Mojokerto",
+        "Kab. Morowali",
+        "Kab. Morowali Utara",
+        "Kab. Muara Enim",
+        "Kab. Muaro Jambi",
+        "Kab. Mukomuko",
+        "Kab. Muna",
+        "Kab. Muna Barat",
+        "Kab. Murung Raya",
+        "Kab. Musi Banyuasin",
+        "Kab. Musi Rawas",
+        "Kab. Musi Rawas Utara",
+        "Kab. Nabire",
+        "Kab. Nagan Raya",
+        "Kab. Nagekeo",
+        "Kab. Nduga",
+        "Kab. Ngada",
+        "Kab. Nganjuk",
+        "Kab. Ngawi",
+        "Kab. Nias",
+        "Kab. Nias Selatan",
+        "Kab. Ogan Ilir",
+        "Kab. Ogan Komering Ilir",
+        "Kab. Ogan Komering Ulu",
+        "Kab. Ogan Komering Ulu Selatan",
+        "Kab. Ogan Komering Ulu Timur",
+        "Kab. Pacitan",
+        "Kab. Padang Pariaman",
+        "Kab. Pakpak Bharat",
+        "Kab. Pamekasan",
+        "Kab. Pandeglang",
+        "Kab. Paniai",
+        "Kab. Pangkajene dan Kepulauan",
+        "Kab. Pangandaran",
+        "Kab. Parigi Moutong",
+        "Kab. Pasaman",
+        "Kab. Pasaman Barat",
+        "Kab. Paser",
+        "Kab. Pasuruan",
+        "Kab. Pati",
+        "Kab. Pekalongan",
+        "Kab. Pelalawan",
+        "Kab. Pemalang",
+        "Kab. Penajam Paser Utara",
+        "Kab. Penukal Abab Lematang Ilir",
+        "Kab. Pesawaran",
+        "Kab. Pesisir Barat",
+        "Kab. Pesisir Selatan",
+        "Kab. Pidie",
+        "Kab. Pidie Jaya",
+        "Kab. Pinrang",
+        "Kab. Pohuwato",
+        "Kab. Ponorogo",
+        "Kab. Poso",
+        "Kab. Probolinggo",
+        "Kab. Pulang Pisau",
+        "Kab. Puncak",
+        "Kab. Puncak Jaya",
+        "Kab. Purbalingga",
+        "Kab. Purwakarta",
+        "Kab. Purworejo",
+        "Kab. Raja Ampat",
+        "Kab. Rembang",
+        "Kab. Rejang Lebong",
+        "Kab. Rokan Hilir",
+        "Kab. Rokan Hulu",
+        "Kab. Rote Ndao",
+        "Kab. Sabu Raijua",
+        "Kab. Samosir",
+        "Kab. Sampang",
+        "Kab. Sambas",
+        "Kab. Sanggau",
+        "Kab. Sarmi",
+        "Kab. Sarolangun",
+        "Kab. Sidoarjo",
+        "Kab. Sigi",
+        "Kab. Sijunjung",
+        "Kab. Simeulue",
+        "Kab. Simalungun",
+        "Kab. Sinjai",
+        "Kab. Sintang",
+        "Kab. Siau Tagulandang Biaro",
+        "Kab. Situbondo",
+        "Kab. Sleman",
+        "Kab. Solok",
+        "Kab. Solok Selatan",
+        "Kab. Soppeng",
+        "Kab. Sorong",
+        "Kab. Sorong Selatan",
+        "Kab. Sragen",
+        "Kab. Subang",
+        "Kab. Sukabumi",
+        "Kab. Sukamara",
+        "Kab. Sukoharjo",
+        "Kab. Sumbawa",
+        "Kab. Sumbawa Barat",
+        "Kab. Sumenep",
+        "Kab. Supiori",
+        "Kab. Tabalong",
+        "Kab. Tabanan",
+        "Kab. Takalar",
+        "Kab. Tambrauw",
+        "Kab. Tanah Bumbu",
+        "Kab. Tanah Datar",
+        "Kab. Tanah Laut",
+        "Kab. Tana Toraja",
+        "Kab. Tangerang",
+        "Kab. Tanjung Jabung Barat",
+        "Kab. Tanjung Jabung Timur",
+        "Kab. Tapin",
+        "Kab. Tasikmalaya",
+        "Kab. Tebo",
+        "Kab. Tegal",
+        "Kab. Teluk Bintuni",
+        "Kab. Teluk Wondama",
+        "Kab. Temanggung",
+        "Kab. Timor Tengah Selatan",
+        "Kab. Timor Tengah Utara",
+        "Kab. Toba Samosir",
+        "Kab. Tojo Una-Una",
+        "Kab. Tolikara",
+        "Kab. Trenggalek",
+        "Kab. Tuban",
+        "Kab. Tulang Bawang",
+        "Kab. Tulang Bawang Barat",
+        "Kab. Tulungagung",
+        "Kab. Wakatobi",
+        "Kab. Waropen",
+        "Kab. Way Kanan",
+        "Kab. Wajo",
+        "Kab. Wonogiri",
+        "Kab. Wonosobo",
+        "Kab. Yahukimo",
+        "Kab. Yalimo",
+        "Kota Ambon",
+        "Kota Banda Aceh",
+        "Kota Banjar",
+        "Kota Banjarbaru",
+        "Kota Banjarmasin",
+        "Kota Batam",
+        "Kota Baubau",
+        "Kota Bengkulu",
+        "Kota Bima",
+        "Kota Binjai",
+        "Kota Bitung",
+        "Kota Blitar",
+        "Kota Bogor",
+        "Kota Bontang",
+        "Kota Bukittinggi",
+        "Kota Cilegon",
+        "Kota Cimahi",
+        "Kota Cirebon",
+        "Kota Denpasar",
+        "Kota Depok",
+        "Kota Dumai",
+        "Kota Fakfak",
+        "Kota Gorontalo",
+        "Kota Gunung Sitoli",
+        "Kota Jakarta Barat",
+        "Kota Jakarta Pusat",
+        "Kota Jakarta Selatan",
+        "Kota Jakarta Timur",
+        "Kota Jakarta Utara",
+        "Kota Jambi",
+        "Kota Jayapura",
+        "Kota Kediri",
+        "Kota Kendari",
+        "Kota Kupang",
+        "Kota Langsa",
+        "Kota Lhokseumawe",
+        "Kota Lubuk Linggau",
+        "Kota Madiun",
+        "Kota Magelang",
+        "Kota Makassar",
+        "Kota Malang",
+        "Kota Manado",
+        "Kota Mataram",
+        "Kota Medan",
+        "Kota Metro",
+        "Kota Mojokerto",
+        "Kota Padang",
+        "Kota Padang Panjang",
+        "Kota Padang Sidempuan",
+        "Kota Pagar Alam",
+        "Kota Palangkaraya",
+        "Kota Palembang",
+        "Kota Palopo",
+        "Kota Palu",
+        "Kota Pangkal Pinang",
+        "Kota Parepare",
+        "Kota Pariaman",
+        "Kota Pasuruan",
+        "Kota Payakumbuh",
+        "Kota Pekalongan",
+        "Kota Pekanbaru",
+        "Kota Pematang Siantar",
+        "Kota Pontianak",
+        "Kota Prabumulih",
+        "Kota Probolinggo",
+        "Kota Sabang",
+        "Kota Salatiga",
+        "Kota Samarinda",
+        "Kota Sawah Lunto",
+        "Kota Semarang",
+        "Kota Serang",
+        "Kota Sibolga",
+        "Kota Singkawang",
+        "Kota Solok",
+        "Kota Subulussalam",
+        "Kota Sukabumi",
+        "Kota Surakarta",
+        "Kota Surabaya",
+        "Kota Sungai Penuh",
+        "Kota Tangerang",
+        "Kota Tangerang Selatan",
+        "Kota Tanjung Balai",
+        "Kota Tanjung Pinang",
+        "Kota Tarakan",
+        "Kota Tasikmalaya",
+        "Kota Tebing Tinggi",
+        "Kota Tegal",
+        "Kota Ternate",
+        "Kota Tidore Kepulauan",
+        "Kota Tomohon",
+        "Kota Tual",
+        "Kota Yogyakarta",
+        "Lainnya"
+      ]
+    },
+    "public.metode_daftar": {
+      "name": "metode_daftar",
+      "schema": "public",
+      "values": [
+        "individu",
+        "kelas"
+      ]
+    },
+    "public.prodi_enum": {
+      "name": "prodi_enum",
+      "schema": "public",
+      "values": [
+        "D3 - TEKKOM",
+        "D4 - TIMD"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

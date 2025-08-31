@@ -5,13 +5,24 @@ import { asEnum } from "@/models/enums";
 import { z } from "zod";
 import { teamNameCheck } from "@/server/services/web-design/tim-name-available-check";
 import { noWaCheck } from "@/server/services/web-design/no-wa-available-check";
+import { npmCheck, npmCheck2 } from "@/server/services/web-design/npm-available-check";
 
 export const participantAsMahasiswa = z.object({
     id: z.uuid().optional(),
     nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),
     npm: z
         .string().min(1, { message: "NIM/NPM tidak boleh kosong." })
-});
+        .refine(async (npm) => {
+            const res = await npmCheck2(npm)
+            return res.success
+        }, {
+            error: "NIM/NPM telah terdaftar"
+        })
+
+})
+
+
+
 export const participantAsGeneral = z.object({
     id: z.uuid().optional(),
     nama: z.string().min(1, { message: "Nama tidak boleh kosong." }),

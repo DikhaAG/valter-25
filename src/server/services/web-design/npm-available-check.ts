@@ -32,3 +32,31 @@ export async function npmCheck(
       success: true,
    };
 }
+
+
+export async function npmCheck2(
+    npm: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      const res = await db.query.pesertaWebDesignTable.findFirst({
+         where: eq(pesertaWebDesignTable.npm, npm),
+      });
+      if (res) {
+         return {
+            success: false,
+            message: `NPM ${npm} telah terdaftar.`,
+         };
+      }
+   } catch (error) {
+      console.log(error);
+      return {
+         success: false,
+         message: "Terjadi kesalahan pada server.",
+         error: error,
+         statusCode: 500,
+      };
+   }
+   return {
+      success: true,
+   };
+}

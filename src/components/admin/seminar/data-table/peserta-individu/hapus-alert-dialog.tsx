@@ -9,18 +9,22 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { ParticipantTable } from "@/models/seminar/table";
+import { CustomToast } from "@/components/ui/nb/custom-toast";
+import { hapusPesertaIndividuSeminar } from "@/server/services/admin/hapus-pendaftaran";
 import { Trash } from "lucide-react";
 
 interface Props {
-  idKelas: string;
-  mahasiswas: ParticipantTable[];
+  id: string;
 }
-export function HapusAlertDialog({ idKelas, mahasiswas }: Props) {
-  function handleKonfirmasi() {
-    alert("hapus");
-    console.log(idKelas);
-    console.log(mahasiswas);
+export function HapusPesertaIndividuAlertDialog({ id,  }: Props) {
+  async function handleHapus() {
+    const res = await hapusPesertaIndividuSeminar(id)
+    if (!res.success) {
+      CustomToast({ variant: "error", message: "Gagal menghapus peserta" })
+      return
+    }
+    CustomToast({ variant: "success", message: "Berhasil menghapus peserta" })
+    window.location.href = "/admin/seminar"
   }
   return (
     <AlertDialog>
@@ -43,7 +47,7 @@ export function HapusAlertDialog({ idKelas, mahasiswas }: Props) {
           <AlertDialogCancel>Batal</AlertDialogCancel>
           <AlertDialogAction
             className="bg-red-500 hover:bg-red-600"
-            onClick={handleKonfirmasi}
+            onClick={handleHapus}
           >
             Hapus
           </AlertDialogAction>

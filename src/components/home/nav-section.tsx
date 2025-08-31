@@ -51,7 +51,7 @@ export function HomeNavSection({ timeLeft }: Props) {
                         variant={"gosong"}
                         className="bg-background text-foreground w-fit"
                      >
-                        Acara
+                        Kegiatan
                      </Button>
                      <div className="border w-[40%] mt-2"></div>
                   </Link>

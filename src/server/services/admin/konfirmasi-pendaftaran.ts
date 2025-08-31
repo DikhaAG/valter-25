@@ -30,7 +30,7 @@ export async function konfirmasiPendaftaranKelasSeminar(idKelas: string): Promis
     }
 }
 
-export async function konfirmasiPendaftaranPesertaSeminar(id: string): Promise<ServerResponseType<unknown>> {
+export async function konfirmasiPesertaIndividuSeminar(id: string): Promise<ServerResponseType<unknown>> {
     try {
         const updateRes = await db.update(pesertaSeminarTable).set({ statusPembayaran: true, tanggalKonfirmasi: getCurrentPostgresTimestamp() }).where(eq(pesertaSeminarTable.id, id))
 

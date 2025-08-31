@@ -6,7 +6,8 @@
  * berorientasi pada tipe (type-safe).
  */
 import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+// import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from 'drizzle-orm/postgres-js';
 import { config } from "dotenv";
 import { esportRelations } from "@/server/db/relations/esport-relation";
 import { videoCampaignRelation } from "@/server/db/relations/video-campaign-relation";
@@ -23,6 +24,7 @@ import { pelatihanSchema } from "@/server/db/schemas/pelatihan";
 import { pelatihanRelation } from "@/server/db/relations/pelatihan";
 import { authSchema } from "@/server/db/schemas/auth-schema";
 import { historySchema } from "@/server/db/schemas/history";
+import postgres from "postgres";
 
 // Memuat variabel lingkungan dari file .env
 config({
@@ -34,7 +36,9 @@ config({
  * Inisialisasi klien Neon untuk membuat koneksi ke database.
  * Koneksi dibuat menggunakan URL yang disimpan di variabel lingkungan.
  */
-const sql = neon(process.env.DATABASE_URL!);
+// NEON
+// const sql = neon(process.env.DATABASE_URL!);
+const connectionString = process.env.DATABASE_URL!
 
 /**
  * @constant db
@@ -42,8 +46,9 @@ const sql = neon(process.env.DATABASE_URL!);
  * Konfigurasi ini menghubungkan Drizzle dengan klien Neon dan mendaftarkan
  * skema serta relasi database yang telah ditentukan.
  */
+export const client = postgres(connectionString, {prepare: false})
 export const db = drizzle({
-    client: sql,
+    client,
     schema: {
         ...esportSchema,
         ...esportRelations,
