@@ -133,7 +133,6 @@ export async function getTotalPesertaSeminarTerkonfirmasi(): Promise<ServerRespo
     try {
         const res = await db.query.pesertaSeminarTable.findMany({ where: eq(pesertaSeminarTable.statusPembayaran, true) })
 
-        revalidatePath("/admin/seminar")
         return {
             success: true, data: res.length
         }
@@ -148,7 +147,6 @@ export async function getTotalPesertaSeminarBelumTerkonfirmasi(): Promise<Server
     try {
         const res = await db.query.pesertaSeminarTable.findMany({ where: eq(pesertaSeminarTable.statusPembayaran, false) })
 
-        revalidatePath("/admin/seminar")
         return {
             success: true, data: res.length
         }

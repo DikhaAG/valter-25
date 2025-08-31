@@ -82,7 +82,6 @@ export async function getPesertaIndividuSeminar(
             };
         }
 
-        revalidatePath("/admin/seminar")
         return {
             success: true,
             message: `Berhasil mengambil data peserta. ${emotSuccess}`,
@@ -107,7 +106,6 @@ export async function getAllClassRegistration(): Promise<
             },
         });
 
-        revalidatePath("/admin/seminar")
         return {
             success: true,
             data: res,

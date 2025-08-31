@@ -63,7 +63,6 @@ export async function getSeminarIncome(): Promise<ServerResponseType<number>> {
         const htm = 60000
         const income = res.length * htm
 
-        revalidatePath("/admin/seminar")
         return {
             success: true
             , data: income
