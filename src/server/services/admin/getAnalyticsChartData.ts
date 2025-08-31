@@ -23,7 +23,9 @@ type CountKeys = Exclude<keyof AnalyticsChartData, "date">;
  * Mengembalikan array objek dengan format {date, pelatihan, seminar, esport, videoCampaign, webDesign}.
  * @returns {Promise<AnalyticsChartData[]>} Data chart yang diformat.
  */
-export async function getAnalyticsChartData(): Promise<AnalyticsChartData[]> {
+export async function getAnalyticsChartData(): Promise<
+   AnalyticsChartData[]
+> {
    try {
       // Sub-query untuk Pelatihan (menggabungkan individu dan kelas)
       const pelatihanData = await db

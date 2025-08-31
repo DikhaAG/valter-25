@@ -1,40 +1,141 @@
-"use server"
+"use server";
 import { db } from "@/lib/drizzle";
-import { pendaftaranSeminarKelasTable, pesertaSeminarTable } from "@/server/db/schemas/seminar-schema";
+import {
+   pendaftaranPelatihanKelasTable,
+   pesertaPelatihanTable,
+} from "@/server/db/schemas/pelatihan";
+import {
+   pendaftaranSeminarKelasTable,
+   pesertaSeminarTable,
+} from "@/server/db/schemas/seminar-schema";
 import { ServerResponseType } from "@/types/server-response";
 import { getCurrentPostgresTimestamp } from "@/utils/get-current-postgres-timestamp";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
-export async function konfirmasiPendaftaranKelasSeminar(idKelas: string): Promise<ServerResponseType<unknown>> {
-    try {
-        const updateKelas = await db.update(pendaftaranSeminarKelasTable).set({ statusPembayaran: true, tanggalKonfirmasi: getCurrentPostgresTimestamp() }).where(eq(pendaftaranSeminarKelasTable.id, idKelas))
+export async function konfirmasiPendaftaranKelasSeminar(
+   idKelas: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      const updateKelas = await db
+         .update(pendaftaranSeminarKelasTable)
+         .set({
+            statusPembayaran: true,
+            tanggalKonfirmasi: getCurrentPostgresTimestamp(),
+         })
+         .where(eq(pendaftaranSeminarKelasTable.id, idKelas));
 
-        const getKelas = await db.query.pendaftaranSeminarKelasTable.findFirst({ with: { peserta: true }, where: eq(pendaftaranSeminarKelasTable.id, idKelas) })
+      const getKelas = await db.query.pendaftaranSeminarKelasTable.findFirst({
+         with: { peserta: true },
+         where: eq(pendaftaranSeminarKelasTable.id, idKelas),
+      });
 
-        getKelas!.peserta.forEach(async (mhs) => {
-            await db.update(pesertaSeminarTable).set({statusPembayaran: true, tanggalKonfirmasi: getCurrentPostgresTimestamp()}).where(eq(pesertaSeminarTable.id, mhs.id))
-        })
+      getKelas!.peserta.forEach(async (mhs) => {
+         await db
+            .update(pesertaSeminarTable)
+            .set({
+               statusPembayaran: true,
+               tanggalKonfirmasi: getCurrentPostgresTimestamp(),
+            })
+            .where(eq(pesertaSeminarTable.id, mhs.id));
+      });
+      revalidatePath("/admin/seminar");
 
-        return {
-            success: true
-        }
-    } catch (e) {
-        return {
-            success: false, message: `${e}`
-        }
-    }
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
 }
 
-export async function konfirmasiPesertaIndividuSeminar(id: string): Promise<ServerResponseType<unknown>> {
-    try {
-        const updateRes = await db.update(pesertaSeminarTable).set({ statusPembayaran: true, tanggalKonfirmasi: getCurrentPostgresTimestamp() }).where(eq(pesertaSeminarTable.id, id))
+export async function konfirmasiPesertaIndividuSeminar(
+   id: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      const updateRes = await db
+         .update(pesertaSeminarTable)
+         .set({
+            statusPembayaran: true,
+            tanggalKonfirmasi: getCurrentPostgresTimestamp(),
+         })
+         .where(eq(pesertaSeminarTable.id, id));
 
-        return {
-            success: true
-        }
-    } catch (e) {
-        return {
-            success: false, message: `${e}`
-        }
-    }
+      revalidatePath("/admin/seminar");
+
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
+}
+
+export async function konfirmasiPendaftaranKelasPelatihan(
+   idKelas: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      const updateKelas = await db
+         .update(pendaftaranPelatihanKelasTable)
+         .set({
+            statusPembayaran: true,
+            tanggalKonfirmasi: getCurrentPostgresTimestamp(),
+         })
+         .where(eq(pendaftaranPelatihanKelasTable.id, idKelas));
+
+      const getKelas = await db.query.pendaftaranPelatihanKelasTable.findFirst({
+         with: { peserta: true },
+         where: eq(pendaftaranPelatihanKelasTable.id, idKelas),
+      });
+
+      getKelas!.peserta.forEach(async (mhs) => {
+         await db
+            .update(pendaftaranPelatihanKelasTable)
+            .set({
+               statusPembayaran: true,
+               tanggalKonfirmasi: getCurrentPostgresTimestamp(),
+            })
+            .where(eq(pendaftaranPelatihanKelasTable.id, mhs.id));
+      });
+      revalidatePath("/admin/pelatihan");
+
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
+}
+
+export async function konfirmasiPesertaIndividuPelatihan(
+   id: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      const updateRes = await db
+         .update(pesertaPelatihanTable)
+         .set({
+            statusPembayaran: true,
+            tanggalKonfirmasi: getCurrentPostgresTimestamp(),
+         })
+         .where(eq(pesertaPelatihanTable.id, id));
+      revalidatePath("/admin/pelatihan");
+
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
 }

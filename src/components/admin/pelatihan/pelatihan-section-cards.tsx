@@ -7,15 +7,15 @@ import {
    CardHeader,
    CardTitle,
 } from "@/components/ui/card";
-import { getSeminarIncome } from "@/server/services/admin/getIncome";
+import { getPelatihanIncome } from "@/server/services/admin/getIncome";
 import {
    getTotalPesertaPelatihanBelumTerkonfirmasi,
-   getTotalPesertaSeminarTerkonfirmasi,
+   getTotalPesertaPelatihanTerkonfirmasi,
 } from "@/server/services/admin/getTotalPeserta";
 import { formatIDRCurrency } from "@/utils/formatIDRCurrency";
 import { useEffect, useState } from "react";
 
-export function SeminarSectionCards() {
+export function PelatihanSectionCards() {
    const [income, setIncome] = useState<number | undefined>();
    const [totalPendaftarTerkonfirmasi, setTotalPendaftarTerkonfirmasi] =
       useState<number | undefined>();
@@ -25,13 +25,13 @@ export function SeminarSectionCards() {
    ] = useState<number | undefined>();
 
    useEffect(() => {
-      getSeminarIncome().then((res) => {
+      getPelatihanIncome().then((res) => {
          if (res.success) {
             setIncome(res.data);
          }
       });
 
-      getTotalPesertaSeminarTerkonfirmasi().then((res) => {
+      getTotalPesertaPelatihanTerkonfirmasi().then((res) => {
          if (res.success) {
             setTotalPendaftarTerkonfirmasi(res.data);
          }

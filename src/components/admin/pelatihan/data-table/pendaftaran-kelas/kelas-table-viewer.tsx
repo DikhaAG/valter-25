@@ -1,0 +1,225 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+   Drawer,
+   DrawerClose,
+   DrawerContent,
+   DrawerDescription,
+   DrawerFooter,
+   DrawerHeader,
+   DrawerTitle,
+   DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import {
+   Table,
+   TableBody,
+   TableCell,
+   TableHead,
+   TableHeader,
+   TableRow,
+} from "@/components/ui/table";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ParticipantTable } from "@/models/pelatihan/table";
+import {
+   ColumnDef,
+   ColumnFiltersState,
+   flexRender,
+   getCoreRowModel,
+   getFilteredRowModel,
+   getPaginationRowModel,
+   getSortedRowModel,
+   Row,
+   SortingState,
+   useReactTable,
+} from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+import { useState } from "react";
+
+const mahasiswasColumn: ColumnDef<ParticipantTable>[] = [
+   {
+      accessorKey: "nama",
+      header: "Nama",
+      cell: ({ row }: { row: Row<ParticipantTable> }) => (
+         <div className="capitalize">{row.original.nama}</div>
+      ),
+   },
+   {
+      accessorKey: "noWa",
+      header: "Nomor Whatsapp",
+      cell: ({ row }: { row: Row<ParticipantTable> }) => (
+         <div>{row.original.noWa}</div>
+      ),
+   },
+   {
+      accessorKey: "email",
+      header: "Email",
+      cell: ({ row }: { row: Row<ParticipantTable> }) => (
+         <div className="lowercase">{row.original.email}</div>
+      ),
+   },
+   {
+      accessorKey: "domisili",
+      header: ({ column }) => {
+         return (
+            <Button
+               variant="ghost"
+               onClick={() =>
+                  column.toggleSorting(column.getIsSorted() === "asc")
+               }
+            >
+               Domisili
+               <ArrowUpDown />
+            </Button>
+         );
+      },
+      cell: ({ row }: { row: Row<ParticipantTable> }) => (
+         <div className="capitalize">{row.original.domisili}</div>
+      ),
+   },
+];
+
+export function KelasTableViewer({
+   kelas,
+   mahasiswas,
+}: {
+   kelas: string;
+   mahasiswas: ParticipantTable[];
+}) {
+   const [sorting, setSorting] = useState<SortingState>([]);
+   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+   const table = useReactTable({
+      data: mahasiswas,
+      columns: mahasiswasColumn,
+      getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      onSortingChange: setSorting,
+      getSortedRowModel: getSortedRowModel(),
+      onColumnFiltersChange: setColumnFilters,
+      getFilteredRowModel: getFilteredRowModel(),
+      state: {
+         sorting,
+         columnFilters,
+      },
+   });
+
+   const isMobile = useIsMobile();
+
+   return (
+      <div className="">
+         {mahasiswas ? (
+            <Drawer direction={isMobile ? "bottom" : "right"}>
+               <DrawerTrigger asChild>
+                  <Button
+                     variant="link"
+                     className="text-foreground w-fit px-0 text-left"
+                  >
+                     {kelas}
+                  </Button>
+               </DrawerTrigger>
+               <DrawerContent>
+                  <DrawerHeader className="gap-1">
+                     <DrawerTitle>{kelas}</DrawerTitle>
+                     <DrawerDescription></DrawerDescription>
+                     <div className="flex items-center py-4">
+                        <Input
+                           placeholder="Cari nama..."
+                           value={
+                              (table
+                                 .getColumn("nama")
+                                 ?.getFilterValue() as string) ?? ""
+                           }
+                           onChange={(event) =>
+                              table
+                                 .getColumn("nama")
+                                 ?.setFilterValue(event.target.value)
+                           }
+                           className="max-w-sm"
+                        />
+                     </div>
+                  </DrawerHeader>
+                  <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
+                     <Table>
+                        <TableHeader>
+                           {table.getHeaderGroups().map((headerGroup) => (
+                              <TableRow key={headerGroup.id}>
+                                 {headerGroup.headers.map((header) => {
+                                    return (
+                                       <TableHead key={header.id}>
+                                          {header.isPlaceholder
+                                             ? null
+                                             : flexRender(
+                                                  header.column.columnDef
+                                                     .header,
+                                                  header.getContext()
+                                               )}
+                                       </TableHead>
+                                    );
+                                 })}
+                              </TableRow>
+                           ))}
+                        </TableHeader>
+                        <TableBody>
+                           {table.getRowModel().rows?.length ? (
+                              table.getRowModel().rows.map((row) => (
+                                 <TableRow
+                                    key={row.id}
+                                    data-state={
+                                       row.getIsSelected() && "selected"
+                                    }
+                                 >
+                                    {row.getVisibleCells().map((cell) => (
+                                       <TableCell key={cell.id}>
+                                          {flexRender(
+                                             cell.column.columnDef.cell,
+                                             cell.getContext()
+                                          )}
+                                       </TableCell>
+                                    ))}
+                                 </TableRow>
+                              ))
+                           ) : (
+                              <TableRow>
+                                 <TableCell
+                                    colSpan={mahasiswasColumn.length}
+                                    className="h-24 text-center"
+                                 >
+                                    No results.
+                                 </TableCell>
+                              </TableRow>
+                           )}
+                        </TableBody>
+                     </Table>
+                  </div>
+                  <DrawerFooter>
+                     <div className="flex items-center justify-end space-x-2 py-4">
+                        <Button
+                           variant="outline"
+                           size="sm"
+                           onClick={() => table.previousPage()}
+                           disabled={!table.getCanPreviousPage()}
+                        >
+                           Previous
+                        </Button>
+                        <Button
+                           variant="outline"
+                           size="sm"
+                           onClick={() => table.nextPage()}
+                           disabled={!table.getCanNextPage()}
+                        >
+                           Next
+                        </Button>
+                     </div>
+                     <Button>Submit</Button>
+                     <DrawerClose asChild>
+                        <Button variant="outline">Done</Button>
+                     </DrawerClose>
+                  </DrawerFooter>
+               </DrawerContent>
+            </Drawer>
+         ) : (
+            <span>Tidak ada data.</span>
+         )}
+      </div>
+   );
+}

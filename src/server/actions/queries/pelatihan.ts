@@ -11,6 +11,7 @@ import {
 } from "@/server/db/schemas/pelatihan";
 import { ServerResponseType } from "@/types/server-response";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function getClassRegistrationById(
    id: string
@@ -65,6 +66,60 @@ export async function getParticipantById(
          success: false,
          message: `Terjadi kesalahan dalam mengambil data peserta ${emotError}`,
          error,
+      };
+   }
+}
+
+export async function getPesertaIndividuPelatihan({
+   revPath,
+}: {
+   revPath: string;
+}): Promise<ServerResponseType<ParticipantTable[]>> {
+   try {
+      const res = await db.query.pesertaPelatihanTable.findMany({
+         where: eq(pesertaPelatihanTable.metodeDaftar, "individu"),
+      });
+      if (!res) {
+         return {
+            success: false,
+            message: `Data peserta tidak ditemukan ${emotError}`,
+         };
+      }
+      revalidatePath(revPath);
+      return {
+         success: true,
+         message: `Berhasil mengambil data peserta. ${emotSuccess}`,
+         data: res,
+      };
+   } catch (error) {
+      return {
+         success: false,
+         message: `Terjadi kesalahan dalam mengambil data peserta ${emotError}`,
+         error,
+      };
+   }
+}
+
+export async function getAllClassRegistration({
+   revPath,
+}: {
+   revPath: string;
+}): Promise<ServerResponseType<ClassRegistrationTable[]>> {
+   try {
+      const res = await db.query.pendaftaranPelatihanKelasTable.findMany({
+         with: {
+            peserta: true,
+         },
+      });
+      revalidatePath(revPath);
+      return {
+         success: true,
+         data: res,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
       };
    }
 }
