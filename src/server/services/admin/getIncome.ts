@@ -1,3 +1,4 @@
+"use server"
 import { db } from "@/lib/drizzle"
 import { ServerResponseType } from "@/types/server-response"
 import { revalidatePath } from "next/cache"
@@ -68,6 +69,7 @@ export async function getSeminarIncome(): Promise<ServerResponseType<number>> {
             , data: income
         }
     } catch (e) {
+        console.log(e)
         return {
             success: false, message: `${e}`
         }

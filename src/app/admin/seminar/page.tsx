@@ -1,40 +1,17 @@
 "use server";
 
-import { getSeminarIncome } from "@/server/services/admin/getIncome";
-import {
-  getTotalPesertaSeminarBelumTerkonfirmasi,
-  getTotalPesertaSeminarTerkonfirmasi,
-} from "@/server/services/admin/getTotalPeserta";
 import { getAllClassRegistration, getPesertaIndividuSeminar } from "@/server/actions/queries/seminar";
 import { SectionCards } from "@/components/admin/section-cards.tsx";
 import { SeminarTabsTable } from "@/components/admin/seminar/tabs-table";
 import { ExportSemuaDataPesertaSeminarButton } from "@/components/admin/seminar/export-semua-data-peserta-seminar-button";
 export default async function Page() {
-  const countIncome = await getSeminarIncome();
-  const countTotalSemuaPendaftarTerkonfirmasi =
-    await getTotalPesertaSeminarTerkonfirmasi();
-  const countTotalSemuaPendaftarBelumTerkonfirmasi =
-    await getTotalPesertaSeminarBelumTerkonfirmasi();
-  const countTotalSemuaPendaftar =
-    (countTotalSemuaPendaftarTerkonfirmasi.data ?? 0) +
-    (countTotalSemuaPendaftarBelumTerkonfirmasi.data ?? 0);
-
   const classRegistions = await getAllClassRegistration();
   const peserta = await getPesertaIndividuSeminar();
   return (
     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="font-extrabold text-2xl mx-4 md:mx-6">Seminar</div>
       <div className="mx-4 md:mx-6"><ExportSemuaDataPesertaSeminarButton /></div>
-      <SectionCards
-        income={countIncome.data ?? 0}
-        totalPendaftar={countTotalSemuaPendaftar}
-        totalPendaftarTerkonfirmasi={
-          countTotalSemuaPendaftarTerkonfirmasi.data ?? 0
-        }
-        totalPendaftarBelumTerkonfirmasi={
-          countTotalSemuaPendaftarBelumTerkonfirmasi.data ?? 0
-        }
-      />
+      <SectionCards/>
       <SeminarTabsTable dataPendaftaranKelas={classRegistions.data ?? []} dataPeserta={peserta.data ?? []} />
     </div>
   );
