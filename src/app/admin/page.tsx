@@ -3,8 +3,8 @@
 import { getAllIncome } from "@/server/services/admin/getIncome"
 import { getTotalSemuaPendaftar, getTotalSemuaPendaftarBelumTerkonfirmasi, getTotalSemuaPendaftarTerkonfirmasi } from "@/server/services/admin/getTotalPeserta"
 import { getAnalyticsChartData } from "@/server/services/admin/getAnalyticsChartData"
-import { SectionCards } from "@/components/admin/section-cards.tsx"
 import { ChartAreaInteractive } from "@/components/admin/chart-area-interactive"
+import { SectionCards } from "@/components/admin/section-cards"
 export default async function Page() {
   const countIncome = await getAllIncome()
   const countTotalSemuaPendaftar = await getTotalSemuaPendaftar()
