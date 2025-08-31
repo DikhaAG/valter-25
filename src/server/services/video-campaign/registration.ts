@@ -56,10 +56,10 @@ export async function registration({
          .insert(timVideoCampaignTable)
          .values({
             id: uuidv4(),
-            as: "mahasiswa",
+            as,
             namaTim: result.namaTim,
             noWa: result.noWa,
-            instansi: (result as TeamAsMahasiswa).instansi,
+            instansi: result.instansi,
             buktiPembayaran: buktiPembayaranUrl,
          })
          .returning({ insertedId: timVideoCampaignTable.id });
