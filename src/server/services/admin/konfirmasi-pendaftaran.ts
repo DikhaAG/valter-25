@@ -9,11 +9,6 @@ export async function konfirmasiPendaftaranKelasSeminar(idKelas: string): Promis
     try {
         const updateKelas = await db.update(pendaftaranSeminarKelasTable).set({ statusPembayaran: true, tanggalKonfirmasi: getCurrentPostgresTimestamp() }).where(eq(pendaftaranSeminarKelasTable.id, idKelas))
 
-        if (updateKelas.rowCount === 0) {
-            return {
-                success: false, message: "Gagal mengupdate pendaftaran kelas."
-            }
-        }
         const getKelas = await db.query.pendaftaranSeminarKelasTable.findFirst({ with: { peserta: true }, where: eq(pendaftaranSeminarKelasTable.id, idKelas) })
 
         getKelas!.peserta.forEach(async (mhs) => {
@@ -33,12 +28,6 @@ export async function konfirmasiPendaftaranKelasSeminar(idKelas: string): Promis
 export async function konfirmasiPesertaIndividuSeminar(id: string): Promise<ServerResponseType<unknown>> {
     try {
         const updateRes = await db.update(pesertaSeminarTable).set({ statusPembayaran: true, tanggalKonfirmasi: getCurrentPostgresTimestamp() }).where(eq(pesertaSeminarTable.id, id))
-
-        if (updateRes.rowCount === 0) {
-            return {
-                success: false, message: "Gagal mengupdate pendaftaran peserta."
-            }
-        }
 
         return {
             success: true
