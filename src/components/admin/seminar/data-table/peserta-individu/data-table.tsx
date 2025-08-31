@@ -163,12 +163,12 @@ export function PesertaIndividuDataTable() {
    }
 
    React.useEffect(() => {
-      getPesertaIndividuSeminar().then((res) => {
+      getPesertaIndividuSeminar({revPath: "/admin/seminar"}).then((res) => {
          if (res.success) {
             setInitialData(res.data!);
          }
       });
-   });
+   }, []);
 
    return (
       <>

@@ -102,7 +102,7 @@ export function SeminarPendaftaranKelasDataTable() {
    const [initialData, setInitialData] = React.useState<
       ClassRegistrationTable[] | undefined
    >();
-   
+
    const [rowSelection, setRowSelection] = React.useState({});
    const [columnVisibility, setColumnVisibility] =
       React.useState<VisibilityState>({});
@@ -163,7 +163,7 @@ export function SeminarPendaftaranKelasDataTable() {
    }
 
    React.useEffect(() => {
-      getAllClassRegistration().then((res) =>
+      getAllClassRegistration({ revPath: "/admin/seminar" }).then((res) =>
          res.success ? setInitialData(res.data!) : setInitialData(undefined)
       );
    }, []);

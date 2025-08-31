@@ -72,7 +72,7 @@ export function ChartAreaInteractive({ chartData }: Props) {
       return date >= startDate
     })
     setFilteredData(filterData)
-  }, [isMobile, timeRange])
+  }, [isMobile, timeRange, chartData])
 
 
 
