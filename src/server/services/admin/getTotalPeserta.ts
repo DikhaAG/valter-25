@@ -7,6 +7,7 @@ import { timVideoCampaignTable } from "@/server/db/schemas/video-campaign-schema
 import { timWebDesignTable } from "@/server/db/schemas/web-design-schema";
 import { ServerResponseType } from "@/types/server-response";
 import { eq, isNotNull, isNull } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function getTotalTimEsportTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
@@ -131,6 +132,8 @@ export async function getTotalTimVideoCampaign(): Promise<ServerResponseType<num
 export async function getTotalPesertaSeminarTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
         const res = await db.query.pesertaSeminarTable.findMany({ where: eq(pesertaSeminarTable.statusPembayaran, true) })
+
+        revalidatePath("/admin/seminar")
         return {
             success: true, data: res.length
         }
@@ -144,6 +147,8 @@ export async function getTotalPesertaSeminarTerkonfirmasi(): Promise<ServerRespo
 export async function getTotalPesertaSeminarBelumTerkonfirmasi(): Promise<ServerResponseType<number>> {
     try {
         const res = await db.query.pesertaSeminarTable.findMany({ where: eq(pesertaSeminarTable.statusPembayaran, false) })
+
+        revalidatePath("/admin/seminar")
         return {
             success: true, data: res.length
         }

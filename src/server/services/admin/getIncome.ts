@@ -1,5 +1,6 @@
 import { db } from "@/lib/drizzle"
 import { ServerResponseType } from "@/types/server-response"
+import { revalidatePath } from "next/cache"
 
 export async function getEsportIncome(): Promise<ServerResponseType<number>> {
     try {
@@ -61,6 +62,8 @@ export async function getSeminarIncome(): Promise<ServerResponseType<number>> {
         })
         const htm = 60000
         const income = res.length * htm
+
+        revalidatePath("/admin/seminar")
         return {
             success: true
             , data: income
