@@ -33,7 +33,7 @@ export default async function Page() {
           countTotalSemuaPendaftarBelumTerkonfirmasi.data ?? 0
         }
       />
-      <SeminarTabsTable dataPendaftaranKelas={classRegistions.data!} dataPeserta={peserta.data!} />
+      <SeminarTabsTable dataPendaftaranKelas={classRegistions.data ?? []} dataPeserta={peserta.data ?? []} />
     </div>
   );
 }
