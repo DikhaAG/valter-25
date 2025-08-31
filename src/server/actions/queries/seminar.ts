@@ -81,7 +81,7 @@ export async function getPesertaIndividuSeminar(
                 message: `Data peserta tidak ditemukan ${emotError}`,
             };
         }
-
+revalidatePath("/admin/seminar")
         return {
             success: true,
             message: `Berhasil mengambil data peserta. ${emotSuccess}`,
@@ -105,7 +105,7 @@ export async function getAllClassRegistration(): Promise<
                 peserta: true,
             },
         });
-
+revalidatePath("/admin/seminar")
         return {
             success: true,
             data: res,
