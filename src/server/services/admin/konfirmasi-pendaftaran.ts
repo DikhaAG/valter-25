@@ -99,12 +99,12 @@ export async function konfirmasiPendaftaranKelasPelatihan(
 
       getKelas!.peserta.forEach(async (mhs) => {
          await db
-            .update(pendaftaranPelatihanKelasTable)
+            .update(pesertaPelatihanTable)
             .set({
                statusPembayaran: true,
                tanggalKonfirmasi: getCurrentPostgresTimestamp(),
             })
-            .where(eq(pendaftaranPelatihanKelasTable.id, mhs.id));
+            .where(eq(pesertaPelatihanTable.id, mhs.id));
       });
       revalidatePath("/admin/pelatihan");
 
@@ -177,7 +177,7 @@ export async function konfirmasiTimVideoCampaign(
             statusPembayaran: true,
             tanggalKonfirmasi: getCurrentPostgresTimestamp(),
          })
-         .where(eq(timEsportTable.id, id));
+         .where(eq(timVideoCampaignTable.id, id));
       revalidatePath("/admin/video-campaign");
 
       return {
@@ -202,7 +202,7 @@ export async function konfirmasiTimWebDesign(
             statusPembayaran: true,
             tanggalKonfirmasi: getCurrentPostgresTimestamp(),
          })
-         .where(eq(timEsportTable.id, id));
+         .where(eq(timWebDesignTable.id, id));
       revalidatePath("/admin/web-design");
 
       return {

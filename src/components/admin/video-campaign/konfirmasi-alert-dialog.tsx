@@ -22,6 +22,7 @@ export function KonfirmasiTimDialog({ id, }: Props) {
   async function handleKonfirmasi() {
     const res = await konfirmasiTimVideoCampaign(id)
     if (!res.success) {
+      console.log(res.message)
       CustomToast({ variant: "error", message: "Gagal mengkonfirmasi pendaftaran" })
       return
     }

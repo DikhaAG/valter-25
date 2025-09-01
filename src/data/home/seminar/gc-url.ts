@@ -1,1 +1,1 @@
-export const gcUrl = "https://web.whatsapp.com/"
+export const gcUrl = "https://chat.whatsapp.com/BdUZ7jwoyk22Cd4dGVTnMZ?mode=ems_copy_t"
