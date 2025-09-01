@@ -5,6 +5,8 @@ export const timelineData: TimelineDataType[] = [
    { nama: "Technical Meeting", tanggal: "11 Oktober 2025" },
    { nama: "Pengumpulan Karya", tanggal: "13 - 20 Oktober 2025" },
    { nama: "Seleksi hasil karya", tanggal: "20 - 22 Oktober 2025" },
-   { nama: "⁠Pengumuman Finalis", tanggal: "23 Okt 2025" },
+   { nama: "Pengumuman Finalis", tanggal: "23 Oktober 2025" },
    { nama: "Presentasi Karya", tanggal: "29 Oktober 2025" },
+
+   { nama: "Pengumuman Pemenang", tanggal: "30 Oktober 2025" },
 ];

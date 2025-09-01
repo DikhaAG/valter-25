@@ -210,27 +210,34 @@ export default function HomePage() {
       {
          date: "Senin, 13 Oktober 2025",
          title: "Pembukaan",
-         description:
-            "Proses pembukaan valter 2025",
+         // description:
+         //    "Proses pembukaan valter 2025",
       },
       {
          date: "Senin, 20 Oktober s.d. Rabu, 22 Oktober 2025",
          title: "Pelaksanaan Pelatihan Content Creator",
-         description:
-            "disini kalian akan ...",
+         // description:
+         //    "disini kalian akan ...",
       },
       {
          date: "Sabtu, 25 Oktober 2025",
          title: "Pelaksanaan Esport dan Presentasi Lomba Web Design",
-         description:
-            "Pada pelaksanaan dan presentasi, ...",
+         // description:
+         //    "Pada pelaksanaan dan presentasi, ...",
       },
       {
          date: "Rabu, 28 Oktober 2025",
          title: "Presentasi Lomba Video Campaign",
-         description:
-            "...",
+         // description:
+         //    "...",
       },
+{
+         date: "Kamis, 30 Oktober 2025",
+         title: "Penutupan",
+         // description:
+         //    "...",
+      },
+
    ];
 
    return (
