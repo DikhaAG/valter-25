@@ -22,49 +22,49 @@ import { customSession } from "better-auth/plugins";
 import { getUserDivisi, getUserRole } from "@/server/services/admin/queries/user";
 
 export const auth = betterAuth({
-    baseURL: "https://www.valter2025.com",
-    database: drizzleAdapter(db, {
-        provider: "pg", // or "mysql", "sqlite"
-        schema: {
-            ...esportSchema,
-            ...esportRelations,
-            ...webDesignSchema,
-            ...webDesignRelations,
-            ...videoCampaignSchema,
-            ...videoCampaignRelation,
-            ...seminarSchema,
-            ...seminarRelations,
-            ...pelatihanSchema,
-            ...pelatihanRelation,
-            ...kelasSchema,
-            ...kelasRelations,
-            ...enumSchema,
-            ...authSchema,
-            ...historySchema
-        },
-    }),
-    emailAndPassword: {
-        enabled: true,
-        autoSignIn: false
+  baseURL: "https://valter2025.com",
+  database: drizzleAdapter(db, {
+    provider: "pg", // or "mysql", "sqlite"
+    schema: {
+      ...esportSchema,
+      ...esportRelations,
+      ...webDesignSchema,
+      ...webDesignRelations,
+      ...videoCampaignSchema,
+      ...videoCampaignRelation,
+      ...seminarSchema,
+      ...seminarRelations,
+      ...pelatihanSchema,
+      ...pelatihanRelation,
+      ...kelasSchema,
+      ...kelasRelations,
+      ...enumSchema,
+      ...authSchema,
+      ...historySchema
     },
-    plugins: [
-        customSession(async ({ user, session }) => {
-            const getUser = await getUserDivisi(user.id)
-            const getRole = await getUserRole(user.id)
-            const role = getRole.data!
-            const divisi = getUser.data!
+  }),
+  emailAndPassword: {
+    enabled: true,
+    autoSignIn: false
+  },
+  plugins: [
+    customSession(async ({ user, session }) => {
+      const getUser = await getUserDivisi(user.id)
+      const getRole = await getUserRole(user.id)
+      const role = getRole.data!
+      const divisi = getUser.data!
 
-            return {
-                user: {
-                    ...user,
-                    role,
-                    divisi
-                },
-                session
-            };
-        }),
-        admin(),
+      return {
+        user: {
+          ...user,
+          role,
+          divisi
+        },
+        session
+      };
+    }),
+    admin(),
 
-        nextCookies() // make sure this is the last plugin in the array
-    ],
+    nextCookies() // make sure this is the last plugin in the array
+  ],
 });
