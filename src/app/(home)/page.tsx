@@ -150,27 +150,27 @@ export default function HomePage() {
       {
          image: "/images/uiuix.png",
          title: "Web Design",
-         description: "Landing Page Valter",
+         description: "''Bertemakan Landing Page Valter''",
          href: "/web-design",
       },
       {
          image: "/images/training.png",
          title: "Pelatihan",
          description:
-            "Optimalisasi Produksi dan Penyajian Konten Digital Berkelanjutan",
+            "''Optimalisasi Produksi dan Penyajian Konten Digital Berkelanjutan''",
          href: "/pelatihan",
       },
       {
          image: "/images/game.png",
          title: "E-sport",
-         description: "Mobile Legends: Bang Bang",
+         description: "''Mobile Legends: Bang Bang''",
          href: "/e-sport",
       },
       {
          image: "/images/vid.png",
          title: "Video Campaign",
          description:
-            "Peran AI dalam pemanfaatan media sosial oleh para content creator.",
+            "''Peran AI dalam pemanfaatan media sosial oleh para content creator.''",
          href: "/video-campaign",
       },
    ];
@@ -208,28 +208,28 @@ export default function HomePage() {
 
    const timelineEvents = [
       {
-         date: "07 Juli 2025 - 07 September 2025",
-         title: "Pendaftaran dan Submit Proposal",
+         date: "Senin, 13 Oktober 2025",
+         title: "Pembukaan",
          description:
-            "Proses pendaftaran untuk peserta kompetisi dimulai pada tanggal 7 Juli 2025 hingga 7 September 2025. Pada tahap ini, peserta diharuskan mengisi formulir pendaftaran dan mengunggah proposal yang berisi detail ide atau proyek mereka yang akan dikutsertakan dalam kompetisi.",
+            "Proses pembukaan valter 2025",
       },
       {
-         date: "15 September 2025 - 26 September 2025",
-         title: "Babak Penyisihan",
+         date: "Senin, 20 Oktober s.d. Rabu, 22 Oktober 2025",
+         title: "Pelaksanaan Pelatihan Content Creator",
          description:
-            "Tahap babak penyisihan akan berlangsung pada tanggal 15 September 2025 dan 22 - 26 September 2025.",
+            "disini kalian akan ...",
       },
       {
-         date: "29 September 2025",
-         title: "Pengumuman Finalis",
+         date: "Sabtu, 25 Oktober 2025",
+         title: "Pelaksanaan Esport dan Presentasi Lomba Web Design",
          description:
-            "Pengumuman finalis kompetisi akan dilakukan pada tanggal 29 September 2025. Peserta yang berhasil lolos ke tahap final akan diinformasikan melalui situs resmi kompetisi dan juga melalui email yang terdaftar pada saat pendaftaran.",
+            "Pada pelaksanaan dan presentasi, ...",
       },
       {
-         date: "12 Oktober 2025 - 14 Oktober 2025",
-         title: "Final",
+         date: "Rabu, 28 Oktober 2025",
+         title: "Presentasi Lomba Video Campaign",
          description:
-            "Babak final akan dilaksanakan dari tanggal 12 Oktober hingga 14 Oktober 2025. Pada tahap ini, para finalis akan mempresentasikan hasil akhir dari proyek mereka di hadapan dewan juri. Penilaian akan dilakukan secara menyeluruh berdasarkan kreativitas, inovasi, dan dampak yang dihasilkan dari proyek tersebut.",
+            "...",
       },
    ];
 
@@ -1063,7 +1063,8 @@ export default function HomePage() {
                   {/* Content */}
                   <div className="text-center lg:text-left space-y-6">
                      <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold font-glofium">
-                        <span className="text-foreground">Memanggil </span>
+                        <span className="text-foreground text-3xl sm:text-5xl md:text-6xl">Open</span>
+                        <br />
                         <span className="text-pink-600">
                            Sponsorship
                            <span className=" font-funky-vibes text-5xl md:text-7xl">
