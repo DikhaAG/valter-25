@@ -22,6 +22,7 @@ import { customSession } from "better-auth/plugins";
 import { getUserDivisi, getUserRole } from "@/server/services/admin/queries/user";
 
 export const auth = betterAuth({
+    baseURL: "https://valter2025.com",
     database: drizzleAdapter(db, {
         provider: "pg", // or "mysql", "sqlite"
         schema: {
