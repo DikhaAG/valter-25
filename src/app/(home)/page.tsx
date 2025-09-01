@@ -8,6 +8,7 @@ import { wrapSymbols } from "@/utils/wrap-symbols";
 import { Button } from "@/components/ui/nb/button";
 import { AnimatedCoinImage } from "@/components/animated-coin.image";
 import { WhatsappContactButton } from "@/components/home/whatsapp-contact-button";
+import { authClient } from "@/lib/auth-client";
 
 export default function HomePage() {
   const [timeLeft, setTimeLeft] = useState({
@@ -35,6 +36,8 @@ export default function HomePage() {
   const timelineSectionRef = useRef<HTMLElement>(null);
   const sponsorSectionRef = useRef<HTMLElement>(null);
 
+  const session = authClient.useSession()
+  console.log(session)
   useEffect(() => {
     const calculateTimeLeft = () => {
       const targetDate = new Date("2025-10-13T00:00:00").getTime();

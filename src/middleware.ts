@@ -43,7 +43,7 @@ type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
     try {
-        const url = `https://www.valter2025.com`;
+        const url = `https://valter2025.com`;
 
         // const response = await fetch(url, {
         //     headers: {
