@@ -37,7 +37,7 @@ export default function HomePage() {
 
    useEffect(() => {
       const calculateTimeLeft = () => {
-         const targetDate = new Date("2025-10-10T00:00:00").getTime();
+         const targetDate = new Date("2025-10-13T00:00:00").getTime();
          const now = new Date().getTime();
          const difference = targetDate - now;
 
@@ -248,9 +248,9 @@ export default function HomePage() {
                      <Image
                         width={500}
                         height={500}
-                        src="/images/brand-logo.png"
+                        src="/images/hero-logo.png"
                         alt="Brand Logo"
-                        className="w-8 sm:w-12 h-8 sm:h-12"
+                        className="hidden sm:flex w-8 sm:w-20 h-8 sm:h-11"
                      />
                   </div>
 

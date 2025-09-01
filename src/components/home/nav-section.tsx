@@ -98,7 +98,7 @@ export function HomeNavSection({ timeLeft }: Props) {
                         height={500}
                         src="/images/brand-logo.png"
                         alt="Brand Logo"
-                        className="w-12 h-12"
+                        className="w-10 h-10"
                      />
                   </div>
 

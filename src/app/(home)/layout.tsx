@@ -22,7 +22,7 @@ export default function HomeLayout({ children }: Props) {
 
    useEffect(() => {
       const calculateTimeLeft = () => {
-         const targetDate = new Date("2025-10-10T00:00:00").getTime();
+         const targetDate = new Date("2025-10-13T00:00:00").getTime();
          const now = new Date().getTime();
          const difference = targetDate - now;
 
