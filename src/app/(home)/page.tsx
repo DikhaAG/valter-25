@@ -154,7 +154,7 @@ export default function HomePage() {
          href: "/web-design",
       },
       {
-         image: "/images/training.png",
+         image: "/images/logoPelatihan.png",
          title: "Pelatihan",
          description:
             "''Optimalisasi Produksi dan Penyajian Konten Digital Berkelanjutan''",

@@ -14,7 +14,6 @@ import {
 } from "@/server/services/admin/getTotalPeserta";
 import { formatIDRCurrency } from "@/utils/formatIDRCurrency";
 import { useEffect, useState } from "react";
-import { Spinner } from "../ui/nb/Spinner";
 
 export function SectionCards() {
    const [income, setIncome] = useState<number | undefined>();
@@ -53,7 +52,7 @@ export function SectionCards() {
             <CardHeader>
                <CardDescription>Total HTM Masuk</CardDescription>
                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                  {income ? formatIDRCurrency(income) : <Spinner />}
+                  {income ? formatIDRCurrency(income) : 0}
                </CardTitle>
             </CardHeader>
          </Card>
@@ -66,7 +65,7 @@ export function SectionCards() {
                      totalPendaftarTerkonfirmasi +
                      totalPendaftarBelumTerkonfirmasi
                   ) : (
-                     <Spinner />
+0
                   )}
                </CardTitle>
             </CardHeader>
@@ -80,7 +79,7 @@ export function SectionCards() {
                      {totalPendaftarTerkonfirmasi ? (
                         totalPendaftarTerkonfirmasi
                      ) : (
-                        <Spinner />
+0
                      )}
                   </span>
                </Badge>
@@ -93,7 +92,7 @@ export function SectionCards() {
                      {totalPendaftarBelumTerkonfirmasi ? (
                         totalPendaftarBelumTerkonfirmasi
                      ) : (
-                        <Spinner />
+0
                      )}
                   </span>
                </Badge>
