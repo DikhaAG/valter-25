@@ -7,28 +7,53 @@ import { ServerResponseType } from "@/types/server-response";
 import { eq } from "drizzle-orm";
 
 export async function npmCheck(
-   peserta: ParticipantAsMahasiswa
+  peserta: ParticipantAsMahasiswa
 ): Promise<ServerResponseType<unknown>> {
-   try {
-      const res = await db.query.pesertaEsportTable.findFirst({
-         where: eq(pesertaEsportTable.npm, peserta.npm!),
-      });
-      if (res) {
-         return {
-            success: false,
-            message: `NPM ${peserta.npm!} telah terdaftar.`,
-         };
-      }
-   } catch (error) {
+  try {
+    const res = await db.query.pesertaEsportTable.findFirst({
+      where: eq(pesertaEsportTable.npm, peserta.npm!),
+    });
+    if (res) {
       return {
-         success: false,
-         message: "Terjadi kesalahan pada server.",
-         error: error,
-         statusCode: 500,
+        success: false,
+        message: `NPM ${peserta.npm!} telah terdaftar.`,
       };
-   }
-   return {
-      success: true,
-   };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server.",
+      error: error,
+      statusCode: 500,
+    };
+  }
+  return {
+    success: true,
+  };
+}
+export async function cekNpm(
+  npm: string
+): Promise<ServerResponseType<unknown>> {
+  try {
+    const res = await db.query.pesertaEsportTable.findFirst({
+      where: eq(pesertaEsportTable.npm, npm),
+    });
+    if (res) {
+      return {
+        success: false,
+        message: `NPM ${npm} telah terdaftar.`,
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Terjadi kesalahan pada server.",
+      error: error,
+      statusCode: 500,
+    };
+  }
+  return {
+    success: true,
+  };
 }
 
