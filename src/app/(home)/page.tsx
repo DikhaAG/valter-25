@@ -918,9 +918,9 @@ export default function HomePage() {
                               <h3 className="text-[10px] md:text-lg font-bold mb-3 font-glofium text-foreground">
                                  {event.title}
                               </h3>
-                              <p className="text-[8px] md:text-sm text-foreground/70 font-poppins leading-relaxed">
-                                 {event.description}
-                              </p>
+                              {/* <p className="text-[8px] md:text-sm text-foreground/70 font-poppins leading-relaxed"> */}
+                              {/*    {event.description} */}
+                              {/* </p> */}
                            </div>
                         </div>
 
