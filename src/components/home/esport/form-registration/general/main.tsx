@@ -31,6 +31,7 @@ import {
 } from "@/models/esport/registration-form";
 import { idMlCheck } from "@/server/services/esport/id-ml-check";
 import { registration } from "@/server/services/esport/registration";
+import { noWaCheck } from "@/server/services/esport/no-wa-available-check";
 
 export function GeneralForm() {
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
@@ -56,14 +57,25 @@ export function GeneralForm() {
     setLoading(true);
 
     let hasError = false;
+
+    const cekWa = await noWaCheck(data.noWa)
+    if (!cekWa.success) {
+      form.setError('noWa', {
+        type: "validate",
+        message: cekWa.message
+      })
+      hasError = true
+      form.setFocus("noWa")
+    }
     for (const [i, p] of data.peserta.entries()) {
       const cekIdMl = await idMlCheck(p.idML);
       if (!cekIdMl.success) {
         form.setError(`peserta.${i}.idML`, {
-          type: "server",
+          type: "validate",
           message: cekIdMl.message, // Gunakan pesan dari server
         });
         hasError = true;
+        form.setFocus(`peserta.${i}.idML`)
       }
     }
 

@@ -25,8 +25,9 @@ import {
   TeamAsMahasiswa,
 } from "@/models/esport/registration-form";
 import { idMlCheck } from "@/server/services/esport/id-ml-check";
-import { npmCheck } from "@/server/services/video-campaign/npm-available-check";
+import { cekNpm } from "@/server/services/esport/npm-available-check";
 import { registration } from "@/server/services/esport/registration";
+import { noWaCheck } from "@/server/services/esport/no-wa-available-check";
 
 export function MahasiswaForm() {
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
@@ -50,26 +51,37 @@ export function MahasiswaForm() {
   });
 
   async function onSubmit(data: TeamAsMahasiswa) {
+
     setLoading(true);
 
     let hasError = false;
 
-    console.log("===from esport mahasiswa form===")
-    console.log(data.peserta)
+    // CEK WA TIM
+    const cekWa = await noWaCheck(data.noWa)
+    if (!cekWa.success) {
+      form.setError(`noWa`, {
+        type: "validate",
+        message: cekWa.message
+      })
+      form.setFocus("noWa")
+      hasError = true
+    }
+    // ITERASI SETIAP ANGGOTA TIM UNTUK CEK IDML DAN NPM
     for (const [i, p] of data.peserta.entries()) {
       const cekIdMl = await idMlCheck(p.idML);
-      const cekNpm = await npmCheck(p.npm);
+      const cekNpmResult = await cekNpm(p.npm);
       if (!cekIdMl.success) {
         form.setError(`peserta.${i}.idML`, {
           type: "server",
           message: cekIdMl.message, // Gunakan pesan dari server
         });
+        form.setFocus(`peserta.${i}.idML`)
         hasError = true;
       }
-      if (!cekNpm.success) {
+      if (!cekNpmResult.success) {
         form.setError(`peserta.${i}.npm`, {
           type: "server",
-          message: cekNpm.message, // Gunakan pesan dari server
+          message: cekNpmResult.message, // Gunakan pesan dari server
         });
         hasError = true;
       }
