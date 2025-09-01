@@ -43,8 +43,8 @@ type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
     try {
-        const url = `https://www.valter2025.com/api/auth/get-session`;
-        
+        const url = `https://www.valter2025.com`;
+
         // const response = await fetch(url, {
         //     headers: {
         //         cookie: request.headers.get("cookie") || "",
@@ -63,15 +63,15 @@ export async function middleware(request: NextRequest) {
         // // Periksa apakah responseData adalah objek yang valid dan memiliki properti 'data'
         // const session: Session | null = responseData?.data ?? null;
 
-     const { data: session } = await betterFetch<Session>(
-        "/api/auth/get-session",
-        {
-            baseURL: url,
-            headers: {
-                cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
-            },
-        }
-    );
+        const { data: session } = await betterFetch<Session>(
+            "/api/auth/get-session",
+            {
+                baseURL: url,
+                headers: {
+                    cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
+                },
+            }
+        );
         console.log(`clg from middleware +++++++++++++++++++++++`);
         console.log(session);
 
