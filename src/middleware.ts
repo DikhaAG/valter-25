@@ -42,7 +42,7 @@ type Session = typeof auth.$Infer.Session;
 
 export async function middleware(request: NextRequest) {
     try {
-        const url = `${request.nextUrl.origin}/api/auth/get-session`;
+        const url = `https://valter2025.com/api/auth/get-session`;
         
         // Menggunakan fetch API bawaan dengan URL absolut
         const response = await fetch(url, {
