@@ -20,7 +20,7 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ParticipantTable } from "@/models/pelatihan/table";
+import { ParticipantTable } from "@/models/web-design/table";
 import {
    ColumnDef,
    ColumnFiltersState,
@@ -33,13 +33,12 @@ import {
    SortingState,
    useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 import { useState } from "react";
-import { KonfirmasiPendaftaranKelasAlertDialog } from "./konfirmasi-alert-dialog";
-import { HapusPendaftaranKelasAlertDialog } from "./hapus-alert-dialog";
+import { KonfirmasiTimDialog } from "./konfirmasi-alert-dialog";
+import { HapusTimAlertDialog } from "./hapus-alert-dialog";
 import { authClient } from "@/lib/auth-client";
 
-const mahasiswasColumn: ColumnDef<ParticipantTable>[] = [
+const pesertaColumn: ColumnDef<ParticipantTable>[] = [
    {
       accessorKey: "nama",
       header: "Nama",
@@ -48,57 +47,31 @@ const mahasiswasColumn: ColumnDef<ParticipantTable>[] = [
       ),
    },
    {
-      accessorKey: "noWa",
-      header: "Nomor Whatsapp",
+      accessorKey: "npm",
+      header: "NPM",
       cell: ({ row }: { row: Row<ParticipantTable> }) => (
-         <div>{row.original.noWa}</div>
-      ),
-   },
-   {
-      accessorKey: "email",
-      header: "Email",
-      cell: ({ row }: { row: Row<ParticipantTable> }) => (
-         <div className="lowercase">{row.original.email}</div>
-      ),
-   },
-   {
-      accessorKey: "domisili",
-      header: ({ column }) => {
-         return (
-            <Button
-               variant="ghost"
-               onClick={() =>
-                  column.toggleSorting(column.getIsSorted() === "asc")
-               }
-            >
-               Domisili
-               <ArrowUpDown />
-            </Button>
-         );
-      },
-      cell: ({ row }: { row: Row<ParticipantTable> }) => (
-         <div className="capitalize">{row.original.domisili}</div>
+         <div className="lowercase">{row.original.npm}</div>
       ),
    },
 ];
 
-export function KelasTableViewer({
-   kelas,
-   mahasiswas,
-   idKelas,
+export function TimTableViewer({
+   namaTim,
+   peserta,
+   idTim,
    terkonfirmasi,
 }: {
-   kelas: string;
-   mahasiswas: ParticipantTable[];
-   idKelas: string;
+   namaTim: string;
+   peserta: ParticipantTable[];
+   idTim: string;
    terkonfirmasi: boolean;
 }) {
    const [sorting, setSorting] = useState<SortingState>([]);
    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
    const session = authClient.useSession();
    const table = useReactTable({
-      data: mahasiswas,
-      columns: mahasiswasColumn,
+      data: peserta,
+      columns: pesertaColumn,
       getCoreRowModel: getCoreRowModel(),
       getPaginationRowModel: getPaginationRowModel(),
       onSortingChange: setSorting,
@@ -115,19 +88,19 @@ export function KelasTableViewer({
 
    return (
       <div className="">
-         {mahasiswas ? (
+         {peserta ? (
             <Drawer direction={isMobile ? "bottom" : "right"}>
                <DrawerTrigger asChild>
                   <Button
                      variant="link"
                      className="text-foreground w-fit px-0 text-left"
                   >
-                     {kelas}
+                     {namaTim}
                   </Button>
                </DrawerTrigger>
                <DrawerContent>
                   <DrawerHeader className="gap-1">
-                     <DrawerTitle>{kelas}</DrawerTitle>
+                     <DrawerTitle>{namaTim}</DrawerTitle>
                      <DrawerDescription></DrawerDescription>
                      <div className="flex items-center py-4">
                         <Input
@@ -189,7 +162,7 @@ export function KelasTableViewer({
                            ) : (
                               <TableRow>
                                  <TableCell
-                                    colSpan={mahasiswasColumn.length}
+                                    colSpan={pesertaColumn.length}
                                     className="h-24 text-center"
                                  >
                                     No results.
@@ -223,15 +196,11 @@ export function KelasTableViewer({
                         <>
                            {!terkonfirmasi && (
                               <Button asChild>
-                                 <KonfirmasiPendaftaranKelasAlertDialog
-                                    idKelas={idKelas}
-                                 />
+                                 <KonfirmasiTimDialog id={idTim} />
                               </Button>
                            )}
                            <Button asChild>
-                              <HapusPendaftaranKelasAlertDialog
-                                 idKelas={idKelas}
-                              />
+                              <HapusTimAlertDialog id={idTim} />
                            </Button>
                         </>
                      )}

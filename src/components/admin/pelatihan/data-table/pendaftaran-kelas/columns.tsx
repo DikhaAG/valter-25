@@ -73,6 +73,8 @@ export const pendaftaranKelasPelatihanColumns = [
         <KelasTableViewer
           kelas={row.original.kelas}
           mahasiswas={row.original.peserta}
+          idKelas={row.original.id}
+          terkonfirmasi={row.original.statusPembayaran}
         />
       );
     },

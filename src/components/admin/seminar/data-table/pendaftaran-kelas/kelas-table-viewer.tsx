@@ -35,6 +35,9 @@ import {
 } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { useState } from "react";
+import { KonfirmasiPendaftaranKelasAlertDialog } from "./konfirmasi-alert-dialog";
+import { HapusPendaftaranKelasAlertDialog } from "./hapus-alert-dialog";
+import { authClient } from "@/lib/auth-client";
 
 const mahasiswasColumn: ColumnDef<ParticipantTable>[] = [
    {
@@ -82,12 +85,17 @@ const mahasiswasColumn: ColumnDef<ParticipantTable>[] = [
 export function KelasTableViewer({
    kelas,
    mahasiswas,
+   idKelas,
+   terkonfirmasi,
 }: {
    kelas: string;
    mahasiswas: ParticipantTable[];
+   idKelas: string;
+   terkonfirmasi: boolean;
 }) {
    const [sorting, setSorting] = useState<SortingState>([]);
    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+   const session = authClient.useSession();
    const table = useReactTable({
       data: mahasiswas,
       columns: mahasiswasColumn,
@@ -210,10 +218,23 @@ export function KelasTableViewer({
                            Next
                         </Button>
                      </div>
-                     <Button>Submit</Button>
-                     <DrawerClose asChild>
-                        <Button variant="outline">Done</Button>
-                     </DrawerClose>
+                     {(session.data?.user.divisi === "superadmin" ||
+                        session.data?.user.divisi === "bph") && (
+                        <>
+                           {!terkonfirmasi && (
+                              <Button asChild>
+                                 <KonfirmasiPendaftaranKelasAlertDialog
+                                    idKelas={idKelas}
+                                 />
+                              </Button>
+                           )}
+                           <Button asChild>
+                              <HapusPendaftaranKelasAlertDialog
+                                 idKelas={idKelas}
+                              />
+                           </Button>
+                        </>
+                     )}
                   </DrawerFooter>
                </DrawerContent>
             </Drawer>

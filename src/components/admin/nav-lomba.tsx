@@ -19,7 +19,7 @@ export function NavLomba() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href={"/admin/web"}>
+              <Link href={"/admin/esport"}>
                 <Image src={"/images/game.png"} alt="E-sport" height={20} width={20} />
                 <span>E-sport</span>
               </Link>
@@ -29,7 +29,7 @@ export function NavLomba() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href={"/admin/video-design"}>
+              <Link href={"/admin/video-campaign"}>
                 <Image src={"/images/vid.png"} alt="Video Campaign" height={20} width={20} />
                 <span>Video Campaign</span>
               </Link>

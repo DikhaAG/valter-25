@@ -19,6 +19,7 @@ import { eq } from "drizzle-orm";
 import { timWebDesignTable } from "@/server/db/schemas/web-design-schema";
 import { db } from "@/lib/drizzle";
 import { TeamTable } from "@/models/web-design/table";
+import { revalidatePath } from "next/cache";
 
 export async function getTeamById(
    id: string
@@ -37,6 +38,35 @@ export async function getTeamById(
       return {
          success: true,
          message: `Berhasil mengambil data tim. ${emotSuccess}`,
+         data: res,
+      };
+   } catch (error) {
+      return {
+         success: false,
+         message: `Terjadi kesalahan dalam mengambil data tim ${emotError}`,
+         error,
+      };
+   }
+}
+
+export async function getAllTeam({
+   revPath,
+}: {
+   revPath: string;
+}): Promise<ServerResponseType<TeamTable[]>> {
+   try {
+      const res = await db.query.timWebDesignTable.findMany({
+         with: { peserta: true },
+      });
+      if (!res) {
+         return {
+            success: false,
+            message: `Data tim tidak ditemukan ${emotError}`,
+         };
+      }
+      revalidatePath(revPath)
+      return {
+         success: true,
          data: res,
       };
    } catch (error) {

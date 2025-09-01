@@ -1,5 +1,6 @@
 "use server";
 import { db } from "@/lib/drizzle";
+import { timEsportTable } from "@/server/db/schemas/esport-schema";
 import {
    pendaftaranPelatihanKelasTable,
    pesertaPelatihanTable,
@@ -79,6 +80,26 @@ export async function hapusPesertaIndividuPelatihan(
          .delete(pesertaPelatihanTable)
          .where(eq(pesertaPelatihanTable.id, id));
       revalidatePath("/admin/pelatihan");
+
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
+}
+
+export async function hapusTim(
+   id: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      await db
+         .delete(timEsportTable)
+         .where(eq(timEsportTable.id, id));
+      revalidatePath("/admin/esport");
 
       return {
          success: true,

@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { Image } from 'lucide-react';
 
 interface ImageDialogProps {
   imageUrl: string;

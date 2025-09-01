@@ -1,7 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { KelasTableViewer } from "./kelas-table-viewer";
-import { ClassRegistrationTable } from "@/models/seminar/table";
-import { formatIDRCurrency } from "@/utils/formatIDRCurrency";
+import { TimTableViewer } from "./tim-table-viewer";
 import { Button } from "@/components/ui/button";
 import {
    IconCircleCheckFilled,
@@ -19,11 +17,12 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { KonfirmasiPendaftaranKelasAlertDialog } from "./konfirmasi-alert-dialog";
-import { BuktiPembayaranImageDialog } from "../../bukti-pembayaran-dialog";
+import { KonfirmasiTimDialog } from "./konfirmasi-alert-dialog";
+import { BuktiPembayaranImageDialog } from "./bukti-pembayaran-dialog";
 import { formatTimestamp } from "@/utils/format-timestamp";
-import { HapusPendaftaranKelasAlertDialog } from "./hapus-alert-dialog";
+import { HapusTimAlertDialog } from "./hapus-alert-dialog";
 import { authClient } from "@/lib/auth-client";
+import { TeamTable } from "@/models/web-design/table";
 
 // Create a separate component for the drag handle
 export function DragHandle({ id }: { id: string }) {
@@ -46,15 +45,15 @@ export function DragHandle({ id }: { id: string }) {
 }
 
 // Inisialisasi columnHelper dengan tipe data baris
-const columnHelper = createColumnHelper<ClassRegistrationTable>();
+const columnHelper = createColumnHelper<TeamTable>();
 
-export const pendaftaranKelasSeminarColumns = [
+export const timColumns = [
    columnHelper.display({
       id: "drag",
       header: () => null,
-      cell: ({ row }) => <DragHandle id={row.original.id} />,
+      cell: ({ row }) => <DragHandle id={row.original.id!} />,
    }),
-   columnHelper.accessor("kelas", {
+   columnHelper.accessor("namaTim", {
       header: ({ column }) => {
          return (
             <Button
@@ -63,17 +62,17 @@ export const pendaftaranKelasSeminarColumns = [
                   column.toggleSorting(column.getIsSorted() === "asc")
                }
             >
-               Kelas
+               Nama Tim
                <ArrowUpDown />
             </Button>
          );
       },
       cell: ({ row }) => {
          return (
-            <KelasTableViewer
-               kelas={row.original.kelas}
-               mahasiswas={row.original.peserta}
-               idKelas={row.original.id}
+            <TimTableViewer
+               namaTim={row.original.namaTim}
+               peserta={row.original.peserta}
+               idTim={row.original.id!}
                terkonfirmasi={row.original.statusPembayaran}
             />
          );
@@ -114,9 +113,17 @@ export const pendaftaranKelasSeminarColumns = [
          </Badge>
       ),
    }),
-   columnHelper.accessor("nominal", {
-      header: "Nominal Bayar",
-      cell: ({ row }) => <div>{formatIDRCurrency(row.original.nominal)}</div>,
+   columnHelper.accessor("as", {
+      header: "Sebagai",
+      cell: ({ row }) => <div>{row.original.as}</div>,
+   }),
+   columnHelper.accessor("noWa", {
+      header: "WA",
+      cell: ({ row }) => <div>{row.original.noWa}</div>,
+   }),
+   columnHelper.accessor("instansi", {
+      header: "Instansi",
+      cell: ({ row }) => <div>{row.original.instansi}</div>,
    }),
    columnHelper.accessor("createdat", {
       header: "Dibuat",
@@ -126,8 +133,8 @@ export const pendaftaranKelasSeminarColumns = [
       header: "Dikonfirmasi",
       cell: ({ row }) => (
          <div>
-            {row.original.tanggalKonfirmasi
-               ? formatTimestamp(row.original.tanggalKonfirmasi)
+            {(row.original.tanggalKonfirmasi as string)
+               ? formatTimestamp(row.original.tanggalKonfirmasi as string)
                : "-"}
          </div>
       ),
@@ -152,7 +159,7 @@ export const pendaftaranKelasSeminarColumns = [
                   <DropdownMenuItem variant="default" asChild>
                      <BuktiPembayaranImageDialog
                         imageUrl={row.original.buktiPembayaran}
-                        altText={row.original.kelas}
+                        altText={row.original.namaTim}
                      />
                   </DropdownMenuItem>
                   {(session.data?.user.divisi === "superadmin" ||
@@ -161,15 +168,11 @@ export const pendaftaranKelasSeminarColumns = [
                         <DropdownMenuSeparator />
                         {!row.original.statusPembayaran && (
                            <DropdownMenuItem variant="default" asChild>
-                              <KonfirmasiPendaftaranKelasAlertDialog
-                                 idKelas={row.original.id}
-                              />
+                              <KonfirmasiTimDialog id={row.original.id!} />
                            </DropdownMenuItem>
                         )}
                         <DropdownMenuItem variant="default" asChild>
-                           <HapusPendaftaranKelasAlertDialog
-                              idKelas={row.original.id}
-                           />
+                           <HapusTimAlertDialog id={row.original.id!} />
                         </DropdownMenuItem>
                      </>
                   )}
