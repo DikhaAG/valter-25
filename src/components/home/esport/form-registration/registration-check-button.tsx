@@ -85,7 +85,7 @@ export function RegistrationCheckButton() {
             <DialogTrigger asChild>
                <Button
                   variant="outline"
-                  className="flex w-full max-w-lg  justify-self-center gap-0"
+                  className="flex w-full max-w-lg items-center  justify-self-center gap-0"
                >
                   Cek status pendaftaran
                </Button>
