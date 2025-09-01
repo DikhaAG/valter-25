@@ -1,7 +1,7 @@
 // import { NextRequest, NextResponse } from "next/server";
 // import { auth } from "@/lib/auth";
-// import { betterFetch } from "@better-fetch/fetch";
-//
+import { betterFetch } from "@better-fetch/fetch";
+
 // type Session = typeof auth.$Infer.Session;
 //
 // export async function middleware(request: NextRequest) {
@@ -45,24 +45,33 @@ export async function middleware(request: NextRequest) {
     try {
         const url = `https://www.valter2025.com/api/auth/get-session`;
         
-        const response = await fetch(url, {
+        // const response = await fetch(url, {
+        //     headers: {
+        //         cookie: request.headers.get("cookie") || "",
+        //     },
+        // });
+        //
+        // // Periksa apakah respons berhasil. Jika tidak, redirect.
+        // if (!response.ok) {
+        //     console.error("Failed to fetch session:", response.status);
+        //     return NextResponse.redirect(new URL("/", request.url));
+        // }
+        //
+        // // Baca respons sebagai JSON. Tambahkan pengecekan null sebelum destructuring.
+        // const responseData = await response.json();
+        //
+        // // Periksa apakah responseData adalah objek yang valid dan memiliki properti 'data'
+        // const session: Session | null = responseData?.data ?? null;
+
+     const { data: session } = await betterFetch<Session>(
+        "/api/auth/get-session",
+        {
+            baseURL: url,
             headers: {
-                cookie: request.headers.get("cookie") || "",
+                cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
             },
-        });
-
-        // Periksa apakah respons berhasil. Jika tidak, redirect.
-        if (!response.ok) {
-            console.error("Failed to fetch session:", response.status);
-            return NextResponse.redirect(new URL("/", request.url));
         }
-
-        // Baca respons sebagai JSON. Tambahkan pengecekan null sebelum destructuring.
-        const responseData = await response.json();
-        
-        // Periksa apakah responseData adalah objek yang valid dan memiliki properti 'data'
-        const session: Session | null = responseData?.data ?? null;
-
+    );
         console.log(`clg from middleware +++++++++++++++++++++++`);
         console.log(session);
 
