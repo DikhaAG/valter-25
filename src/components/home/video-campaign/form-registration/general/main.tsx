@@ -28,6 +28,7 @@ import {
   TeamAsGeneral,
 } from "@/models/video-campaign/registration-form";
 import { registration } from "@/server/services/video-campaign/registration";
+import { noWaCheck } from "@/server/services/video-campaign/no-wa-available-check";
 
 export function GeneralForm() {
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
@@ -51,6 +52,23 @@ export function GeneralForm() {
 
   async function onSubmit(data: TeamAsGeneral) {
     setLoading(true);
+
+    let hasError = false
+
+    const cekWa = await noWaCheck(data.noWa)
+    if (!cekWa.success) {
+      form.setError("noWa", {
+        type: "validate"
+        , message: cekWa.message
+      })
+      form.setFocus("noWa")
+      hasError = true
+    }
+
+    if (hasError) {
+      setLoading(false)
+      return
+    }
 
     const res = await registration({ data });
     if (!res.success) {
