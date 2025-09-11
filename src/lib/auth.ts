@@ -16,7 +16,7 @@ import { pelatihanSchema } from "@/server/db/schemas/pelatihan";
 import { pelatihanRelation } from "@/server/db/relations/pelatihan";
 import { authSchema } from "@/server/db/schemas/auth-schema";
 import { historySchema } from "@/server/db/schemas/history";
-import { admin } from "better-auth/plugins/admin";
+import { admin } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
 import { customSession } from "better-auth/plugins";
 import { getUserDivisi, getUserRole } from "@/server/services/admin/queries/user";
