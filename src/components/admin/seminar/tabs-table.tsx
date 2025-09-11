@@ -22,6 +22,12 @@ export function SeminarTabsTable() {
     number | undefined
   >();
   const [totalPeserta, setTotalPeserta] = useState<number | undefined>();
+  const [activeTab, setActiveTab] = useState<string>("kelas");
+
+  function tabsValueHandleOnChange(value: string) {
+    setActiveTab(value);
+  }
+
   useEffect(() => {
     getTotalPendaftaranKelasSeminar().then((res) =>
       res.success
@@ -32,13 +38,23 @@ export function SeminarTabsTable() {
       res.success ? setTotalPeserta(res.data!) : setTotalPeserta(0),
     );
   }, []);
+
   return (
-    <Tabs defaultValue="kelas" className="w-full flex-col justify-start gap-6">
+    <Tabs
+      defaultValue={activeTab}
+      value={activeTab}
+      onValueChange={tabsValueHandleOnChange}
+      className="w-full flex-col justify-start gap-6"
+    >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
           View
         </Label>
-        <Select defaultValue="kelas">
+        <Select
+          defaultValue={activeTab}
+          onValueChange={tabsValueHandleOnChange}
+          value={activeTab}
+        >
           <SelectTrigger
             className="flex w-fit @4xl/main:hidden"
             size="sm"
