@@ -36,8 +36,8 @@ export default function HomePage() {
   const timelineSectionRef = useRef<HTMLElement>(null);
   const sponsorSectionRef = useRef<HTMLElement>(null);
 
-  const session = authClient.useSession()
-  console.log(session)
+  const session = authClient.useSession();
+  console.log(session);
   useEffect(() => {
     const calculateTimeLeft = () => {
       const targetDate = new Date("2025-10-13T00:00:00").getTime();
@@ -47,10 +47,10 @@ export default function HomePage() {
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
         );
         const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
+          (difference % (1000 * 60 * 60)) / (1000 * 60),
         );
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
@@ -110,7 +110,7 @@ export default function HomePage() {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (aboutSectionRef.current) {
@@ -184,7 +184,7 @@ export default function HomePage() {
 
   const prevActivity = () => {
     setCurrentActivityIndex(
-      (prev) => (prev - 1 + activities.length) % activities.length
+      (prev) => (prev - 1 + activities.length) % activities.length,
     );
   };
 
@@ -204,8 +204,9 @@ export default function HomePage() {
     //         -currentActivityIndex * baseItemWidth.desktop;
 
     // Return responsive transform using CSS custom properties approach
-    return `translateX(calc(${mobileOffset}px + 50% - ${baseItemWidth.mobile / 2
-      }px))`;
+    return `translateX(calc(${mobileOffset}px + 50% - ${
+      baseItemWidth.mobile / 2
+    }px))`;
   };
 
   const timelineEvents = [
@@ -228,7 +229,7 @@ export default function HomePage() {
       //    "Pada pelaksanaan dan presentasi, ...",
     },
     {
-      date: "Rabu, 28 Oktober 2025",
+      date: "Rabu, 27 Oktober 2025",
       title: "Presentasi Lomba Video Campaign",
       // description:
       //    "...",
@@ -239,16 +240,14 @@ export default function HomePage() {
       // description:
       //    "...",
     },
-
   ];
 
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden font-glofium-demo">
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-primary/90 backdrop-blur-[3px]"
-          : "bg-transparent"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? "bg-primary/90 backdrop-blur-[3px]" : "bg-transparent"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -360,16 +359,18 @@ export default function HomePage() {
 
       <section
         ref={aboutSectionRef}
-        className={`min-h-screen bg-background flex flex-col items-center justify-center px-4 py-20 relative transition-all duration-1000 ease-out z-20 ${showAboutSection
-          ? "opacity-100 transform translate-y-0"
-          : "opacity-0 transform translate-y-10"
-          }`}
+        className={`min-h-screen bg-background flex flex-col items-center justify-center px-4 py-20 relative transition-all duration-1000 ease-out z-20 ${
+          showAboutSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+        }`}
       >
         <div
-          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-50 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${showTopHand
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform -translate-y-20"
-            }`}
+          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-50 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${
+            showTopHand
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform -translate-y-20"
+          }`}
           style={{
             animation: showTopHand ? "fallBounce 1s ease-out" : "none",
           }}
@@ -384,14 +385,13 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`absolute -bottom-10 sm:-bottom-40 -left-50 sm:-left-70 z-100 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${showBottomHand
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-20"
-            }`}
+          className={`absolute -bottom-10 sm:-bottom-40 -left-50 sm:-left-70 z-100 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${
+            showBottomHand
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-20"
+          }`}
           style={{
-            animation: showBottomHand
-              ? "throwUpBounce 1s ease-out"
-              : "none",
+            animation: showBottomHand ? "throwUpBounce 1s ease-out" : "none",
           }}
         >
           <Image
@@ -404,10 +404,11 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`max-w-sm sm:max-w-md md:max-w-xl lg:max-w-4xl mx-auto text-center lg:pt-20 transition-all duration-1000 delay-300 ease-out ${showAboutSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-            }`}
+          className={`max-w-sm sm:max-w-md md:max-w-xl lg:max-w-4xl mx-auto text-center lg:pt-20 transition-all duration-1000 delay-300 ease-out ${
+            showAboutSection
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-10"
+          }`}
         >
           <h2 className="text-[15px] lg:text-[28px] font-bold mb-5 font-glofium text-start">
             <span className="text-foreground">Apa itu </span>
@@ -421,34 +422,33 @@ export default function HomePage() {
             <strong className="text-secondary font-glofium-demo font-[900]">
               VALTER
             </strong>{" "}
-            Festival Multimedia & Komputer merupakan salah satu event
-            tahunan HMJ TEKNIK KOMPUTER POLITEKNIK NEGERI SRIWIJAYA .
-            Tahun ini,{" "}
+            Festival Multimedia & Komputer merupakan salah satu event tahunan
+            HMJ TEKNIK KOMPUTER POLITEKNIK NEGERI SRIWIJAYA . Tahun ini,{" "}
             <strong className="text-secondary font-glofium-demo font-[900]">
               VALTER
             </strong>{" "}
-            hadir lebih dekat dengan dunia content creator dengan
-            mengusung tema <br className="sm:hidden" />
+            hadir lebih dekat dengan dunia content creator dengan mengusung tema{" "}
+            <br className="sm:hidden" />
             <strong className="text-[10px] lg:text-sm font-glofium-demo font-[900]">
               {wrapSymbols(
                 `Creative Synergy : “ Kreativitas Berdaya bersama Teknologi “ `,
-                "text-[14px] lg:text-2xl"
+                "text-[14px] lg:text-2xl",
               )}
             </strong>{" "}
             .
             <br className="sm:hidden" />
             Disini rangkaian acara seru siap menemani kamu! Mulai dari
-            pelatihan, 3 kompetisi digital, hingga seminar inspiratif
-            sebagai acara puncak! Saatnya wujudkan ide kreatifmu,
-            kolaborasikan dengan teknologi, dan jadilah bagian dari energi
-            baru di dunia digital! <br className="block lg:hidden" />
+            pelatihan, 3 kompetisi digital, hingga seminar inspiratif sebagai
+            acara puncak! Saatnya wujudkan ide kreatifmu, kolaborasikan dengan
+            teknologi, dan jadilah bagian dari energi baru di dunia digital!{" "}
+            <br className="block lg:hidden" />
             <strong className="text-secondary font-glofium-demo font-[900]">
               VALTER 2025
             </strong>{" "}
             <strong className="font-[200] font-glofium-demo">
               {wrapSymbols(
                 `- Imajinasi Ciptakan Inovasi !`,
-                "text-lg lg:text-4xl"
+                "text-lg lg:text-4xl",
               )}
             </strong>
           </p>
@@ -459,13 +459,9 @@ export default function HomePage() {
             </div>
             <h3 className="text-white text-[13px] lg:text-[20px] font-bold font-glofium leading-tight pb-4 lg:pb-0 lg:mb-6">
               Creative synergy
-              <span className="font-funky-vibes lg:text-[30px]">
-                : &quot;
-              </span>
+              <span className="font-funky-vibes lg:text-[30px]">: &quot;</span>
               Kreativitas Berdaya bersama Teknologi{" "}
-              <span className="font-funky-vibes lg:text-[30px]">
-                &quot;
-              </span>
+              <span className="font-funky-vibes lg:text-[30px]">&quot;</span>
             </h3>
           </div>
         </div>
@@ -473,16 +469,18 @@ export default function HomePage() {
 
       <section
         ref={guestSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 z-10 transition-all duration-1000 ease-out ${showGuestSection
-          ? "opacity-100 transform translate-y-0"
-          : "opacity-0 transform translate-y-10"
-          }`}
-      >
-        <div
-          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${showGuestSection
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 z-10 transition-all duration-1000 ease-out ${
+          showGuestSection
             ? "opacity-100 transform translate-y-0"
             : "opacity-0 transform translate-y-10"
-            }`}
+        }`}
+      >
+        <div
+          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${
+            showGuestSection
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-10"
+          }`}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div className="flex lg:hidden justify-center lg:justify-end">
@@ -555,23 +553,20 @@ export default function HomePage() {
             <div className="space-y-2 sm:space-y-8">
               <h2 className="text-center sm:text-[28px] font-bold font-glofium text-secondary">
                 Co
-                <span className="font-funky-vibes text-2xl md:text-5xl">
-                  -
-                </span>
+                <span className="font-funky-vibes text-2xl md:text-5xl">-</span>
                 Create or Compete
               </h2>
 
               <p className="text-foreground text-[12px] sm:text-[15px] leading-relaxed font-poppins">
-                Seminar VALTER 2025 hadir sebagai acara puncak dari
-                Festival Multimedia dan Komputer (VALTER)! Dengan
-                mengusung tema “CoCreate or Compete: Kolaborasi atau
-                Kompetisi bersama AI”, seminar ini menjadi momen spesial
-                yang menghadirkan Kevin Anggara, content creator dan
-                penulis muda sebagai GUEST STAR inspiratif untuk berbagi
-                pengalaman dan insight terbaru. Seminar ini menggali
-                bagaimana kreativitas, teknologi, dan AI dapat berjalan
-                berdampingan, sekaligus menjadi tantangan di era digital
-                dan content creation
+                Seminar VALTER 2025 hadir sebagai acara puncak dari Festival
+                Multimedia dan Komputer (VALTER)! Dengan mengusung tema
+                “CoCreate or Compete: Kolaborasi atau Kompetisi bersama AI”,
+                seminar ini menjadi momen spesial yang menghadirkan Kevin
+                Anggara, content creator dan penulis muda sebagai GUEST STAR
+                inspiratif untuk berbagi pengalaman dan insight terbaru. Seminar
+                ini menggali bagaimana kreativitas, teknologi, dan AI dapat
+                berjalan berdampingan, sekaligus menjadi tantangan di era
+                digital dan content creation
               </p>
 
               <div className="my-4"></div>
@@ -638,16 +633,18 @@ export default function HomePage() {
 
       <section
         ref={trailerSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${showTrailerSection
-          ? "opacity-100 transform translate-y-0"
-          : "opacity-0 transform translate-y-10"
-          }`}
-      >
-        <div
-          className={`w-full text-center transition-all duration-1000 delay-200 ease-out ${showTrailerSection
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
+          showTrailerSection
             ? "opacity-100 transform translate-y-0"
             : "opacity-0 transform translate-y-10"
-            }`}
+        }`}
+      >
+        <div
+          className={`w-full text-center transition-all duration-1000 delay-200 ease-out ${
+            showTrailerSection
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-10"
+          }`}
         >
           <div
             className="relative cursor-pointer group w-full"
@@ -689,16 +686,18 @@ export default function HomePage() {
       <section
         id="activity-section"
         ref={activitySectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${showActivitySection
-          ? "opacity-100 transform translate-y-0"
-          : "opacity-0 transform translate-y-10"
-          }`}
-      >
-        <div
-          className={` max-w-8xl lg:max-w-[1200px] mx-auto text-center transition-all duration-1000 delay-200 ease-out ${showActivitySection
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
+          showActivitySection
             ? "opacity-100 transform translate-y-0"
             : "opacity-0 transform translate-y-10"
-            }`}
+        }`}
+      >
+        <div
+          className={` max-w-8xl lg:max-w-[1200px] mx-auto text-center transition-all duration-1000 delay-200 ease-out ${
+            showActivitySection
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-10"
+          }`}
         >
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 lg:mb-16 font-glofium">
             <span className="text-foreground">Kegiatan </span>
@@ -740,18 +739,21 @@ export default function HomePage() {
                   return (
                     <div
                       key={`activity-${index}`}
-                      className={`${index === activities.length - 1 && isCenter
-                        ? "ml-20"
-                        : "ml-0"
-                        } ${index === activities.length - 2 && isCenter
+                      className={`${
+                        index === activities.length - 1 && isCenter
+                          ? "ml-20"
+                          : "ml-0"
+                      } ${
+                        index === activities.length - 2 && isCenter
                           ? "ml-10"
                           : "ml-0"
-                        } md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${isCenter
+                      } md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${
+                        isCenter
                           ? "transform scale-110 sm:scale-125 md:scale-130 lg:scale-140 xl:scale-150 z-10 opacity-100"
                           : isAdjacent
                             ? "transform scale-75 sm:scale-80 md:scale-85 lg:scale-90 xl:scale-95 opacity-60 hover:opacity-80"
                             : "transform scale-60 sm:scale-65 md:scale-70 lg:scale-75 xl:scale-80 opacity-30"
-                        }`}
+                      }`}
                       style={{
                         width: isCenter
                           ? "clamp(120px, 20vw, 200px)"
@@ -761,17 +763,15 @@ export default function HomePage() {
                       }}
                     >
                       <div
-                        className={`relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isCenter
-                          ? "drop-shadow-2xl"
-                          : isAdjacent
-                            ? "drop-shadow-md"
-                            : "drop-shadow-sm"
-                          }`}
+                        className={`relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                          isCenter
+                            ? "drop-shadow-2xl"
+                            : isAdjacent
+                              ? "drop-shadow-md"
+                              : "drop-shadow-sm"
+                        }`}
                       >
-                        <Link
-                          href={activity.href}
-                          className="cursor-pointer"
-                        >
+                        <Link href={activity.href} className="cursor-pointer">
                           <Image
                             width={200}
                             height={200}
@@ -781,22 +781,24 @@ export default function HomePage() {
                               "/placeholder.svg"
                             }
                             alt={activity.title}
-                            className={`object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isCenter
-                              ? "w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 xl:w-52 xl:h-52"
-                              : isAdjacent
-                                ? "w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 lg:w-26 lg:h-26 xl:w-30 xl:h-30"
-                                : "w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 lg:w-22 lg:h-22 xl:w-26 xl:h-26"
-                              }`}
+                            className={`object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                              isCenter
+                                ? "w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 xl:w-52 xl:h-52"
+                                : isAdjacent
+                                  ? "w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 lg:w-26 lg:h-26 xl:w-30 xl:h-30"
+                                  : "w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 lg:w-22 lg:h-22 xl:w-26 xl:h-26"
+                            }`}
                           />
                         </Link>
                       </div>
                       <div
-                        className={`mt-2 sm:mt-3 md:mt-4 lg:mt-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${isCenter
-                          ? "opacity-100 translate-y-0 scale-100"
-                          : isAdjacent
-                            ? "opacity-70 translate-y-1 scale-95"
-                            : "opacity-50 translate-y-2 scale-90"
-                          } flex flex-col justify-start items-center text-center`}
+                        className={`mt-2 sm:mt-3 md:mt-4 lg:mt-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${
+                          isCenter
+                            ? "opacity-100 translate-y-0 scale-100"
+                            : isAdjacent
+                              ? "opacity-70 translate-y-1 scale-95"
+                              : "opacity-50 translate-y-2 scale-90"
+                        } flex flex-col justify-start items-center text-center`}
                         style={{
                           width: "100%",
                           maxWidth: isCenter
@@ -807,22 +809,24 @@ export default function HomePage() {
                         }}
                       >
                         <h3
-                          className={`font-bold font-funky-vibes text-foreground transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${isCenter
-                            ? "text-md sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"
-                            : isAdjacent
-                              ? "text-sm sm:text-md md:text-lg lg:text-xl xl:text-xl"
-                              : "text-[12px] sm:text-sm md:text-base lg:text-md xl:text-xl"
-                            } mb-1`}
+                          className={`font-bold font-funky-vibes text-foreground transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${
+                            isCenter
+                              ? "text-md sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"
+                              : isAdjacent
+                                ? "text-sm sm:text-md md:text-lg lg:text-xl xl:text-xl"
+                                : "text-[12px] sm:text-sm md:text-base lg:text-md xl:text-xl"
+                          } mb-1`}
                         >
                           {activity.title}
                         </h3>
                         <p
-                          className={`font-poppins text-foreground/70 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${isCenter
-                            ? "text-[10px] sm:text-base md:text-md lg:text-xl xl:text-[14px]"
-                            : isAdjacent
-                              ? "text-[8px] sm:text-sm md:text-base lg:text-md xl:text-[10px]"
-                              : "text-[8px] sm:text-[10px] md:text-xs lg:text-sm xl:text-[6px]"
-                            }`}
+                          className={`font-poppins text-foreground/70 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${
+                            isCenter
+                              ? "text-[10px] sm:text-base md:text-md lg:text-xl xl:text-[14px]"
+                              : isAdjacent
+                                ? "text-[8px] sm:text-sm md:text-base lg:text-md xl:text-[10px]"
+                                : "text-[8px] sm:text-[10px] md:text-xs lg:text-sm xl:text-[6px]"
+                          }`}
                         >
                           {activity.description}
                         </p>
@@ -854,16 +858,18 @@ export default function HomePage() {
       <section
         id="timeline-section"
         ref={timelineSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${showTimelineSection
-          ? "opacity-100 transform translate-y-0"
-          : "opacity-0 transform translate-y-10"
-          }`}
-      >
-        <div
-          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${showTimelineSection
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
+          showTimelineSection
             ? "opacity-100 transform translate-y-0"
             : "opacity-0 transform translate-y-10"
-            }`}
+        }`}
+      >
+        <div
+          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${
+            showTimelineSection
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-10"
+          }`}
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 font-glofium text-foreground">
             Timeline
@@ -877,18 +883,18 @@ export default function HomePage() {
             {timelineEvents.map((event, index) => (
               <div
                 key={index}
-                className={`relative flex items-center mb-16 ${index % 2 === 0 ? "flex-row-reverse" : "flex-row"
-                  }`}
+                className={`relative flex items-center mb-16 ${
+                  index % 2 === 0 ? "flex-row-reverse" : "flex-row"
+                }`}
               >
                 {/* Timeline dot */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full z-10"></div>
 
                 {/* Content */}
                 <div
-                  className={` w-5/12 ${index % 2 === 0
-                    ? "text-right sm:pr-8"
-                    : "text-left sm:pl-8"
-                    }`}
+                  className={` w-5/12 ${
+                    index % 2 === 0 ? "text-right sm:pr-8" : "text-left sm:pl-8"
+                  }`}
                 >
                   <div className="bg-primary/10 rounded-lg p-4 shadow-sm">
                     <div className="text-primary text-[10px] md:text-sm font-medium mb-2 font-poppins">
@@ -918,16 +924,18 @@ export default function HomePage() {
       {/* SPONSOR SECTION */}
       <section
         ref={sponsorSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 md:py-20 relative transition-all duration-1000 ease-out ${showSponsorSection
-          ? "opacity-100 transform translate-y-0"
-          : "opacity-0 transform translate-y-10"
-          }`}
+        className={`min-h-screen bg-background flex items-center justify-center px-4 md:py-20 relative transition-all duration-1000 ease-out ${
+          showSponsorSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+        }`}
       >
         <div
-          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-100 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${showTopHand
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform -translate-y-20"
-            }`}
+          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-100 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${
+            showTopHand
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform -translate-y-20"
+          }`}
           style={{
             animation: showTopHand ? "fallBounce 1s ease-out" : "none",
           }}
@@ -942,14 +950,13 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`absolute -bottom-20 sm:-bottom-30 -left-50 sm:-left-70 z-50 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${showBottomHand
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-20"
-            }`}
+          className={`absolute -bottom-20 sm:-bottom-30 -left-50 sm:-left-70 z-50 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${
+            showBottomHand
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-20"
+          }`}
           style={{
-            animation: showBottomHand
-              ? "throwUpBounce 1s ease-out"
-              : "none",
+            animation: showBottomHand ? "throwUpBounce 1s ease-out" : "none",
           }}
         >
           <Image
@@ -972,10 +979,11 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`max-w-6xl mx-auto transition-all duration-1000 delay-200 ease-out ${showSponsorSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-            }`}
+          className={`max-w-6xl mx-auto transition-all duration-1000 delay-200 ease-out ${
+            showSponsorSection
+              ? "opacity-100 transform translate-y-0"
+              : "opacity-0 transform translate-y-10"
+          }`}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Telephone illustration */}
@@ -1045,7 +1053,9 @@ export default function HomePage() {
             {/* Content */}
             <div className="text-center lg:text-left space-y-6">
               <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold font-glofium">
-                <span className="text-foreground text-3xl sm:text-5xl md:text-6xl">Open</span>
+                <span className="text-foreground text-3xl sm:text-5xl md:text-6xl">
+                  Open
+                </span>
                 <br />
                 <span className="text-pink-600">
                   Sponsorship
@@ -1091,9 +1101,8 @@ export default function HomePage() {
               className="w-48 h-auto mx-auto mb-6"
             />
             <p className="text-white/80 font-poppins max-w-2xl mx-auto text-xs sm:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
 
@@ -1157,8 +1166,8 @@ export default function HomePage() {
                 <li>
                   <strong className="font-[900] mr-2">Alamat:</strong>
                   <span className="text-sm">
-                    Kesekretariatan HMJ Teknik Komputer, Politeknik
-                    Negeri Sriwijaya
+                    Kesekretariatan HMJ Teknik Komputer, Politeknik Negeri
+                    Sriwijaya
                   </span>
                 </li>
               </ul>
@@ -1185,8 +1194,7 @@ export default function HomePage() {
           <div className="border-t border-white/20 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-white/60 font-poppins text-xs sm:text-sm mb-4 md:mb-0">
-                Creative Synergy: “Kreativitas Berdaya bersama
-                Teknologi”
+                Creative Synergy: “Kreativitas Berdaya bersama Teknologi”
               </p>
               <p className="text-white/60 font-poppins text-xs sm:text-sm">
                 © Valter 2025. All Rights Reserved.
@@ -1197,128 +1205,128 @@ export default function HomePage() {
       </footer>
 
       <style jsx>{`
-            @keyframes fallBounce {
-               0% {
-                  transform: translateY(-100px);
-                  opacity: 0;
-               }
-               60% {
-                  transform: translateY(10px);
-                  opacity: 1;
-               }
-               80% {
-                  transform: translateY(-5px);
-               }
-               100% {
-                  transform: translateY(0);
-                  opacity: 1;
-               }
-            }
+        @keyframes fallBounce {
+          0% {
+            transform: translateY(-100px);
+            opacity: 0;
+          }
+          60% {
+            transform: translateY(10px);
+            opacity: 1;
+          }
+          80% {
+            transform: translateY(-5px);
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
 
-            @keyframes throwUpBounce {
-               0% {
-                  transform: translateY(100px);
-                  opacity: 0;
-               }
-               60% {
-                  transform: translateY(-10px);
-                  opacity: 1;
-               }
-               80% {
-                  transform: translateY(5px);
-               }
-               100% {
-                  transform: translateY(0);
-                  opacity: 1;
-               }
-            }
+        @keyframes throwUpBounce {
+          0% {
+            transform: translateY(100px);
+            opacity: 0;
+          }
+          60% {
+            transform: translateY(-10px);
+            opacity: 1;
+          }
+          80% {
+            transform: translateY(5px);
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
 
-            @keyframes slideInCenter {
-               0% {
-                  transform: scale(0.75) translateX(0) translateY(10px);
-                  opacity: 0.6;
-               }
-               50% {
-                  transform: scale(1.05) translateX(0) translateY(-5px);
-                  opacity: 0.95;
-               }
-               100% {
-                  transform: scale(1.1) translateX(0) translateY(0);
-                  opacity: 1;
-               }
-            }
+        @keyframes slideInCenter {
+          0% {
+            transform: scale(0.75) translateX(0) translateY(10px);
+            opacity: 0.6;
+          }
+          50% {
+            transform: scale(1.05) translateX(0) translateY(-5px);
+            opacity: 0.95;
+          }
+          100% {
+            transform: scale(1.1) translateX(0) translateY(0);
+            opacity: 1;
+          }
+        }
 
-            @keyframes slideInLeft {
-               0% {
-                  transform: scale(1.1) translateX(20px) translateY(-10px);
-                  opacity: 1;
-               }
-               50% {
-                  transform: scale(0.85) translateX(-10px) translateY(5px);
-                  opacity: 0.7;
-               }
-               100% {
-                  transform: scale(0.75) translateX(-4px) translateY(0);
-                  opacity: 0.6;
-               }
-            }
+        @keyframes slideInLeft {
+          0% {
+            transform: scale(1.1) translateX(20px) translateY(-10px);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(0.85) translateX(-10px) translateY(5px);
+            opacity: 0.7;
+          }
+          100% {
+            transform: scale(0.75) translateX(-4px) translateY(0);
+            opacity: 0.6;
+          }
+        }
 
-            @keyframes slideInRight {
-               0% {
-                  transform: scale(1.1) translateX(-20px) translateY(-10px);
-                  opacity: 1;
-               }
-               50% {
-                  transform: scale(0.85) translateX(10px) translateY(5px);
-                  opacity: 0.7;
-               }
-               100% {
-                  transform: scale(0.75) translateX(4px) translateY(0);
-                  opacity: 0.6;
-               }
-            }
+        @keyframes slideInRight {
+          0% {
+            transform: scale(1.1) translateX(-20px) translateY(-10px);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(0.85) translateX(10px) translateY(5px);
+            opacity: 0.7;
+          }
+          100% {
+            transform: scale(0.75) translateX(4px) translateY(0);
+            opacity: 0.6;
+          }
+        }
 
-            .line-clamp-2 {
-               display: -webkit-box;
-               -webkit-line-clamp: 2;
-               -webkit-box-orient: vertical;
-               overflow: hidden;
-            }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
 
-            @media (min-width: 640px) {
-               @keyframes slideInCenter {
-                  0% {
-                     transform: scale(0.8) translateY(8px);
-                     opacity: 0.7;
-                  }
-                  50% {
-                     transform: scale(1.15) translateY(-3px);
-                     opacity: 0.95;
-                  }
-                  100% {
-                     transform: scale(1.1) translateY(0);
-                     opacity: 1;
-                  }
-               }
+        @media (min-width: 640px) {
+          @keyframes slideInCenter {
+            0% {
+              transform: scale(0.8) translateY(8px);
+              opacity: 0.7;
             }
+            50% {
+              transform: scale(1.15) translateY(-3px);
+              opacity: 0.95;
+            }
+            100% {
+              transform: scale(1.1) translateY(0);
+              opacity: 1;
+            }
+          }
+        }
 
-            @media (min-width: 1025px) {
-               @keyframes slideInCenter {
-                  0% {
-                     transform: scale(0.7) translateY(12px);
-                     opacity: 0.6;
-                  }
-                  50% {
-                     transform: scale(1.55) translateY(-8px);
-                     opacity: 0.9;
-                  }
-                  100% {
-                     transform: scale(1.5) translateY(0);
-                     opacity: 1;
-                  }
-               }
+        @media (min-width: 1025px) {
+          @keyframes slideInCenter {
+            0% {
+              transform: scale(0.7) translateY(12px);
+              opacity: 0.6;
             }
-         `}</style>
+            50% {
+              transform: scale(1.55) translateY(-8px);
+              opacity: 0.9;
+            }
+            100% {
+              transform: scale(1.5) translateY(0);
+              opacity: 1;
+            }
+          }
+        }
+      `}</style>
       <WhatsappContactButton
         phoneNumber="6285353612531" // Ganti dengan nomor kontak Anda
         contactName="Ica"
