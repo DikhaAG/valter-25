@@ -29,7 +29,6 @@ import { individualRegistration } from "@/server/services/seminar/individual-reg
 import DomisiliSelector from "../domisili-selector";
 import { KABUPATEN_KOTA_INDONESIA } from "@/data/kabupaten-kote-indonesia";
 import { exportPesertaToExcel } from "@/server/services/seminar/export-peserta-to-excel";
-import { ParticipantTable } from "@/models/esport/table";
 export function MahasiswaForm({
    handleTabsValue,
 }: {
