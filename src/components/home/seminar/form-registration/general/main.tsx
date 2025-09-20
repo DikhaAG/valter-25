@@ -18,7 +18,6 @@ import {
    FormLabel,
    FormControl,
    FormMessage,
-   FormDescription,
 } from "@/components/ui/form";
 import { Spinner } from "@/components/ui/nb/Spinner";
 import { UploadBuktiPembayaranField } from "../upload-bukti-pembayaran-field";
@@ -52,18 +51,18 @@ export function GeneralForm() {
       if (!res.success) {
          CustomToast({
             variant: "error",
-            message: `${res.message} 😂💀`,
+            message: `${res.message}`,
          });
          return;
       } else {
          CustomToast({
             variant: "success",
-            message: `Berhasil melakukan pendaftaran 😂. Tunggu admin untuk konfirmasi 😘`,
+            message: `Berhasil melakukan pendaftaran. Tunggu admin untuk konfirmasi`,
          });
+         exportPesertaToExcel({ data: res.data! });
          form.reset();
          sessionStorage.setItem("registrationId", res.data!.id!);
          sessionStorage.setItem("metodeDaftar", "individu");
-         exportPesertaToExcel({ data: res.data! });
          router.push("/seminar/detail-pendaftaran");
       }
    }

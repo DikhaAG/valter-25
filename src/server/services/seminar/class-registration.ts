@@ -5,98 +5,105 @@ import { isUniqueConstraintViolationError } from "@/utils/is-unique-constraint-e
 import { DrizzleQueryError, eq } from "drizzle-orm";
 import { ServerResponseType } from "@/types/server-response";
 import {
-    pendaftaranSeminarKelasTable,
-    pesertaSeminarTable,
+   pendaftaranSeminarKelasTable,
+   pesertaSeminarTable,
 } from "@/server/db/schemas/seminar-schema";
 import {
-    classRegstrationSchema,
-    ClassRegstrationSchema,
+   classRegstrationSchema,
+   ClassRegstrationSchema,
 } from "@/models/seminar/registration-form";
 import { uploadToCloudinary } from "@/server/services/upload-to-cloudinary";
 import { db } from "@/lib/drizzle";
-import { ParticipantTable } from "@/models/seminar/table";
+import {
+   ClassRegistrationTable,
+   ParticipantTable,
+} from "@/models/seminar/table";
 import { getCurrentPostgresTimestamp } from "@/utils/get-current-postgres-timestamp";
+import { getClassRegistrationById } from "@/server/actions/queries/seminar";
 
 export async function classRegistration({
-    data,
+   data,
 }: {
-    data: ClassRegstrationSchema;
-}): Promise<ServerResponseType<{ registrationId: string; kelas: string }>> {
-    const result = await classRegstrationSchema.parseAsync(data);
+   data: ClassRegstrationSchema;
+}): Promise<ServerResponseType<ClassRegistrationTable>> {
+   const result = await classRegstrationSchema.parseAsync(data);
 
-    if (!result) {
-        return {
-            success: false,
-            message: "Data yang diberikan tidak valid!.",
-        };
-    }
+   if (!result) {
+      return {
+         success: false,
+         message: "Data yang diberikan tidak valid!.",
+      };
+   }
 
-    try {
-        const buktiPembayaranUrl = await uploadToCloudinary(
-            result.buktiPembayaran,
-            result.buktiPembayaran.name
-        );
+   try {
+      const buktiPembayaranUrl = await uploadToCloudinary(
+         result.buktiPembayaran,
+         result.buktiPembayaran.name
+      );
 
-        // Insert ke tabel timML
-        const classInsert = await db
-            .insert(pendaftaranSeminarKelasTable)
-            .values({
-                id: uuidv4(),
-                kelas: result.kelas,
-                nominal: result.nominal,
-                buktiPembayaran: buktiPembayaranUrl,
-            })
-            .returning({
-                insertedId: pendaftaranSeminarKelasTable.id,
-                insertedKelas: pendaftaranSeminarKelasTable.kelas,
-            });
-
-        // Setelah berhasil, insert ke tabel pesertaML
-        const participants: ParticipantTable[] = result.participants.map((p) => ({
+      // Insert ke tabel timML
+      const classInsert = await db
+         .insert(pendaftaranSeminarKelasTable)
+         .values({
             id: uuidv4(),
-            as: "mahasiswa",
-            metodeDaftar: "kelas",
             kelas: result.kelas,
-            nama: p.nama,
-            npm: p.npm,
-            noWa: p.noWa,
-            email: p.email,
-            instansi: "Politeknik Negeri Sriwijaya",
-            domisili: "Kota Palembang",
+            nominal: result.nominal,
             buktiPembayaran: buktiPembayaranUrl,
-            statusPembayaran: false,
-            tanggalKonfirmasi: null,
-            createdat: getCurrentPostgresTimestamp(),
-            updatedat: getCurrentPostgresTimestamp(),
-        }));
+         })
+         .returning({
+            insertedId: pendaftaranSeminarKelasTable.id,
+            insertedKelas: pendaftaranSeminarKelasTable.kelas,
+         });
 
-        await db.insert(pesertaSeminarTable).values(participants);
+      // Setelah berhasil, insert ke tabel pesertaML
+      const participants: ParticipantTable[] = result.participants.map((p) => ({
+         id: uuidv4(),
+         as: "mahasiswa",
+         metodeDaftar: "kelas",
+         kelas: result.kelas,
+         nama: p.nama,
+         npm: p.npm,
+         noWa: p.noWa,
+         email: p.email,
+         instansi: "Politeknik Negeri Sriwijaya",
+         domisili: "Kota Palembang",
+         buktiPembayaran: buktiPembayaranUrl,
+         statusPembayaran: false,
+         tanggalKonfirmasi: null,
+         createdat: getCurrentPostgresTimestamp(),
+         updatedat: getCurrentPostgresTimestamp(),
+      }));
 
-        return {
-            success: true,
-            data: {
-                registrationId: classInsert[0].insertedId,
-                kelas: classInsert[0].insertedKelas,
-            },
-        };
-    } catch (error) {
-        await db
-            .delete(pendaftaranSeminarKelasTable)
-            .where(eq(pendaftaranSeminarKelasTable.kelas, result.kelas));
-        if (isUniqueConstraintViolationError(error)) {
-            if ((error as DrizzleQueryError).cause?.message.includes("kelas")) {
-                return {
-                    success: false,
-                    message: "Kelas telah terdaftar.",
-                };
-            }
-        }
-        console.log(error);
-        return {
-            success: false,
-            statusCode: 500,
-            error: error,
-            message: "Terjadi kesalahan pada server.",
-        };
-    }
+      await db.insert(pesertaSeminarTable).values(participants);
+
+      const insertedKelas = await getClassRegistrationById(
+         classInsert[0].insertedId
+      );
+
+      return {
+         success: true,
+         data: {
+            ...insertedKelas.data!,
+         },
+      };
+   } catch (error) {
+      await db
+         .delete(pendaftaranSeminarKelasTable)
+         .where(eq(pendaftaranSeminarKelasTable.kelas, result.kelas));
+      if (isUniqueConstraintViolationError(error)) {
+         if ((error as DrizzleQueryError).cause?.message.includes("kelas")) {
+            return {
+               success: false,
+               message: "Kelas telah terdaftar.",
+            };
+         }
+      }
+      console.log(error);
+      return {
+         success: false,
+         statusCode: 500,
+         error: error,
+         message: "Terjadi kesalahan pada server.",
+      };
+   }
 }

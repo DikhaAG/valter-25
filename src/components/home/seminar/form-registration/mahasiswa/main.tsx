@@ -63,10 +63,10 @@ export function MahasiswaForm({
             variant: "success",
             message: `Berhasil melakukan pendaftaran. Tunggu admin untuk konfirmasi`,
          });
+         exportPesertaToExcel({ data: res.data! });
          form.reset();
          sessionStorage.setItem("registrationId", res.data!.id!);
          sessionStorage.setItem("metodeDaftar", "individu");
-         exportPesertaToExcel({ data: res.data! });
          router.push("/seminar/detail-pendaftaran");
       }
    }
