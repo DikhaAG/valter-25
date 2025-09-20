@@ -9,9 +9,6 @@ import { Form } from "@/components/home/pelatihan/form-registration/main";
 
 export default function PelatihanPage() {
    const [isVisible, setIsVisible] = useState(false);
-   if (typeof window !== "undefined") {
-      sessionStorage.clear();
-   }
 
    useEffect(() => {
       setIsVisible(true);
@@ -27,7 +24,6 @@ export default function PelatihanPage() {
 
          {/* Registration Form Section */}
          <Form isVisible={isVisible} />
-       
       </div>
    );
 }

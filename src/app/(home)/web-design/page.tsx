@@ -9,9 +9,6 @@ import { Form } from "@/components/home/web-design/form-registration/main";
 
 export default function WebDesignPage() {
    const [isVisible, setIsVisible] = useState(false);
-   if (typeof window !== "undefined") {
-      sessionStorage.clear();
-   }
 
    useEffect(() => {
       setIsVisible(true);

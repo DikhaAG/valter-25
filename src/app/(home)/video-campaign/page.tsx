@@ -9,9 +9,6 @@ import { Form } from "@/components/home/video-campaign/form-registration/main";
 
 export default function VideoCampaignPage() {
    const [isVisible, setIsVisible] = useState(false);
-   if (typeof window !== "undefined") {
-      sessionStorage.clear();
-   }
 
    useEffect(() => {
       setIsVisible(true);
