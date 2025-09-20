@@ -96,8 +96,8 @@ export function RegistrationCheckButton() {
                      Cek Status Pendaftaran
                   </DialogTitle>
                   <DialogDescription>
-                     Masukan kode registrasi tim kamu untuk melihat status apakah
-                     pembayaran telah berhasil dikonfirmasi
+                     Masukan kode registrasi tim kamu untuk melihat status
+                     apakah pembayaran telah berhasil dikonfirmasi
                   </DialogDescription>
                </DialogHeader>
                <div className="grid gap-4">
