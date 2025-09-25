@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/nb/button";
 import { AnimatedCoinImage } from "@/components/animated-coin.image";
 import { WhatsappContactButton } from "@/components/home/whatsapp-contact-button";
 import { authClient } from "@/lib/auth-client";
+import { TrailerDialog } from "@/components/home/trailer-dialog";
+
+const LOCAL_VIDEO_PATH = "/videos/teaser.mp4"
 
 export default function HomePage() {
   const [timeLeft, setTimeLeft] = useState({
@@ -28,6 +31,8 @@ export default function HomePage() {
   const [showTimelineSection, setShowTimelineSection] = useState(false);
   const [showSponsorSection, setShowSponsorSection] = useState(false);
   const [currentActivityIndex, setCurrentActivityIndex] = useState(1); // Start with middle item selected
+
+  const [isTrailerDialogOpen, setIsTrailerDialogOpen] = useState(false)
 
   const aboutSectionRef = useRef<HTMLElement>(null);
   const guestSectionRef = useRef<HTMLElement>(null);
@@ -145,9 +150,13 @@ export default function HomePage() {
     aboutSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const openYouTubeVideo = () => {
-    window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+  const openTrailerDialog = () => {
+    setIsTrailerDialogOpen(true)
   };
+  const closeTrailerDialog = () => {
+    setIsTrailerDialogOpen(false)
+  };
+
 
   const activities = [
     {
@@ -204,9 +213,8 @@ export default function HomePage() {
     //         -currentActivityIndex * baseItemWidth.desktop;
 
     // Return responsive transform using CSS custom properties approach
-    return `translateX(calc(${mobileOffset}px + 50% - ${
-      baseItemWidth.mobile / 2
-    }px))`;
+    return `translateX(calc(${mobileOffset}px + 50% - ${baseItemWidth.mobile / 2
+      }px))`;
   };
 
   const timelineEvents = [
@@ -245,9 +253,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden font-glofium-demo">
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-primary/90 backdrop-blur-[3px]" : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-primary/90 backdrop-blur-[3px]" : "bg-transparent"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -359,18 +366,16 @@ export default function HomePage() {
 
       <section
         ref={aboutSectionRef}
-        className={`min-h-screen bg-background flex flex-col items-center justify-center px-4 py-20 relative transition-all duration-1000 ease-out z-20 ${
-          showAboutSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
+        className={`min-h-screen bg-background flex flex-col items-center justify-center px-4 py-20 relative transition-all duration-1000 ease-out z-20 ${showAboutSection
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform translate-y-10"
+          }`}
       >
         <div
-          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-50 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${
-            showTopHand
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform -translate-y-20"
-          }`}
+          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-50 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${showTopHand
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform -translate-y-20"
+            }`}
           style={{
             animation: showTopHand ? "fallBounce 1s ease-out" : "none",
           }}
@@ -385,11 +390,10 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`absolute -bottom-10 sm:-bottom-40 -left-50 sm:-left-70 z-100 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${
-            showBottomHand
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-20"
-          }`}
+          className={`absolute -bottom-10 sm:-bottom-40 -left-50 sm:-left-70 z-100 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${showBottomHand
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-20"
+            }`}
           style={{
             animation: showBottomHand ? "throwUpBounce 1s ease-out" : "none",
           }}
@@ -404,11 +408,10 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`max-w-sm sm:max-w-md md:max-w-xl lg:max-w-4xl mx-auto text-center lg:pt-20 transition-all duration-1000 delay-300 ease-out ${
-            showAboutSection
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-10"
-          }`}
+          className={`max-w-sm sm:max-w-md md:max-w-xl lg:max-w-4xl mx-auto text-center lg:pt-20 transition-all duration-1000 delay-300 ease-out ${showAboutSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+            }`}
         >
           <h2 className="text-[15px] lg:text-[28px] font-bold mb-5 font-glofium text-start">
             <span className="text-foreground">Apa itu </span>
@@ -469,18 +472,16 @@ export default function HomePage() {
 
       <section
         ref={guestSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 z-10 transition-all duration-1000 ease-out ${
-          showGuestSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 z-10 transition-all duration-1000 ease-out ${showGuestSection
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform translate-y-10"
+          }`}
       >
         <div
-          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${
-            showGuestSection
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-10"
-          }`}
+          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${showGuestSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+            }`}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div className="flex lg:hidden justify-center lg:justify-end">
@@ -633,22 +634,20 @@ export default function HomePage() {
 
       <section
         ref={trailerSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
-          showTrailerSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${showTrailerSection
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform translate-y-10"
+          }`}
       >
         <div
-          className={`w-full text-center transition-all duration-1000 delay-200 ease-out ${
-            showTrailerSection
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-10"
-          }`}
+          className={`w-full text-center transition-all duration-1000 delay-200 ease-out ${showTrailerSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+            }`}
         >
           <div
             className="relative cursor-pointer group w-full"
-            onClick={openYouTubeVideo}
+            onClick={openTrailerDialog}
           >
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               <div className="w-full h-[360px] sm:h-[480px] bg-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
@@ -682,22 +681,27 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Komponen Dialog Video Lokal */}
+      <TrailerDialog
+        isOpen={isTrailerDialogOpen}
+        onClose={closeTrailerDialog}
+        videoSrc={LOCAL_VIDEO_PATH} // Masukkan path video
+      />
+
       {/* ACTIVITY SECTION */}
       <section
         id="activity-section"
         ref={activitySectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
-          showActivitySection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${showActivitySection
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform translate-y-10"
+          }`}
       >
         <div
-          className={` max-w-8xl lg:max-w-[1200px] mx-auto text-center transition-all duration-1000 delay-200 ease-out ${
-            showActivitySection
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-10"
-          }`}
+          className={` max-w-8xl lg:max-w-[1200px] mx-auto text-center transition-all duration-1000 delay-200 ease-out ${showActivitySection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+            }`}
         >
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 lg:mb-16 font-glofium">
             <span className="text-foreground">Kegiatan </span>
@@ -739,21 +743,18 @@ export default function HomePage() {
                   return (
                     <div
                       key={`activity-${index}`}
-                      className={`${
-                        index === activities.length - 1 && isCenter
-                          ? "ml-20"
-                          : "ml-0"
-                      } ${
-                        index === activities.length - 2 && isCenter
+                      className={`${index === activities.length - 1 && isCenter
+                        ? "ml-20"
+                        : "ml-0"
+                        } ${index === activities.length - 2 && isCenter
                           ? "ml-10"
                           : "ml-0"
-                      } md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${
-                        isCenter
+                        } md:ml-0 flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform-gpu flex-shrink-0 ${isCenter
                           ? "transform scale-110 sm:scale-125 md:scale-130 lg:scale-140 xl:scale-150 z-10 opacity-100"
                           : isAdjacent
                             ? "transform scale-75 sm:scale-80 md:scale-85 lg:scale-90 xl:scale-95 opacity-60 hover:opacity-80"
                             : "transform scale-60 sm:scale-65 md:scale-70 lg:scale-75 xl:scale-80 opacity-30"
-                      }`}
+                        }`}
                       style={{
                         width: isCenter
                           ? "clamp(120px, 20vw, 200px)"
@@ -763,13 +764,12 @@ export default function HomePage() {
                       }}
                     >
                       <div
-                        className={`relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                          isCenter
-                            ? "drop-shadow-2xl"
-                            : isAdjacent
-                              ? "drop-shadow-md"
-                              : "drop-shadow-sm"
-                        }`}
+                        className={`relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isCenter
+                          ? "drop-shadow-2xl"
+                          : isAdjacent
+                            ? "drop-shadow-md"
+                            : "drop-shadow-sm"
+                          }`}
                       >
                         <Link href={activity.href} className="cursor-pointer">
                           <Image
@@ -781,24 +781,22 @@ export default function HomePage() {
                               "/placeholder.svg"
                             }
                             alt={activity.title}
-                            className={`object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                              isCenter
-                                ? "w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 xl:w-52 xl:h-52"
-                                : isAdjacent
-                                  ? "w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 lg:w-26 lg:h-26 xl:w-30 xl:h-30"
-                                  : "w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 lg:w-22 lg:h-22 xl:w-26 xl:h-26"
-                            }`}
+                            className={`object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isCenter
+                              ? "w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 xl:w-52 xl:h-52"
+                              : isAdjacent
+                                ? "w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 lg:w-26 lg:h-26 xl:w-30 xl:h-30"
+                                : "w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 lg:w-22 lg:h-22 xl:w-26 xl:h-26"
+                              }`}
                           />
                         </Link>
                       </div>
                       <div
-                        className={`mt-2 sm:mt-3 md:mt-4 lg:mt-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${
-                          isCenter
-                            ? "opacity-100 translate-y-0 scale-100"
-                            : isAdjacent
-                              ? "opacity-70 translate-y-1 scale-95"
-                              : "opacity-50 translate-y-2 scale-90"
-                        } flex flex-col justify-start items-center text-center`}
+                        className={`mt-2 sm:mt-3 md:mt-4 lg:mt-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${isCenter
+                          ? "opacity-100 translate-y-0 scale-100"
+                          : isAdjacent
+                            ? "opacity-70 translate-y-1 scale-95"
+                            : "opacity-50 translate-y-2 scale-90"
+                          } flex flex-col justify-start items-center text-center`}
                         style={{
                           width: "100%",
                           maxWidth: isCenter
@@ -809,24 +807,22 @@ export default function HomePage() {
                         }}
                       >
                         <h3
-                          className={`font-bold font-funky-vibes text-foreground transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${
-                            isCenter
-                              ? "text-md sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"
-                              : isAdjacent
-                                ? "text-sm sm:text-md md:text-lg lg:text-xl xl:text-xl"
-                                : "text-[12px] sm:text-sm md:text-base lg:text-md xl:text-xl"
-                          } mb-1`}
+                          className={`font-bold font-funky-vibes text-foreground transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${isCenter
+                            ? "text-md sm:text-lg md:text-xl lg:text-2xl xl:text-2xl"
+                            : isAdjacent
+                              ? "text-sm sm:text-md md:text-lg lg:text-xl xl:text-xl"
+                              : "text-[12px] sm:text-sm md:text-base lg:text-md xl:text-xl"
+                            } mb-1`}
                         >
                           {activity.title}
                         </h3>
                         <p
-                          className={`font-poppins text-foreground/70 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${
-                            isCenter
-                              ? "text-[10px] sm:text-base md:text-md lg:text-xl xl:text-[14px]"
-                              : isAdjacent
-                                ? "text-[8px] sm:text-sm md:text-base lg:text-md xl:text-[10px]"
-                                : "text-[8px] sm:text-[10px] md:text-xs lg:text-sm xl:text-[6px]"
-                          }`}
+                          className={`font-poppins text-foreground/70 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] leading-tight ${isCenter
+                            ? "text-[10px] sm:text-base md:text-md lg:text-xl xl:text-[14px]"
+                            : isAdjacent
+                              ? "text-[8px] sm:text-sm md:text-base lg:text-md xl:text-[10px]"
+                              : "text-[8px] sm:text-[10px] md:text-xs lg:text-sm xl:text-[6px]"
+                            }`}
                         >
                           {activity.description}
                         </p>
@@ -858,18 +854,16 @@ export default function HomePage() {
       <section
         id="timeline-section"
         ref={timelineSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${
-          showTimelineSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
+        className={`min-h-screen bg-background flex items-center justify-center px-4 py-20 transition-all duration-1000 ease-out ${showTimelineSection
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform translate-y-10"
+          }`}
       >
         <div
-          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${
-            showTimelineSection
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-10"
-          }`}
+          className={`max-w-4xl mx-auto text-center transition-all duration-1000 delay-200 ease-out ${showTimelineSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+            }`}
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 font-glofium text-foreground">
             Timeline
@@ -883,18 +877,16 @@ export default function HomePage() {
             {timelineEvents.map((event, index) => (
               <div
                 key={index}
-                className={`relative flex items-center mb-16 ${
-                  index % 2 === 0 ? "flex-row-reverse" : "flex-row"
-                }`}
+                className={`relative flex items-center mb-16 ${index % 2 === 0 ? "flex-row-reverse" : "flex-row"
+                  }`}
               >
                 {/* Timeline dot */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full z-10"></div>
 
                 {/* Content */}
                 <div
-                  className={` w-5/12 ${
-                    index % 2 === 0 ? "text-right sm:pr-8" : "text-left sm:pl-8"
-                  }`}
+                  className={` w-5/12 ${index % 2 === 0 ? "text-right sm:pr-8" : "text-left sm:pl-8"
+                    }`}
                 >
                   <div className="bg-primary/10 rounded-lg p-4 shadow-sm">
                     <div className="text-primary text-[10px] md:text-sm font-medium mb-2 font-poppins">
@@ -924,18 +916,16 @@ export default function HomePage() {
       {/* SPONSOR SECTION */}
       <section
         ref={sponsorSectionRef}
-        className={`min-h-screen bg-background flex items-center justify-center px-4 md:py-20 relative transition-all duration-1000 ease-out ${
-          showSponsorSection
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
+        className={`min-h-screen bg-background flex items-center justify-center px-4 md:py-20 relative transition-all duration-1000 ease-out ${showSponsorSection
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform translate-y-10"
+          }`}
       >
         <div
-          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-100 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${
-            showTopHand
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform -translate-y-20"
-          }`}
+          className={`absolute -top-0 sm:-top-60 -right-50 sm:-right-60 z-100 w-[287px] sm:w-[450px] lg:w-[550px] h-[252px] sm:h-[702px] lg:h-[802px] transition-all duration-1000 ease-out ${showTopHand
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform -translate-y-20"
+            }`}
           style={{
             animation: showTopHand ? "fallBounce 1s ease-out" : "none",
           }}
@@ -950,11 +940,10 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`absolute -bottom-20 sm:-bottom-30 -left-50 sm:-left-70 z-50 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${
-            showBottomHand
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-20"
-          }`}
+          className={`absolute -bottom-20 sm:-bottom-30 -left-50 sm:-left-70 z-50 w-[287px] sm:w-[387px] lg:w-[487px] h-[252px] sm:h-[452px] lg:h-[552px] transition-all duration-1000 ease-out ${showBottomHand
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-20"
+            }`}
           style={{
             animation: showBottomHand ? "throwUpBounce 1s ease-out" : "none",
           }}
@@ -979,11 +968,10 @@ export default function HomePage() {
         </div>
 
         <div
-          className={`max-w-6xl mx-auto transition-all duration-1000 delay-200 ease-out ${
-            showSponsorSection
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-10"
-          }`}
+          className={`max-w-6xl mx-auto transition-all duration-1000 delay-200 ease-out ${showSponsorSection
+            ? "opacity-100 transform translate-y-0"
+            : "opacity-0 transform translate-y-10"
+            }`}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Telephone illustration */}
