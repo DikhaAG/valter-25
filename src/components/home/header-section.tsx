@@ -1,12 +1,17 @@
+"use client"
 import { HeaderDataType } from "@/types/header";
 import { wrapSymbols } from "@/utils/wrap-symbols";
 import { AnimatedCoinImage } from "../animated-coin.image";
+import { Button } from "../ui/nb/button";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
    isVisible: boolean;
    data: HeaderDataType;
 }
 export function HeaderSection({ isVisible, data }: Props) {
+  const currentPath = usePathname()
    return (
       <section
          id="activity-section"
@@ -76,6 +81,13 @@ export function HeaderSection({ isVisible, data }: Props) {
                <div className="text-3xl md:text-4xl font-bold text-secondary">
                   Rp {wrapSymbols(data.htm)}
                </div>
+          <div className="w-full">
+            <Button asChild>
+              <Link className="w-full" href={`${currentPath}#pendaftaran-section`}>
+                Daftar
+              </Link>
+            </Button>
+          </div>
             </div>
          </div>
          <div className="my-20"></div>
