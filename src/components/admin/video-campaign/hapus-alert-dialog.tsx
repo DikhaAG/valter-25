@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { CustomToast } from "@/components/ui/nb/custom-toast";
-import { hapusTim } from "@/server/services/admin/hapus-pendaftaran";
+import { hapusTimVideoCampagin } from "@/server/services/admin/hapus-pendaftaran";
 import { Trash } from "lucide-react";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 }
 export function HapusTimAlertDialog({ id }: Props) {
    async function handleHapus() {
-      const res = await hapusTim(id);
+      const res = await hapusTimVideoCampagin(id);
       if (!res.success) {
          CustomToast({
             variant: "error",

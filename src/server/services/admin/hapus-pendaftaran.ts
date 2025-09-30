@@ -9,6 +9,8 @@ import {
    pendaftaranSeminarKelasTable,
    pesertaSeminarTable,
 } from "@/server/db/schemas/seminar-schema";
+import { timVideoCampaignTable } from "@/server/db/schemas/video-campaign-schema";
+import { timWebDesignTable } from "@/server/db/schemas/web-design-schema";
 import { ServerResponseType } from "@/types/server-response";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -92,14 +94,50 @@ export async function hapusPesertaIndividuPelatihan(
    }
 }
 
-export async function hapusTim(
+export async function hapusTimEsport(
+   id: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      await db.delete(timEsportTable).where(eq(timEsportTable.id, id));
+      revalidatePath("/admin/esport");
+
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
+}
+
+export async function hapusTimVideoCampagin(
    id: string
 ): Promise<ServerResponseType<unknown>> {
    try {
       await db
-         .delete(timEsportTable)
-         .where(eq(timEsportTable.id, id));
-      revalidatePath("/admin/esport");
+         .delete(timVideoCampaignTable)
+         .where(eq(timVideoCampaignTable.id, id));
+      revalidatePath("/admin/video-campaign");
+
+      return {
+         success: true,
+      };
+   } catch (e) {
+      return {
+         success: false,
+         message: `${e}`,
+      };
+   }
+}
+
+export async function hapusTimWebDesign(
+   id: string
+): Promise<ServerResponseType<unknown>> {
+   try {
+      await db.delete(timWebDesignTable).where(eq(timWebDesignTable.id, id));
+      revalidatePath("/admin/web-design");
 
       return {
          success: true,
