@@ -150,12 +150,16 @@ export default function HomePage() {
     aboutSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const openTrailerDialog = () => {
-    setIsTrailerDialogOpen(true)
-  };
-  const closeTrailerDialog = () => {
-    setIsTrailerDialogOpen(false)
-  };
+  const openYouTubeVideo = () => {
+    window.open("https://www.instagram.com/reel/DPlW4Lbkupi/", "_blank");
+  }
+
+  // const openTrailerDialog = () => {
+  //   setIsTrailerDialogOpen(true)
+  // };
+  // const closeTrailerDialog = () => {
+  //   setIsTrailerDialogOpen(false)
+  // };
 
 
   const activities = [
@@ -647,7 +651,7 @@ export default function HomePage() {
         >
           <div
             className="relative cursor-pointer group w-full"
-            onClick={openTrailerDialog}
+            onClick={openYouTubeVideo}
           >
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               <div className="w-full h-[360px] sm:h-[480px] bg-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
@@ -681,12 +685,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Komponen Dialog Video Lokal */}
-      <TrailerDialog
-        isOpen={isTrailerDialogOpen}
-        onClose={closeTrailerDialog}
-        videoSrc={LOCAL_VIDEO_PATH} // Masukkan path video
-      />
+      {/* <TrailerDialog */}
+      {/*   isOpen={isTrailerDialogOpen} */}
+      {/*   onClose={closeTrailerDialog} */}
+      {/*   videoSrc={LOCAL_VIDEO_PATH} // Masukkan path video */}
+      {/* /> */}
 
       {/* ACTIVITY SECTION */}
       <section
