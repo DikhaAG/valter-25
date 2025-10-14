@@ -284,7 +284,7 @@ export function KelasForm() {
                )}
             </div>
             {fields.length > 0 && (
-               <div className="max-h-screen">
+               <div className="max-h-screen overflow-y-scroll">
                   <h3 className="text-lg font-semibold mt-4">
                      Daftar Mahasiswa
                   </h3>
