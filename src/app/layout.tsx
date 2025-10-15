@@ -1,38 +1,40 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner"
-import { Analytics } from '@vercel/analytics/next';
+import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+   variable: "--font-geist-sans",
+   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+   variable: "--font-geist-mono",
+   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "VALTER 2025",
-  description: "Created by Mulmed with love",
+   title: "VALTER 2025",
+   description: "Created by Mulmed with love",
 };
 
 export default function RootLayout({
-  children,
+   children,
 }: Readonly<{
-  children: React.ReactNode;
+   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        <Toaster richColors/>
-        <Analytics />
-      </body>
-    </html>
-  );
+   return (
+      <html lang="en" suppressHydrationWarning>
+         <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+         >
+            {children}
+            <Toaster richColors />
+            <Analytics />
+            <SpeedInsights />
+         </body>
+      </html>
+   );
 }
