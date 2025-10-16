@@ -60,7 +60,6 @@ export function KelasForm() {
          excelFile: undefined,
          participants: [],
       },
-      mode: "onSubmit",
    });
    const { fields, replace } = useFieldArray({
       control: form.control,
