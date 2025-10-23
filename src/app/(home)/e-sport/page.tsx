@@ -23,7 +23,7 @@ export default function EsportPage() {
          <TimelineSection data={timelineData} isVisible={isVisible} />
 
          {/* Registration Form Section */}
-         {/* <Form isVisible={isVisible} /> */}
+         <Form isVisible={isVisible} />
       </div>
    );
 }
