@@ -50,7 +50,7 @@ export const timEsportTable = pgTable("tim_esport", {
     * Nilai default-nya adalah `false` dan tidak boleh kosong.
     */
    statusPembayaran: boolean("status_pembayaran").default(false).notNull(),
-   tanggalKonfirmasi: timestamp("tanggal_konfirmasi", {mode: "string"}),
+   tanggalKonfirmasi: timestamp("tanggal_konfirmasi", { mode: "string" }),
 
    /**
     * Timestamp saat data pertama kali dibuat.
