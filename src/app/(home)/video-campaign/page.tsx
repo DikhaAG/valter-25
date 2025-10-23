@@ -23,7 +23,7 @@ export default function VideoCampaignPage() {
          <TimelineSection data={timelineData} isVisible={isVisible} />
 
          {/* Registration Form Section */}
-         <Form isVisible={isVisible} />
+         {/* <Form isVisible={isVisible} /> */}
       </div>
    );
 }
